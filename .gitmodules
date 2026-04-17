@@ -1,0 +1,6 @@
+[submodule "blog-app"]
+	path = blog-app
+	url = https://github.com/fuxiaoji/blog-app.git
+[submodule "note"]
+	path = note
+	url = https://github.com/fuxiaoji/note.git
