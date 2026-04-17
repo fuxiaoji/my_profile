@@ -1,0 +1,18 @@
+.DS_Store
+node_modules/
+*.log
+.cursor/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local runtime artifacts
+server.log
+
+# Nested app build artifacts
+blog-app/node_modules/
+blog-app/.next/
+blog-app/.turbo/
+blog-app/prisma/dev.db
+blog-app/prisma/dev.db-journal

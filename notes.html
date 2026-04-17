@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>笔记目录 · 傅文基</title>
+    <meta
+      name="description"
+      content="傅文基的笔记目录，涵盖各学科笔记及平时总结。"
+    />
+    <meta name="view-transition" content="same-origin" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Source Serif 4"', '"Noto Serif SC"', 'Georgia', 'serif'],
+              body: ['"Source Sans 3"', '"Noto Sans SC"', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              paper: '#fafaf8',
+              accent: { DEFAULT: '#c2410c', soft: '#ffedd5', muted: '#ea580c' },
+              depth: { DEFAULT: '#0f766e' },
+            },
+            boxShadow: {
+              card: '0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 40px rgba(28, 25, 23, 0.06)',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --bg-color: #fafaf8;
+        --text-color: #1c1917;
+        --accent-color: #3730a3;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+      ::selection {
+        background-color: var(--accent-color);
+        color: white;
+      }
+      .tree-dir > .tree-children { display: none; }
+      .tree-dir.expanded > .tree-children { display: block; }
+      .tree-icon { transition: transform 0.2s; display: inline-block; }
+      .tree-dir.expanded > .tree-header .tree-icon { transform: rotate(90deg); }
+    </style>
+  </head>
+  <body class="font-body text-stone-800 antialiased selection:bg-accent selection:text-white flex flex-col min-h-screen">
+    <header class="sticky top-0 z-40 w-full border-b border-stone-200/60 bg-paper/80 backdrop-blur-md">
+      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+        <a href="index.html" class="font-heading text-lg font-bold text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+          FVIN
+        </a>
+        <nav class="hidden items-center gap-6 text-sm outline-none font-medium text-stone-600 sm:flex">
+          <a href="index.html#focus" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">关注领域</a>
+          <a href="index.html#projects" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">项目</a>
+          <a href="index.html#background" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">简历摘要</a>
+          <a href="articles.html" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">文章列表</a>
+          <a href="notes.html" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">笔记</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12 sm:py-20 lg:py-24">
+      <div class="flex flex-col gap-4">
+        <h1 class="font-heading text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl lg:text-5xl">
+          笔记目录
+        </h1>
+        <p class="max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
+          存放平时整理的学习笔记及课件。支持点击展开文件夹。
+        </p>
+      </div>
+      
+      <div class="mt-8 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+        <div id="tree-container" class="text-sm">
+          <p class="text-stone-500">正在加载笔记目录...</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="mt-auto border-t border-stone-200 bg-stone-50 py-8">
+      <div class="mx-auto max-w-6xl px-4 text-center">
+        <p class="text-sm text-stone-500">
+          © 2026 傅文基. Based on Note Folder.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function buildTreeHTML(node) {
+        if (node.type === 'directory') {
+          let html = `<div class="tree-dir mt-1">`;
+          html += `
+            <div class="tree-header flex items-center cursor-pointer py-1.5 px-2 rounded hover:bg-stone-100 text-stone-800 font-medium" onclick="this.parentElement.classList.toggle('expanded')">
+              <span class="tree-icon mr-2 text-stone-400">▶</span>
+              <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5.172a2 2 0 011.414.586l1.828 1.828A2 2 0 0013.828 7H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+              ${node.name}
+            </div>
+            <div class="tree-children border-l ml-3 pl-4 border-stone-200">
+          `;
+          if (node.children) {
+            node.children.forEach(child => {
+              html += buildTreeHTML(child);
+            });
+          }
+          if (!node.children || node.children.length === 0) {
+            html += `<div class="py-1 px-2 text-stone-400 italic text-xs">空文件夹</div>`;
+          }
+          html += `</div></div>`;
+          return html;
+        } else {
+          // File
+          let icon = '<svg class="w-4 h-4 mr-2 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
+          
+          let actionUrl = '#';
+          if (node.name.toLowerCase().endsWith('.md')) {
+            actionUrl = `article-viewer.html?file=${encodeURIComponent(node.path)}`;
+          } else if (node.name.toLowerCase().endsWith('.pdf')) {
+            actionUrl = node.path;
+          }
+
+          let extClasses = "text-stone-700 hover:text-accent hover:underline";
+          if (node.name.toLowerCase().endsWith('.pdf')) {
+            icon = '<svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>';
+          }
+
+          return `
+            <div class="py-1 mt-1">
+              <a href="${actionUrl}" target="${node.name.endsWith('.pdf') ? '_blank' : '_self'}" class="flex items-center px-2 py-1 rounded hover:bg-stone-50 ${extClasses}">
+                <span class="w-4 h-4 mr-2 opacity-0"></span> <!-- alignment spacer -->
+                ${icon}
+                ${node.name}
+              </a>
+            </div>
+          `;
+        }
+      }
+
+      fetch('notes.json')
+        .then(res => res.json())
+        .then(data => {
+          let rootHtml = `<div class="tree-dir expanded">`;
+          rootHtml += `
+            <div class="tree-header flex items-center cursor-pointer py-1.5 px-2 rounded hover:bg-stone-100 text-stone-800 font-bold" onclick="this.parentElement.classList.toggle('expanded')">
+              <span class="tree-icon mr-2 text-stone-400">▶</span>
+              <svg class="w-5 h-5 mr-2 text-stone-700" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5.172a2 2 0 011.414.586l1.828 1.828A2 2 0 0013.828 7H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+              ${data.name}
+            </div>
+            <div class="tree-children border-l ml-3 pl-4 border-stone-200">
+          `;
+          data.children.forEach(child => {
+            rootHtml += buildTreeHTML(child);
+          });
+          rootHtml += `</div></div>`;
+          document.getElementById('tree-container').innerHTML = rootHtml;
+        })
+        .catch(err => {
+          document.getElementById('tree-container').innerHTML = `<p class="text-red-500">加载失败: ${err.message}</p>`;
+        });
+    </script>
+  </body>
+</html>

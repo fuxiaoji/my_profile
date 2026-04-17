@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>文章阅读 · 傅文基</title>
+    <meta name="description" content="傅文基的站内 Markdown 文章阅读页。" />
+    <meta name="view-transition" content="same-origin" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- 引入 zero-md 开源 Web Component 框架 -->
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@3/dist/zero-md.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Source Serif 4"', '"Noto Serif SC"', 'Georgia', 'serif'],
+              body: ['"Source Sans 3"', '"Noto Sans SC"', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              paper: '#fafaf8',
+              accent: { DEFAULT: '#c2410c', soft: '#ffedd5', muted: '#ea580c' },
+              depth: { DEFAULT: '#0f766e' },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root { color-scheme: light; }
+      body {
+        font-family: 'Source Sans 3', 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #fafaf8;
+        background-image: radial-gradient(ellipse 120% 80% at 100% -20%, rgba(224, 231, 255, 0.35), transparent 55%), radial-gradient(ellipse 80% 50% at 0% 100%, rgba(204, 251, 241, 0.2), transparent 50%);
+      }
+      .font-heading { font-family: 'Source Serif 4', 'Noto Serif SC', Georgia, serif; }
+      #content-wrapper { min-height: 50vh; }
+    </style>
+  </head>
+  <body class="min-h-screen text-stone-800 antialiased">
+    <div class="mx-auto max-w-4xl px-4 pb-20 pt-8 sm:pt-10">
+      <header class="mb-8 flex flex-col gap-4 border-b border-stone-200 pb-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <a href="index.html" class="font-heading text-lg font-semibold text-stone-900">傅文基</a>
+          <nav class="flex flex-wrap items-center gap-4 text-sm font-medium text-stone-600">
+            <a href="index.html" class="transition-colors duration-200 hover:text-accent">首页</a>
+            <a href="index.html#projects" class="transition-colors duration-200 hover:text-accent">项目</a>
+            <a href="index.html#contact" class="transition-colors duration-200 hover:text-accent">联系</a>
+            <a href="articles.html" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">文章列表</a>
+            <a href="notes.html" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">笔记</a>
+          </nav>
+        </div>
+
+        <div>
+          <h1 id="page-title" class="mt-3 font-heading text-3xl font-semibold text-stone-900">文档阅读</h1>
+          <p id="page-subtitle" class="mt-2 text-sm text-stone-600">正在加载文章内容...</p>
+        </div>
+      </header>
+
+      <main>
+        <div id="content-wrapper" class="rounded-3xl border border-stone-200 bg-white/90 px-6 py-8 shadow-sm">
+          <!-- zero-md 渲染容器 -->
+          <zero-md id="md-viewer" no-shadow></zero-md>
+        </div>
+        <div id="error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700"></div>
+      </main>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const fileParam = params.get('file');
+      const file = fileParam ? decodeURIComponent(fileParam) : null;
+      
+      const mdViewer = document.getElementById('md-viewer');
+      const errorEl = document.getElementById('error');
+      const titleEl = document.getElementById('page-title');
+      const subtitleEl = document.getElementById('page-subtitle');
+      const contentWrapper = document.getElementById('content-wrapper');
+
+      function showError(message) {
+        contentWrapper.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        errorEl.textContent = message;
+        subtitleEl.textContent = '无法加载文章。';
+      }
+
+      if (!file || !file.endsWith('.md')) {
+        showError('文章地址无效，请从文章列表或笔记目录重新进入。');
+      } else {
+        // 从 file 路径中提取文章标题
+        const expectedTitle = file.split('/').pop().replace('.md', '');
+        
+        fetch('http://localhost:3000/api/posts')
+          .then((response) => {
+            if (!response.ok) throw new Error('无法连接到由于后端未启动');
+            return response.json();
+          })
+          .then((posts) => {
+            const post = posts.find((p) => p.title === expectedTitle);
+            if (!post) throw new Error('未能在数据库找包含该标题的文章');
+
+            const title = post.title;
+            titleEl.textContent = title;
+            subtitleEl.textContent = post.tags && post.tags.length ? `来自数据库层 · ${post.tags.join(' | ')}` : file;
+            document.title = `${title} · 傅文基`;
+
+            // 处理 Obsidian 图片语法 `![[]]`
+            const normalized = post.content.replaceAll('![[', '![](').replaceAll(']]', ')');
+            
+            // 写入 zero-md
+            mdViewer.innerHTML = '';
+            const scriptEl = document.createElement('script');
+            scriptEl.type = 'text/markdown';
+            scriptEl.text = normalized;
+            mdViewer.appendChild(scriptEl);
+          })
+          .catch((err) => {
+            showError('文章加载失败：' + err.message + ' (也许是 localhost:3000 API 没开?)');
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,586 @@
+{
+  "name": "note",
+  "type": "directory",
+  "children": [
+    {
+      "name": "中级宏观经济学",
+      "type": "directory",
+      "children": [
+        {
+          "name": "Chap11b(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chap11b(1).pdf"
+        },
+        {
+          "name": "Chap12-13b(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chap12-13b(1).pdf"
+        },
+        {
+          "name": "Chap7b.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chap7b.pdf"
+        },
+        {
+          "name": "Chap8b.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chap8b.pdf"
+        },
+        {
+          "name": "Chapter 11_Saving Capital Accumulation and Output(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 11_Saving Capital Accumulation and Output(1).pdf"
+        },
+        {
+          "name": "Chapter 12_Technological Progress and Growth(2).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 12_Technological Progress and Growth(2).pdf"
+        },
+        {
+          "name": "Chapter 12_Technological Progress and Growth(3).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 12_Technological Progress and Growth(3).pdf"
+        },
+        {
+          "name": "Chapter 13_Technological Progress The Short The Medium and the Long Run(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 13_Technological Progress The Short The Medium and the Long Run(1).pdf"
+        },
+        {
+          "name": "Chapter 3_The Goods Market.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 3_The Goods Market.pdf"
+        },
+        {
+          "name": "Chapter 4_Financial Markets.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 4_Financial Markets.pdf"
+        },
+        {
+          "name": "Chapter 5_The IS-LM Model.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 5_The IS-LM Model.pdf"
+        },
+        {
+          "name": "Chapter 6_The Labor Market.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 6_The Labor Market.pdf"
+        },
+        {
+          "name": "Chapter 7_The AS-AD Model.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 7_The AS-AD Model.pdf"
+        },
+        {
+          "name": "Chapter 8_The Phillips Curve(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Chapter 8_The Phillips Curve(1).pdf"
+        },
+        {
+          "name": "FinalReview.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/FinalReview.pdf"
+        },
+        {
+          "name": "Mid-term-review2025.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Mid-term-review2025.pdf"
+        },
+        {
+          "name": "Midterm Exam with Answers_2025(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Midterm Exam with Answers_2025(1).pdf"
+        },
+        {
+          "name": "Problem Set 1 with Answers_2025.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 1 with Answers_2025.pdf"
+        },
+        {
+          "name": "Problem Set 2 with Answers_2025.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 2 with Answers_2025.pdf"
+        },
+        {
+          "name": "Problem Set 3 with Answers_2023 (2).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 3 with Answers_2023 (2).pdf"
+        },
+        {
+          "name": "Problem Set 3 with Answers_2025(1).pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 3 with Answers_2025(1).pdf"
+        },
+        {
+          "name": "Problem Set 4 with Answers_2023.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 4 with Answers_2023.pdf"
+        },
+        {
+          "name": "Problem Set 4_2025.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/Problem Set 4_2025.pdf"
+        },
+        {
+          "name": "content_1703648379445.pdf",
+          "type": "file",
+          "path": "note/中级宏观经济学/content_1703648379445.pdf"
+        },
+        {
+          "name": "中级宏观经济学.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学.md"
+        },
+        {
+          "name": "中级宏观经济学复习.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学复习.md"
+        },
+        {
+          "name": "中级宏观经济学复习：第三章 经济增长模型（索洛模型核心+真题衔接+画图强化）_副本.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学复习：第三章 经济增长模型（索洛模型核心+真题衔接+画图强化）_副本.md"
+        },
+        {
+          "name": "中级宏观经济学复习：第五章 宏观政策综合应用（压轴考点+模型联动+真题精析）_副本.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学复习：第五章 宏观政策综合应用（压轴考点+模型联动+真题精析）_副本.md"
+        },
+        {
+          "name": "中级宏观经济学复习：第四章 技术进步与增长（核心计算+综合画图+真题精析）_副本.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学复习：第四章 技术进步与增长（核心计算+综合画图+真题精析）_副本.md"
+        },
+        {
+          "name": "中级宏观经济学期末.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/中级宏观经济学期末.md"
+        },
+        {
+          "name": "内训.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/内训.md"
+        },
+        {
+          "name": "复习.md",
+          "type": "file",
+          "path": "note/中级宏观经济学/复习.md"
+        }
+      ]
+    },
+    {
+      "name": "中级微观",
+      "type": "directory",
+      "children": [
+        {
+          "name": "10.Monopoly.pdf",
+          "type": "file",
+          "path": "note/中级微观/10.Monopoly.pdf"
+        },
+        {
+          "name": "11.Exchange(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/11.Exchange(1).pdf"
+        },
+        {
+          "name": "12.Game Theory.pdf",
+          "type": "file",
+          "path": "note/中级微观/12.Game Theory.pdf"
+        },
+        {
+          "name": "IM_Micro_2022F_Final_1220.pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2022F_Final_1220.pdf"
+        },
+        {
+          "name": "IM_Micro_2022F_PS5.pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2022F_PS5.pdf"
+        },
+        {
+          "name": "IM_Micro_2025_Exercises_05_Mono_EE(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_Exercises_05_Mono_EE(1).pdf"
+        },
+        {
+          "name": "IM_Micro_2025_Exercises_06_GT(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_Exercises_06_GT(1).pdf"
+        },
+        {
+          "name": "IM_Micro_2025_MT_Soln.pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_MT_Soln.pdf"
+        },
+        {
+          "name": "IM_Micro_2025_PS4(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_PS4(1).pdf"
+        },
+        {
+          "name": "IM_Micro_2025_PS5(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_PS5(1).pdf"
+        },
+        {
+          "name": "IM_Micro_2025_PS6(1).pdf",
+          "type": "file",
+          "path": "note/中级微观/IM_Micro_2025_PS6(1).pdf"
+        },
+        {
+          "name": "Intermed_Micro_2022F_PS4.pdf",
+          "type": "file",
+          "path": "note/中级微观/Intermed_Micro_2022F_PS4.pdf"
+        },
+        {
+          "name": "Intermed_Micro_2022F_Soln4.pdf",
+          "type": "file",
+          "path": "note/中级微观/Intermed_Micro_2022F_Soln4.pdf"
+        },
+        {
+          "name": "Makeup_Final_IM_Micro_2022F_022623.pdf",
+          "type": "file",
+          "path": "note/中级微观/Makeup_Final_IM_Micro_2022F_022623.pdf"
+        },
+        {
+          "name": "SWUFE_Intermed_Micro_2021F_PS5.pdf",
+          "type": "file",
+          "path": "note/中级微观/SWUFE_Intermed_Micro_2021F_PS5.pdf"
+        },
+        {
+          "name": "中级微观经济学期末复习指南（考点分布+章节精讲+真题_作业联动）.md",
+          "type": "file",
+          "path": "note/中级微观/中级微观经济学期末复习指南（考点分布+章节精讲+真题_作业联动）.md"
+        },
+        {
+          "name": "中级微观经济学核心公式速记手册（期末必考）.md",
+          "type": "file",
+          "path": "note/中级微观/中级微观经济学核心公式速记手册（期末必考）.md"
+        },
+        {
+          "name": "微观范里安讲义太白金星V.pdf",
+          "type": "file",
+          "path": "note/中级微观/微观范里安讲义太白金星V.pdf"
+        }
+      ]
+    },
+    {
+      "name": "国际金融学",
+      "type": "directory",
+      "children": [
+        {
+          "name": "1 - Introduction_ Macro Analysis, Policy Responses, and Conclusion of Sri Lanka's Economic Crisis.md",
+          "type": "file",
+          "path": "note/国际金融学/1 - Introduction_ Macro Analysis, Policy Responses, and Conclusion of Sri Lanka's Economic Crisis.md"
+        },
+        {
+          "name": "Lecture 1 Fundamental （students）.pdf",
+          "type": "file",
+          "path": "note/国际金融学/Lecture 1 Fundamental （students）.pdf"
+        },
+        {
+          "name": "Lecture 2 Exchange rate I The monetary approach in the long run (students).pdf",
+          "type": "file",
+          "path": "note/国际金融学/Lecture 2 Exchange rate I The monetary approach in the long run (students).pdf"
+        }
+      ]
+    },
+    {
+      "name": "概率论",
+      "type": "directory",
+      "children": [
+        {
+          "name": "Chapter 6_ Limiting Theorems, Estimation and Sampling Distributions.md",
+          "type": "file",
+          "path": "note/概率论/Chapter 6_ Limiting Theorems, Estimation and Sampling Distributions.md"
+        },
+        {
+          "name": "Homework11王梓岳42139002.pdf",
+          "type": "file",
+          "path": "note/概率论/Homework11王梓岳42139002.pdf"
+        },
+        {
+          "name": "Homework12王梓岳42139002.pdf",
+          "type": "file",
+          "path": "note/概率论/Homework12王梓岳42139002.pdf"
+        },
+        {
+          "name": "Probability-and-Statistics(1).pdf",
+          "type": "file",
+          "path": "note/概率论/Probability-and-Statistics(1).pdf"
+        },
+        {
+          "name": "未命名文档.md",
+          "type": "file",
+          "path": "note/概率论/未命名文档.md"
+        },
+        {
+          "name": "概率论.md",
+          "type": "file",
+          "path": "note/概率论/概率论.md"
+        },
+        {
+          "name": "概率论与数理统计核心公式+必背结论汇总.md",
+          "type": "file",
+          "path": "note/概率论/概率论与数理统计核心公式+必背结论汇总.md"
+        },
+        {
+          "name": "概率论与数理统计模拟期末考试题（含详细解答）.pdf",
+          "type": "file",
+          "path": "note/概率论/概率论与数理统计模拟期末考试题（含详细解答）.pdf"
+        },
+        {
+          "name": "概率论作业题王泽明.md",
+          "type": "file",
+          "path": "note/概率论/概率论作业题王泽明.md"
+        },
+        {
+          "name": "深入解析连续分布与均匀分布.md",
+          "type": "file",
+          "path": "note/概率论/深入解析连续分布与均匀分布.md"
+        },
+        {
+          "name": "连续分布：多元正态、卡方与 t 分布.md",
+          "type": "file",
+          "path": "note/概率论/连续分布：多元正态、卡方与 t 分布.md"
+        }
+      ]
+    },
+    {
+      "name": "毛概",
+      "type": "directory",
+      "children": []
+    },
+    {
+      "name": "统计",
+      "type": "directory",
+      "children": [
+        {
+          "name": "The_Elements_of_Statistical_Learning_z_library_sk,_1lib_sk,.pdf",
+          "type": "file",
+          "path": "note/统计/The_Elements_of_Statistical_Learning_z_library_sk,_1lib_sk,.pdf"
+        }
+      ]
+    },
+    {
+      "name": "艺术导论",
+      "type": "directory",
+      "children": [
+        {
+          "name": "艺术导论.md",
+          "type": "file",
+          "path": "note/艺术导论/艺术导论.md"
+        }
+      ]
+    },
+    {
+      "name": "计量经济学",
+      "type": "directory",
+      "children": [
+        {
+          "name": "ETRC Lec 1_1_2026.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC Lec 1_1_2026.pdf"
+        },
+        {
+          "name": "ETRC Lec 1_2probability.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC Lec 1_2probability.pdf"
+        },
+        {
+          "name": "ETRC Lec 1_2statistics.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC Lec 1_2statistics.pdf"
+        },
+        {
+          "name": "ETRC Lec 2.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC Lec 2.pdf"
+        },
+        {
+          "name": "ETRC lec 3.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC lec 3.pdf"
+        },
+        {
+          "name": "ETRC lec 3_Modified_April8.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC lec 3_Modified_April8.pdf"
+        },
+        {
+          "name": "ETRC lec 4_revised.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC lec 4_revised.pdf"
+        },
+        {
+          "name": "ETRC lec 4_revisedApril15.pdf",
+          "type": "file",
+          "path": "note/计量经济学/ETRC lec 4_revisedApril15.pdf"
+        },
+        {
+          "name": "EconometricsAssignment1_2026new.pdf",
+          "type": "file",
+          "path": "note/计量经济学/EconometricsAssignment1_2026new.pdf"
+        },
+        {
+          "name": "Econometrics_Spring_2026_Syllabus.pdf",
+          "type": "file",
+          "path": "note/计量经济学/Econometrics_Spring_2026_Syllabus.pdf"
+        },
+        {
+          "name": "Introduction_to_Econometrics,_Global_z_library_sk,_1lib_sk,.pdf",
+          "type": "file",
+          "path": "note/计量经济学/Introduction_to_Econometrics,_Global_z_library_sk,_1lib_sk,.pdf"
+        },
+        {
+          "name": "Lec4_review_simplified.pdf",
+          "type": "file",
+          "path": "note/计量经济学/Lec4_review_simplified.pdf"
+        },
+        {
+          "name": "计量.md",
+          "type": "file",
+          "path": "note/计量经济学/计量.md"
+        },
+        {
+          "name": "计量经济学(原书第4版) (詹姆斯·H.斯托克,马克·W.沃森) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+          "type": "file",
+          "path": "note/计量经济学/计量经济学(原书第4版) (詹姆斯·H.斯托克,马克·W.沃森) (z-library.sk, 1lib.sk, z-lib.sk).pdf"
+        }
+      ]
+    },
+    {
+      "name": "财务管理",
+      "type": "directory",
+      "children": [
+        {
+          "name": "Syllabus.pdf",
+          "type": "file",
+          "path": "note/财务管理/Syllabus.pdf"
+        },
+        {
+          "name": "W1_Intro_NoSolution.pdf",
+          "type": "file",
+          "path": "note/财务管理/W1_Intro_NoSolution.pdf"
+        },
+        {
+          "name": "W2-3 TimeValueofMoney_NoSolution.pdf",
+          "type": "file",
+          "path": "note/财务管理/W2-3 TimeValueofMoney_NoSolution.pdf"
+        },
+        {
+          "name": "note.md",
+          "type": "file",
+          "path": "note/财务管理/note.md"
+        },
+        {
+          "name": "笔记.md",
+          "type": "file",
+          "path": "note/财务管理/笔记.md"
+        }
+      ]
+    },
+    {
+      "name": "马原",
+      "type": "directory",
+      "children": [
+        {
+          "name": "题",
+          "type": "directory",
+          "children": [
+            {
+              "name": "《马克思主义基本原理》单选题.pdf",
+              "type": "file",
+              "path": "note/马原/题/《马克思主义基本原理》单选题.pdf"
+            },
+            {
+              "name": "《马克思主义基本原理》多选题.pdf",
+              "type": "file",
+              "path": "note/马原/题/《马克思主义基本原理》多选题.pdf"
+            },
+            {
+              "name": "马原题两套.pdf",
+              "type": "file",
+              "path": "note/马原/题/马原题两套.pdf"
+            }
+          ]
+        },
+        {
+          "name": "马原速成01 讲义@空卡空卡空空卡.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成01 讲义@空卡空卡空空卡.pdf"
+        },
+        {
+          "name": "马原速成02 讲义 @空卡空卡空空卡.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成02 讲义 @空卡空卡空空卡.pdf"
+        },
+        {
+          "name": "马原速成03讲义@空卡空卡空空卡.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成03讲义@空卡空卡空空卡.pdf"
+        },
+        {
+          "name": "马原速成04讲义@空卡空卡空空卡.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成04讲义@空卡空卡空空卡.pdf"
+        },
+        {
+          "name": "马原速成课05 讲义.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成课05 讲义.pdf"
+        },
+        {
+          "name": "马原速成课06@空卡空卡空空卡.pdf",
+          "type": "file",
+          "path": "note/马原/马原速成课06@空卡空卡空空卡.pdf"
+        }
+      ]
+    },
+    {
+      "name": "2025-12-24.md",
+      "type": "file",
+      "path": "note/2025-12-24.md"
+    },
+    {
+      "name": "25期末.md",
+      "type": "file",
+      "path": "note/25期末.md"
+    },
+    {
+      "name": "fx-991CNCW_999CNCW_CN.pdf",
+      "type": "file",
+      "path": "note/fx-991CNCW_999CNCW_CN.pdf"
+    },
+    {
+      "name": "刷题笔记.md",
+      "type": "file",
+      "path": "note/刷题笔记.md"
+    },
+    {
+      "name": "提示词.md",
+      "type": "file",
+      "path": "note/提示词.md"
+    },
+    {
+      "name": "未命名.md",
+      "type": "file",
+      "path": "note/未命名.md"
+    },
+    {
+      "name": "简历.md",
+      "type": "file",
+      "path": "note/简历.md"
+    },
+    {
+      "name": "艺术导论.pdf",
+      "type": "file",
+      "path": "note/艺术导论.pdf"
+    },
+    {
+      "name": "要求.md",
+      "type": "file",
+      "path": "note/要求.md"
+    }
+  ]
+}

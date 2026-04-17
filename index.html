@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>傅文基 · 个人网站</title>
+    <meta
+      name="description"
+      content="西南财经大学金融（经管实验班）本科在读，金融科技与 Web3 方向；记录投研、建模与长文写作。"
+    />
+    <meta name="view-transition" content="same-origin" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: [
+                '"Source Serif 4"',
+                '"Noto Serif SC"',
+                'Georgia',
+                'serif',
+              ],
+              body: [
+                '"Source Sans 3"',
+                '"Noto Sans SC"',
+                'system-ui',
+                'sans-serif',
+              ],
+            },
+            colors: {
+              ink: '#1c1917',
+              paper: '#fafaf8',
+              mist: '#e7e5e4',
+              accent: {
+                DEFAULT: '#c2410c',
+                soft: '#ffedd5',
+                muted: '#ea580c',
+              },
+              depth: {
+                DEFAULT: '#0f766e',
+                soft: '#ccfbf1',
+              },
+            },
+            boxShadow: {
+              card: '0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 40px rgba(28, 25, 23, 0.06)',
+            },
+            animation: {
+              marquee: 'marquee 50s linear infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              }
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.04"/%3E%3C/svg%3E');
+        pointer-events: none;
+        z-index: 50;
+      }
+      body {
+        font-family: 'Source Sans 3', 'Noto Sans SC', system-ui, -apple-system,
+          BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        position: relative;
+        background-color: #fafaf8;
+        background-image: radial-gradient(
+            ellipse 120% 80% at 100% -20%,
+            rgba(224, 231, 255, 0.35),
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 80% 50% at 0% 100%,
+            rgba(204, 251, 241, 0.25),
+            transparent 50%
+          );
+      }
+      .font-heading {
+        font-family: 'Source Serif 4', 'Noto Serif SC', Georgia, serif;
+      }
+      /* scrollytelling: vertical scroll drives horizontal track */
+      .focus-scroll {
+        position: relative;
+      }
+      .focus-sticky {
+        position: sticky;
+        top: 5.25rem;
+      }
+      .focus-viewport {
+        overflow: hidden;
+      }
+      .focus-track {
+        display: flex;
+        gap: 1rem;
+        will-change: transform;
+      }
+      .focus-card {
+        transform-origin: center center;
+        will-change: transform;
+      }
+      .mermaid svg {
+        max-width: 100%;
+        height: auto;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+    <!-- 引入 GSAP 以支持复杂入场及滚动动画 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  </head>
+
+  <body class="min-h-screen text-stone-800 antialiased overflow-x-hidden">
+    <div class="relative z-10 flex min-h-screen flex-col">
+      <header
+        id="global-header"
+        class="pointer-events-auto fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-paper/85 px-4 py-3 backdrop-blur-md opacity-0 -translate-y-full"
+      >
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <a
+            href="#top"
+            class="flex items-center gap-3 text-sm font-medium text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          >
+            <span
+              class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-xs font-semibold tracking-tight text-accent shadow-sm"
+              aria-hidden="true"
+            >
+              傅
+            </span>
+            <span class="font-heading text-base text-stone-900">傅文基</span>
+            <span class="hidden text-xs font-normal text-stone-500 sm:inline">
+              金融科技 · Web3
+            </span>
+          </a>
+
+          <nav class="hidden items-center gap-6 text-sm font-medium text-stone-600 sm:flex">
+            <a
+              href="#focus"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              关注领域
+            </a>
+            <a
+              href="#projects"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              项目
+            </a>
+            <a
+              href="#background"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              简历摘要
+            </a>
+            <a
+              href="#learning-map"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              学习树
+            </a>
+            <a
+              id="nav-articles"
+              href="articles.html"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              文章列表
+            </a>
+            <a
+              id="nav-notes"
+              href="notes.html"
+              class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              笔记
+            </a>
+          </nav>
+
+          <a
+            href="#contact"
+            class="cursor-pointer rounded-full border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 shadow-sm transition-colors duration-200 hover:border-accent/40 hover:bg-accent-soft/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          >
+            联系
+          </a>
+        </div>
+      </header>
+
+      <main
+        id="top"
+        class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-20"
+      >
+        <section id="learning-map" class="fixed inset-x-0 inset-y-0 -z-10 flex flex-col justify-center items-center pointer-events-none mt-[60px]">
+          <div class="w-full flex flex-col items-center justify-center p-4">
+            <div class="w-full max-w-[1400px] px-2" id="tree-container">
+              <div class="mermaid flex justify-center">
+flowchart TB
+  %% 极简现代风配置，更贴合网站全局
+  classDef math fill:#ffffff,stroke:#c7d2fe,stroke-width:1px,color:#1c1917;
+  classDef econ fill:#ffffff,stroke:#e9d5ff,stroke-width:1px,color:#1c1917;
+  classDef core fill:#ffffff,stroke:#fed7aa,stroke-width:1px,color:#1c1917;
+  classDef app fill:#ffffff,stroke:#bbf7d0,stroke-width:1px,color:#1c1917;
+  classDef cs fill:#ffffff,stroke:#99f6e4,stroke-width:1px,color:#1c1917;
+  classDef cluster fill:none,stroke:#e7e5e4,stroke-width:1px,stroke-dasharray:4 4;
+
+  subgraph T1 [基础工具层]
+    M1[高等数学]:::math
+    M2[线性代数]:::math
+    M3[概率论与数理统计]:::math
+    C1[Python/C++ 编程]:::math
+  end
+
+  subgraph T2 [经济学基石层]
+    E1[微观经济学]:::econ
+    E2[宏观经济学]:::econ
+    E3[政治经济学]:::econ
+  end
+
+  subgraph T3 [中级核心理论层]
+    I1[中级微观经济学]:::core
+    I2[中级宏观经济学]:::core
+    I3[国际经济学]:::core
+    I4[计量经济学]:::core
+  end
+
+  subgraph T4 [商业与金融应用层]
+    A1[中国金融市场导论]:::app
+    A2[会计学]:::app
+    A3[管理学原理]:::app
+    A4[财务管理]:::app
+  end
+
+  subgraph T5 [计算机方向]
+    CS1[CS61A]:::cs
+    CS2[CS336]:::cs
+    CS3[408数据结构]:::cs
+    CS4[408计算机操作系统]:::cs
+    CS5[408计算机网络]:::cs
+    CS6[408计算机组成原理]:::cs
+  end
+
+  M1 --> E1
+  M1 --> E2
+  M2 --> M3
+  M3 --> I1
+  M3 --> I2
+  M3 --> I4
+  E1 --> I1
+  E1 --> I3
+  E1 --> I4
+  E2 --> I2
+  E2 --> I3
+  E3 --> A2
+  E3 --> A3
+  I1 --> A1
+  I1 --> A4
+  I2 --> A1
+  A2 --> A4
+
+  C1 --> CS1
+  CS1 --> CS2
+  CS1 --> CS3
+  CS3 --> CS6
+  CS6 --> CS4
+  CS4 --> CS5
+              </div>
+            </div>
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-[13px] font-semibold opacity-0" id="map-legend">
+              <span class="inline-flex items-center gap-2 text-orange-700 drop-shadow-[0_0_8px_rgba(194,65,12,0.4)]">
+                <span class="w-2.5 h-2.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(234,88,12,0.8)]"></span> 已学
+              </span>
+              <span class="inline-flex items-center gap-2 text-emerald-700 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.9)]"></span> 计划学
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="hero-title"
+          class="relative z-10 grid gap-12 mt-[100vh] pt-12 after:absolute after:inset-y-0 after:w-[100vw] after:left-1/2 after:-translate-x-1/2 after:bg-paper/95 after:-z-10 before:-z-10 before:absolute before:-top-[15vh] before:w-[100vw] before:left-1/2 before:-translate-x-1/2 before:h-[15vh] before:bg-gradient-to-b before:from-transparent before:to-paper/95 pb-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start transition-opacity duration-1000 px-2 sm:px-6"
+          id="hero-content"
+        >
+          <div class="space-y-8">
+            <p class="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
+              SWUFE · Finance &amp; management pilot · Fintech &amp; Web3
+            </p>
+            <h1
+              id="hero-title"
+              class="font-heading text-3xl font-semibold leading-[1.3] tracking-tight text-stone-900 sm:text-4xl lg:text-[2.65rem]"
+            >
+              在金融市场与代码之间，<br class="hidden sm:block" />
+              <span class="text-accent leading-[1.4]">找可验证的问题与叙事</span>。
+            </h1>
+            <p class="max-w-xl text-base leading-loose text-stone-600 sm:text-lg sm:leading-[1.85]">
+              来自重庆，西南财经大学<strong class="font-medium text-stone-800">金融（经管实验班）</strong>本科在读。关心交易与投研、金融科技与
+              Web3，也用数据抓取、建模和 LLM 工具提高交付效率。本站汇总公开项目、写作与简历入口——风格偏克制，内容偏实务。
+            </p>
+            <div class="flex flex-wrap items-center gap-2 text-xs text-stone-600 pt-2">
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1.5 shadow-sm"
+              >
+                <span
+                  class="h-1.5 w-1.5 rounded-full bg-depth"
+                  aria-hidden="true"
+                ></span>
+                本科在读 · 绩点约 3.2/4
+              </span>
+              <span
+                class="inline-flex items-center rounded-full border border-transparent bg-stone-100 px-3 py-1.5"
+              >
+                基金从业资格
+              </span>
+              <span
+                class="inline-flex items-center rounded-full border border-transparent bg-stone-100 px-3 py-1.5"
+              >
+                CET-4 500+
+              </span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href="简历%20(2).pdf"
+                download
+                class="cursor-pointer rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-colors duration-200 hover:bg-indigo-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              >
+                下载简历（PDF）
+              </a>
+              <a
+                href="https://github.com/fuxiaoji"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cursor-pointer rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 shadow-sm transition-colors duration-200 hover:border-accent/40 hover:bg-accent-soft/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.fuwenji.asia"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cursor-pointer text-sm font-medium text-stone-700 underline decoration-stone-300 underline-offset-4 transition-colors duration-200 hover:text-accent hover:decoration-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              >
+                fuwenji.asia
+              </a>
+            </div>
+          </div>
+
+          <aside
+            class="rounded-2xl border border-stone-200/90 bg-white/80 p-6 shadow-card backdrop-blur-sm"
+            aria-label="关注维度摘要"
+          >
+            <p class="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
+              现在在做的几件事
+            </p>
+            <ul class="mt-5 space-y-4">
+              <li class="rounded-xl border border-stone-100 bg-stone-50/80 p-4">
+                <p class="text-xs font-semibold text-accent">投研与金融实务</p>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                  ETF 策略与基本面梳理；Wind / Choice 终端与研报写作；曾在<strong class="font-medium text-stone-700">中泰证券深圳分部</strong>参与私募备案与行研（2025 暑期）。
+                </p>
+              </li>
+              <li class="rounded-xl border border-stone-100 bg-white p-4">
+                <p class="text-xs font-semibold text-depth">金融科技 · Web3</p>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                  理解 Web3 平台逻辑与合约应用；联合创建校内「区块链」社团并做技术专题；写作涵盖稳定币等主题。
+                </p>
+              </li>
+              <li class="rounded-xl border border-stone-100 bg-white p-4">
+                <p class="text-xs font-semibold text-stone-700">数据 · LLM · 政经长文</p>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                  数据清洗与建模、提示词与工作流；亦写政治经济学视角的长篇观察（见文章列表）。
+                </p>
+              </li>
+            </ul>
+            <p class="mt-4 text-xs text-stone-500">
+              网名 <span class="font-medium text-stone-700">三只阿鸡</span>
+              ·
+              <a
+                href="https://space.bilibili.com/480295330"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cursor-pointer font-medium text-accent underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                Bilibili
+              </a>
+            </p>
+          </aside>
+        </section>
+
+        <section id="focus" class="mt-20 space-y-5 focus-scroll" data-focus-scroll>
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 class="font-heading text-2xl font-semibold text-stone-900">
+                兴趣版图
+              </h2>
+              <p class="mt-1 max-w-2xl text-sm text-stone-600">
+                金融逻辑、技术实现与制度叙事可以放在同一张表里讨论——关键是假设是否清楚、证据是否站得住。
+              </p>
+            </div>
+            <p class="text-xs text-stone-500">
+              向下滚动浏览（中心卡片会放大）
+            </p>
+          </div>
+
+          <!-- Scrollytelling container -->
+          <div class="rounded-2xl border border-stone-200 bg-white/70 shadow-sm">
+            <div class="focus-sticky px-4 py-5">
+              <div
+                class="focus-viewport rounded-xl"
+                role="list"
+                aria-label="关注领域卡片"
+                data-focus-viewport
+              >
+                <div class="focus-track pb-1 text-sm" data-focus-track>
+              <article
+                class="focus-card flex w-72 flex-none flex-col justify-between rounded-xl border border-stone-200 bg-paper p-5 shadow-sm transition-shadow duration-200 hover:shadow-card"
+                tabindex="0"
+                role="listitem"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-200 bg-white text-xs font-semibold text-stone-800"
+                    aria-hidden="true"
+                  >
+                    01
+                  </span>
+                  <h3 class="font-heading text-sm font-semibold text-stone-900">
+                    证券投资与建模
+                  </h3>
+                </div>
+                <p class="mt-4 text-xs leading-relaxed text-stone-600">
+                  模拟与实盘经验、ETF 与行业轮动；金融科技建模与量化学习项目并行。
+                </p>
+                <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
+                  <li>· 全国 ETF 模拟赛（前 2% · 二等）</li>
+                  <li>· 校金融科技建模大赛（二等）</li>
+                  <li>· Top Analyst 行研挑战（三等）</li>
+                </ul>
+              </article>
+
+              <article
+                class="focus-card flex w-72 flex-none flex-col justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card"
+                tabindex="0"
+                role="listitem"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-200 bg-white text-xs font-semibold text-stone-800"
+                    aria-hidden="true"
+                  >
+                    02
+                  </span>
+                  <h3 class="font-heading text-sm font-semibold text-stone-900">
+                    Web3 与链上应用
+                  </h3>
+                </div>
+                <p class="mt-4 text-xs leading-relaxed text-stone-600">
+                  关注协议与产品逻辑，把「谁能做什么、风险在哪」说清楚。
+                </p>
+                <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
+                  <li>· 校内区块链社团与分享</li>
+                  <li>· 稳定币与数字资产相关写作</li>
+                  <li>· GitHub 上的实践与小项目</li>
+                </ul>
+              </article>
+
+              <article
+                class="focus-card flex w-72 flex-none flex-col justify-between rounded-xl border border-stone-200 bg-paper p-5 shadow-sm transition-shadow duration-200 hover:shadow-card"
+                tabindex="0"
+                role="listitem"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-200 bg-white text-xs font-semibold text-stone-800"
+                    aria-hidden="true"
+                  >
+                    03
+                  </span>
+                  <h3 class="font-heading text-sm font-semibold text-stone-900">
+                    数据与 LLM 工具链
+                  </h3>
+                </div>
+                <p class="mt-4 text-xs leading-relaxed text-stone-600">
+                  抓取清洗、建模与可视化；用 Cursor / Claude 等工具压缩重复劳动。
+                </p>
+                <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
+                  <li>· Python / Jupyter 工作流</li>
+                  <li>· 提示词与结构化输出</li>
+                  <li>· 爬虫与增量数据（见项目）</li>
+                </ul>
+              </article>
+
+              <article
+                class="focus-card flex w-72 flex-none flex-col justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card"
+                tabindex="0"
+                role="listitem"
+              >
+                <div class="flex items-center gap-2">
+                  <span
+                    class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-200 bg-white text-xs font-semibold text-stone-800"
+                    aria-hidden="true"
+                  >
+                    04
+                  </span>
+                  <h3 class="font-heading text-sm font-semibold text-stone-900">
+                    政经与产业观察
+                  </h3>
+                </div>
+                <p class="mt-4 text-xs leading-relaxed text-stone-600">
+                  长文梳理制度与市场互动；关税、出海、宏观政策等课题与实习行研有交集。
+                </p>
+                <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
+                  <li>· 越南政治与市场转型（Markdown）</li>
+                  <li>· 关税与制造业出海（Word 报告）</li>
+                  <li>· 宏观与政策有效性札记</li>
+                </ul>
+              </article>
+                </div>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between text-xs text-stone-500">
+                <span>提示：继续向下滚动切换卡片</span>
+                <span class="hidden sm:inline">也可用触控板横向滚动（降级模式）</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 图片轮播 -->
+        <section id="photo-carousel" class="mt-20 space-y-5">
+          <div>
+            <h2 class="font-heading text-2xl font-semibold text-stone-900">
+              影像记录
+            </h2>
+            <p class="mt-1 text-sm text-stone-600">
+              生活与旅途中的一些瞬间。
+            </p>
+          </div>
+          <div class="overflow-hidden w-full relative h-[18rem] md:h-[22rem]">
+            <!-- 左右渐变遮罩 -->
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper/90 to-transparent z-10"></div>
+            <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-paper/90 to-transparent z-10"></div>
+            
+            <div class="animate-marquee flex gap-4 absolute left-0 top-0 h-full w-max">
+              <!-- first set -->
+              <img src="photo/078b88b66a8b2f1bab00e072ffdf7fe0.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/19fe9711f293690d0f284f205ef2e987.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/25c4d98036115c98f231c62d90005970.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/8562470192cf76943e9acf21df4fd607.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/8d1acd0f8314c9a56308436e2af3702d.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_2874.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_3421.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_3893.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4098.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4212.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4984.JPG" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_5292.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/d8548023ca6e0f529fa56d584ad7b6dd.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              
+              <!-- second set -->
+              <img src="photo/078b88b66a8b2f1bab00e072ffdf7fe0.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/19fe9711f293690d0f284f205ef2e987.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/25c4d98036115c98f231c62d90005970.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/8562470192cf76943e9acf21df4fd607.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/8d1acd0f8314c9a56308436e2af3702d.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_2874.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_3421.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_3893.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4098.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4212.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_4984.JPG" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/IMG_5292.jpeg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+              <img src="photo/d8548023ca6e0f529fa56d584ad7b6dd.jpg" class="h-64 md:h-80 w-auto rounded-xl object-cover shadow-sm" alt="Photo" />
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="mt-20 space-y-5">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 class="font-heading text-2xl font-semibold text-stone-900">
+                GitHub 项目
+              </h2>
+              <p class="mt-1 text-sm text-stone-600">
+                选自
+                <a
+                  href="https://github.com/fuxiaoji"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cursor-pointer font-medium text-accent underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                >
+                  github.com/fuxiaoji
+                </a>
+                的公开仓库；点击卡片跳转源码。
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="https://github.com/fuxiaoji/crawler_for_biddingprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  crawler_for_biddingprofile
+                </h3>
+                <span class="text-[11px] font-medium text-depth">Python</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                重庆市公共资源交易平台中标结果爬虫：多年数据抓取与增量更新实战。
+              </p>
+              <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
+            </a>
+
+            <a
+              href="https://github.com/fuxiaoji/quant_test"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  quant_test
+                </h3>
+                <span class="text-[11px] font-medium text-depth">Python</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                量化学习与策略实验笔记代码，配合课程与自建练习。
+              </p>
+              <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
+            </a>
+
+            <a
+              href="https://github.com/fuxiaoji/mcm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-paper p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  mcm
+                </h3>
+                <span class="text-[11px] font-medium text-stone-500">Jupyter</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                数学建模相关 Notebook，与竞赛与课程项目对应。
+              </p>
+              <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
+            </a>
+
+            <a
+              href="https://github.com/fuxiaoji/vnpy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  vnpy（Fork）
+                </h3>
+                <span class="text-[11px] font-medium text-depth">Python</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                基于开源量化框架 vn.py 的 fork，用于学习与二次开发参考。
+              </p>
+              <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
+            </a>
+
+            <a
+              href="https://github.com/fuxiaoji/fuxiaoji"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper sm:col-span-2 lg:col-span-1"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  fuxiaoji / README
+                </h3>
+                <span class="text-[11px] font-medium text-stone-500">Profile</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                GitHub 主页说明与技能、获奖总览，与本站信息互为补充。
+              </p>
+              <span class="mt-4 text-xs font-medium text-accent">查看主页仓库 →</span>
+            </a>
+          </div>
+        </section>
+
+        <section id="articles" class="mt-20 space-y-5">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 class="font-heading text-2xl font-semibold text-stone-900">
+                文章列表入口
+              </h2>
+              <p class="mt-1 text-sm text-stone-600">
+                已将 `文章/` 中的文稿统一补充为 Markdown 版本，并单独提供文章页与阅读页。
+              </p>
+            </div>
+            <a
+              href="articles.html"
+              class="cursor-pointer text-xs font-medium text-accent underline-offset-4 transition-colors duration-200 hover:text-indigo-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              打开文章页面
+            </a>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="article-viewer.html?file=文章/越南政坛巨变——列宁主义国家市场化转型之路.md"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                政经 · 站内阅读
+              </p>
+              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                越南政坛巨变——列宁主义国家市场化转型之路
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                权力结构、「四驾马车」与民主化改革叙事；列宁式政党转型阶段梳理。
+              </p>
+              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+            </a>
+
+            <a
+              href="article-viewer.html?file=文章/京东稳定币业务.md"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-depth">
+                Web3 · 金融
+              </p>
+              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                京东稳定币业务
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                稳定币与平台金融结合的专题稿，已转为 Markdown 站内阅读。
+              </p>
+              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+            </a>
+
+            <a
+              href="article-viewer.html?file=文章/美国关税新政下日用品制造业出海策略研究_修订版.md"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-paper p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                产业 · 出海
+              </p>
+              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                美国关税新政下日用品制造业出海策略研究
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                关税冲击下的制造业策略修订稿，已转为 Markdown 站内阅读。
+              </p>
+              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+            </a>
+
+            <a
+              href="article-viewer.html?file=文章/全面发钱的有效性分析.md"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
+                宏观 · 政策
+              </p>
+              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                全面发钱的有效性分析
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                对全民货币刺激类政策的有效性讨论，已转为 Markdown 站内阅读。
+              </p>
+              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+            </a>
+
+            <a
+              href="article-viewer.html?file=文章/人工智能在银行活跃度用户识别应用.md"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
+                金融科技 · AI
+              </p>
+              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                人工智能在银行活跃用户识别中的应用
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                银行业务场景下的用户活跃度与模型应用，已转为 Markdown 站内阅读。
+              </p>
+              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+            </a>
+          </div>
+        </section>
+
+        <section id="notes-list" class="mt-20 space-y-8">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 class="font-heading text-2xl font-semibold text-stone-900">
+                笔记文件夹
+              </h2>
+              <p class="mt-1 text-sm text-stone-600">
+                收录 `note/` 目录下的日常笔记、课程总结与思维碎片，以文件树格式浏览。
+              </p>
+            </div>
+            <a
+              href="notes.html"
+              class="cursor-pointer text-xs font-medium text-accent underline-offset-4 transition-colors duration-200 hover:text-indigo-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              打开笔记页面
+            </a>
+          </div>
+
+          <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p class="text-sm leading-relaxed text-stone-600">
+              这里是近期整理的个人笔记，涵盖了财务管理、中级微观经济学、中级宏观经济学、计量经济学、概率论等多门学科。点击“打开笔记页面”进入文件浏览器，可直接阅览 `.md` 文稿或预览 `.pdf` 课件。
+            </p>
+          </div>
+        </section>
+
+        <section id="background" class="mt-20 space-y-5">
+          <div>
+            <h2 class="font-heading text-2xl font-semibold text-stone-900">
+              简历摘要
+            </h2>
+            <p class="mt-1 max-w-2xl text-sm text-stone-600">
+              与 PDF 简历一致的核心条目；更新以简历文件为准。
+            </p>
+          </div>
+
+          <div class="grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+            <div class="space-y-4 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+              <h3 class="font-heading text-sm font-semibold text-stone-900">
+                比赛与职务
+              </h3>
+              <ul class="space-y-3 text-sm text-stone-600">
+                <li>
+                  <span class="font-semibold text-stone-800">2024.11</span>
+                  第三届全国 ETF 模拟投资挑战赛 · 前 2% · 二等奖；优秀仿真交易团队。
+                </li>
+                <li>
+                  <span class="font-semibold text-stone-800">2024.11</span>
+                  西南财经大学金融科技建模大赛 · 二等奖（团队前 10%）。
+                </li>
+                <li>
+                  <span class="font-semibold text-stone-800">2025.01–03</span>
+                  Top Analyst 股票研究报告挑战赛 · 三等奖。
+                </li>
+                <li>
+                  院排球队、足球队；红十字会急救员；金融投资协会研发部副部长；联合创建「区块链」本科社团。
+                </li>
+              </ul>
+            </div>
+
+            <div class="space-y-4 rounded-2xl border border-stone-200 bg-stone-50/80 p-6 shadow-sm">
+              <h3 class="font-heading text-sm font-semibold text-stone-900">
+                实习与证书
+              </h3>
+              <ul class="space-y-3 text-sm text-stone-600">
+                <li>
+                  <span class="font-semibold text-stone-800">2025.7–8</span>
+                  中泰证券深圳分部：私募基金备案支持、尽职调查材料；海外关税相关行研，Wind / Choice。
+                </li>
+                <li>基金从业资格证；英语四级 500+。</li>
+                <li>
+                  技能摘要：证券交易实务、Web3 平台与合约、数据抓取与建模、LLM 提示词与 AI 工具链。
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          class="mt-20 rounded-2xl border border-stone-200 bg-gradient-to-br from-white via-paper to-accent-soft/30 p-6 shadow-card sm:p-8"
+        >
+          <div class="grid gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-start">
+            <div>
+              <h2 class="font-heading text-2xl font-semibold text-stone-900">
+                联系与合作
+              </h2>
+              <p class="mt-2 text-sm text-stone-600">
+                实习、项目或写作交流，欢迎发邮件；技术内容也可在 GitHub 上私信或提 Issue。
+              </p>
+              <ul class="mt-5 flex flex-col gap-3 text-sm">
+                <li>
+                  <a
+                    href="mailto:Fuwenji61616@gmail.com"
+                    class="cursor-pointer font-medium text-accent underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                  >
+                    Fuwenji61616@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/fuxiaoji"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cursor-pointer font-medium text-accent underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                  >
+                    github.com/fuxiaoji
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.fuwenji.asia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cursor-pointer font-medium text-accent underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                  >
+                    www.fuwenji.asia
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="rounded-xl border border-stone-200/80 bg-white/90 p-5">
+              <p class="text-xs font-semibold text-stone-800">订阅（可选）</p>
+              <p class="mt-2 text-xs text-stone-600">
+                若日后接入 Newsletter，可在此放表单；目前请优先使用邮箱联系。
+              </p>
+              <form class="mt-4 space-y-3" aria-label="订阅更新（占位）">
+                <label class="block text-xs font-semibold text-stone-800">
+                  邮箱
+                  <input
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    disabled
+                    class="mt-1.5 block w-full cursor-not-allowed rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm text-stone-500"
+                    placeholder="尚未接入服务"
+                  />
+                </label>
+                <button
+                  type="button"
+                  disabled
+                  class="w-full cursor-not-allowed rounded-full bg-stone-300 px-4 py-2.5 text-sm font-semibold text-stone-500"
+                >
+                  即将开放
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="border-t border-stone-200 bg-white/90 py-8">
+        <div
+          class="mx-auto flex max-w-6xl flex-col gap-3 px-4 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <p>
+            ©
+            <span class="font-heading text-stone-700">傅文基</span>
+            · 西南财经大学 · 纸感浅色布局
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a
+              href="https://github.com/fuxiaoji"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cursor-pointer text-stone-600 underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              GitHub
+            </a>
+            <a
+              href="#top"
+              class="cursor-pointer text-stone-600 underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              回到顶部
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const link = document.getElementById('nav-articles');
+        if (!link) return;
+
+        link.addEventListener('click', (e) => {
+          if (!document.startViewTransition) return;
+          e.preventDefault();
+          const href = link.getAttribute('href');
+          document.startViewTransition(() => {
+            window.location.href = href;
+          });
+        });
+      })();
+    </script>
+
+      <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: 'base',
+          themeVariables: {
+            fontFamily: '"Source Sans 3", "Noto Sans SC", system-ui, sans-serif',
+            lineColor: '#e7e5e4', /* 浅灰色背景连线 */
+            primaryTextColor: '#1c1917',
+            tertiaryColor: '#fafaf8', /* 背景融合 */
+            clusterBkg: 'none',
+            clusterBorder: '#d6d3d1'
+          },
+          flowchart: { curve: 'linear', useMaxWidth: true, nodeSpacing: 35, rankSpacing: 50 },
+        });
+      </script>
+
+      <script>
+        (function () {
+          const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+          if (reduceMotion) return;
+
+          const section = document.querySelector('[data-focus-scroll]');
+          const viewport = document.querySelector('[data-focus-viewport]');
+          const track = document.querySelector('[data-focus-track]');
+          if (!section || !viewport || !track) return;
+
+          const cards = Array.from(track.querySelectorAll('.focus-card'));
+          if (cards.length === 0) return;
+
+          function clamp01(x) {
+            return Math.max(0, Math.min(1, x));
+          }
+
+          function lerp(a, b, t) {
+            return a + (b - a) * t;
+          }
+
+          let progress = 0;
+          let maxX = 0;
+
+          function layout() {
+            const vw = viewport.clientWidth;
+            const trackWidth = track.scrollWidth;
+            maxX = Math.max(0, trackWidth - vw);
+
+            // Keep this section tall enough to hold sticky viewport.
+            // Reduced to remove excessive whitespace below
+            section.style.height = `${window.innerHeight + maxX * 1.5}px`;
+          }        function paint() {
+          const vw = viewport.clientWidth;
+          const x = progress * maxX;
+
+          track.style.transform = `translate3d(${-x}px, 0, 0)`;
+
+          // center scaling
+          const centerX = vw / 2;
+          for (const card of cards) {
+            const r = card.getBoundingClientRect();
+            const cardCenter = r.left + r.width / 2;
+            const dist = Math.abs(cardCenter - centerX);
+            const norm = Math.min(1, dist / (vw * 0.55));
+            const scale = lerp(1.08, 0.94, norm);
+            card.style.transform = `scale(${scale})`;
+          }
+        }
+
+        function getViewportMetrics() {
+          const rect = viewport.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const rectCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(rectCenter - viewportCenter);
+          return { rect, viewportCenter, rectCenter, distance };
+        }
+
+        function isFocusActive() {
+          const { rect, distance } = getViewportMetrics();
+          const threshold = Math.max(140, window.innerHeight * 0.22);
+
+          // Active when the visual container crosses the screen center
+          // or is close enough to it to be considered the current stage.
+          return (
+            (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) ||
+            distance <= threshold
+          );
+        }
+
+        function nudgeViewportToCenter() {
+          const { rectCenter, viewportCenter, distance } = getViewportMetrics();
+          const threshold = Math.max(140, window.innerHeight * 0.22);
+          if (distance > threshold) return;
+
+          const delta = rectCenter - viewportCenter;
+          // Pull the focus band back toward center when entering lock mode,
+          // so fast wheel gestures do not skip the interaction.
+          if (Math.abs(delta) > 2) {
+            window.scrollTo({
+              top: window.scrollY + delta,
+              behavior: 'auto',
+            });
+          }
+        }
+
+        let raf = 0;
+        function schedulePaint() {
+          if (raf) return;
+          raf = requestAnimationFrame(() => {
+            raf = 0;
+            paint();
+          });
+        }
+
+        function onWheel(e) {
+          if (maxX <= 0) return;
+
+          const dy = e.deltaY;
+          const wantsForward = dy > 0;
+          const wantsBackward = dy < 0;
+          const canForward = progress < 1;
+          const canBackward = progress > 0;
+          const active = isFocusActive();
+
+          if (active && ((wantsForward && canForward) || (wantsBackward && canBackward))) {
+            e.preventDefault();
+            nudgeViewportToCenter();
+            // Lower sensitivity = longer horizontal showcase.
+            const step = dy / 700;
+            progress = clamp01(progress + step);
+            schedulePaint();
+          }
+        }
+
+        window.addEventListener('resize', () => {
+          layout();
+          schedulePaint();
+        });
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('scroll', schedulePaint, { passive: true });
+
+        // initial
+        layout();
+        paint();
+      })();
+    </script>
+    <script>
+      // 注册 ScrollTrigger 插件
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // 设置初始隐藏状态，由外部窗口滚动触发动画
+        gsap.set("#hero-content", { autoAlpha: 0 });
+        gsap.set("#hero-title", { y: 30, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] p", { y: 30, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] aside", { x: 30, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] div.flex", { y: 30, autoAlpha: 0 });
+        gsap.set("#map-legend", { y: 20, autoAlpha: 0 });
+        
+        // 等待 Mermaid 渲染完成（使用 MutationObserver 监听 svg 加入）
+        const mermaidDiv = document.querySelector('.mermaid');
+        const observer = new MutationObserver((mutations, obs) => {
+          if (mermaidDiv.querySelector('svg')) {
+            obs.disconnect(); // 停止监听
+            runIntroAnimation();
+          }
+        });
+        
+        if (mermaidDiv) {
+          if (mermaidDiv.querySelector('svg')) {
+            runIntroAnimation();
+          } else {
+            observer.observe(mermaidDiv, { childList: true, subtree: true });
+          }
+        }
+
+        function runIntroAnimation() {
+          const svg = document.querySelector('.mermaid svg');
+          const wrapper = document.querySelector('#tree-container');
+          
+          if (!svg) return;
+          
+          // Force the SVG to span the container and avoid small clipped boxes
+          svg.style.maxWidth = '100%';
+          svg.style.height = 'auto';
+
+          // Wait a tick for styles to apply
+          setTimeout(() => {
+            const nodes = gsap.utils.toArray(svg.querySelectorAll('.node'));
+            const edges = gsap.utils.toArray(svg.querySelectorAll('.edgePaths path, .edgePath path'));
+            const subgraphs = gsap.utils.toArray(svg.querySelectorAll('.cluster rect, .cluster text'));
+
+            // 根节点
+            const rootNodes = nodes.filter(n => n.classList.contains('math') || n.classList.contains('tool'));
+            
+            // "已学" 与 "计划学"的归类
+            const learnedNodes = nodes.filter(n => n.classList.contains('math') || n.classList.contains('econ'));
+            const plannedNodes = nodes.filter(n => !learnedNodes.includes(n));
+            const otherNodes = nodes.filter(n => !rootNodes.includes(n));
+
+            // 设定初态：缩放外层容器特写起始节点；隐藏其余节点与线条
+            gsap.set(wrapper, { transformOrigin: "center 5%", scale: 8, autoAlpha: 0 });
+            gsap.set(rootNodes.concat(otherNodes), { autoAlpha: 0 });
+            gsap.set(subgraphs, { autoAlpha: 0 });
+            
+            // 让连线设为隐藏和准备划动状态，同时克隆线条生成“光点”
+            const dots = [];
+            edges.forEach(edge => {
+               const len = edge.getTotalLength() || 400;
+               // 基础路线：用虚线动画呈现画线的流动光效，更逼近烟花拖尾
+               gsap.set(edge, { 
+                  strokeDasharray: len, 
+                  strokeDashoffset: len, 
+                  autoAlpha: 1,
+                  stroke: "#fbbf24", // 亮黄光效
+                  strokeWidth: 3 
+               });
+               
+               // 生成强可见亮黄光束
+               const glow = edge.cloneNode(true);
+               glow.style.fill = 'none';
+               // 移除箭头marker避免克隆时显示出额外的箭头
+               glow.removeAttribute('marker-end');
+               
+               gsap.set(glow, {
+                  strokeDasharray: `20, ${len + 30}`, 
+                  strokeDashoffset: 20, 
+                  autoAlpha: 1,
+                  stroke: "#fbbf24", 
+                  strokeWidth: 6,
+                  filter: "drop-shadow(0 0 6px rgba(251,191,36,0.8))"
+               });
+               edge.parentNode.appendChild(glow);
+               edge._glow = glow;
+               
+               // 作为底色的灰线补全
+               const base = edge.cloneNode(true);
+               base.style.fill = 'none';
+               gsap.set(base, { strokeDasharray: "none", strokeDashoffset: 0, stroke: "#e7e5e4", strokeWidth: 2, autoAlpha: 1 });
+               edge.parentNode.insertBefore(base, edge);
+            });
+
+            let minY = Infinity, maxY = -Infinity;
+            const allElements = [...otherNodes, ...edges, ...rootNodes];
+            allElements.forEach(el => {
+               const y = el.getBBox().y;
+               if(y < minY) minY = y;
+               if(y > maxY) maxY = y;
+            });
+            const heightSpan = maxY - minY || 1;
+            
+            // 整个烟花点燃的下沉周期时间(例如1.5秒内的物理过程)
+            const sweepDuration = 1.5;
+
+            const sweepElements = [...otherNodes, ...edges]; // rootNodes已处理
+            
+            const tl = gsap.timeline({ defaults: { ease: "power1.inOut" } }).timeScale(2.5);
+
+            // 1. 显现起始课程 (放大特写)
+            tl.to(wrapper, { autoAlpha: 1, duration: 0.8 })
+              // 2. 然后视图恢复整体比例 (呈现整棵树)
+              .to(wrapper, { scale: 1, duration: 4.5, ease: "power2.inOut" }, "<")
+              
+              // 3. 起点（位于最顶层）闪烁发光
+              .fromTo(rootNodes, 
+                { filter: "brightness(2.5) drop-shadow(0 0 20px rgba(251,191,36,0.8))" }, 
+                { filter: "brightness(1) drop-shadow(0 0 0px rgba(251,191,36,0))", duration: 1.2, stagger: 0.1 }, 
+              "-=4.0");
+
+            const animStart = "-=3.6";
+
+            sweepElements.forEach((el, index) => {
+              const elY = el.getBBox().y;
+              const yProgress = heightSpan ? (elY - Math.min(...rootNodes.map(n=>n.getBBox().y))) / heightSpan : 0;
+              const safeProgress = Math.max(0, Math.min(1, yProgress));
+              const absoluteOffset = sweepDuration * safeProgress;
+              
+              if(el.tagName === 'path') {
+                const len = el.getTotalLength() || 400;
+                
+                // 线条稍微比光点画得慢一丁点，做托底
+                tl.to(el, { strokeDashoffset: 0, duration: 0.6, ease: "none" }, animStart + "+" + absoluteOffset)
+                // 光点(dashoffset从20到-len)完美从头划到尾，就像烟花引信
+                  .to(el._glow, { strokeDashoffset: -len, duration: 0.5, ease: "none" }, animStart + "+" + absoluteOffset)
+                  .to(el._glow, { autoAlpha: 0, duration: 0.1 }, animStart + "+" + (absoluteOffset + 0.5));
+              } else {
+                if (plannedNodes.includes(el)) {
+                  // 未学的课程：不被强光点亮点燃，处于灰暗、未激活的状态（暗化+半透明）
+                  tl.to(el, { autoAlpha: 0.4, duration: 0.6, ease: "power1.inOut" }, animStart + "+" + absoluteOffset)
+                    .fromTo(el, 
+                      { filter: "grayscale(80%) brightness(0.9)", scale: 1 }, 
+                      { filter: "grayscale(80%) brightness(0.9)", scale: 1, duration: 1.0 }, 
+                    animStart + "+" + absoluteOffset);
+                } else {
+                  // 已学的课程：点燃，释放强光
+                  let color = "rgba(194,65,12,0.5)"; // 橙底光
+                  
+                  tl.to(el, { autoAlpha: 1, duration: 0.1, ease: "none" }, animStart + "+" + absoluteOffset)
+                    .fromTo(el, 
+                      { filter: `brightness(1.5) drop-shadow(0 0 15px ${color})`, scale: 1.06, transformOrigin: 'center' }, 
+                      { filter: "brightness(1) drop-shadow(0 0 2px rgba(0,0,0,0.05))", scale: 1, duration: 1.0, ease: "power2.out" }, 
+                    animStart + "+" + absoluteOffset);
+                }
+              }
+            });
+
+            // 5. 全部点亮后，展示聚类底框
+            tl.to(subgraphs, { autoAlpha: 1, duration: 1.0 }, "-=1.0")
+
+              // 6. 图例组件进场
+              .to("#map-legend", { y: -10, autoAlpha: 1, duration: 0.6 }, "-=0.2")
+
+              // 7. 主体内容滑上（通过实际滚屏来拉升标题部分）
+              .add("heroIn", "-=1.0")
+              .to({y: 0}, {
+                y: window.innerHeight * 0.55,
+                duration: 1.8,
+                ease: "power3.inOut",
+                onStart: function() { this.targets()[0].y = window.scrollY; },
+                onUpdate: function() { window.scrollTo(0, this.targets()[0].y); }
+              }, "heroIn")
+              .to("#hero-content", { autoAlpha: 1, duration: 1.2 }, "heroIn+=0.2")
+              .to(".uppercase.tracking-\\[0\\.16em\\]", { y: 0, autoAlpha: 1, duration: 0.6 }, "heroIn+=0.4")
+              .to("#hero-title", { y: 0, autoAlpha: 1, duration: 0.6 }, "heroIn+=0.3")
+              .to("#global-header", { y: "0%", autoAlpha: 1, duration: 0.8, ease: "power3.out" }, "heroIn+=0.3")
+              .to("section[aria-labelledby='hero-title'] p", { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1 }, "heroIn+=0.4")
+              .to("section[aria-labelledby='hero-title'] div.flex", { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.1 }, "heroIn+=0.5")
+              .to("section[aria-labelledby='hero-title'] aside", { x: 0, autoAlpha: 1, duration: 0.8 }, "heroIn+=0.4");
+              
+            // 向下滚动时学习树固定不动并且逐渐淡去
+            ScrollTrigger.create({
+              trigger: document.body,
+              start: "50vh top", 
+              end: "+=600px", 
+              scrub: true,
+              animation: gsap.to("#learning-map", {
+                opacity: 0,
+                y: -100,
+                scale: 0.9,
+                ease: "none"
+              })
+            });
+          }, 50);
+        }
+      });
+    </script>
+  </body>
+</html>
