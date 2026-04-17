@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+</head>
+<body>
+    <zero-md id="md-viewer" no-shadow></zero-md>
+    <script>
+      setTimeout(() => {
+        const text = '# Hello from Blob\n![[cool_image.png]]'.replace('![[', '![](').replace(']]', ')');
+        const blob = new Blob([text], {type: 'text/markdown'});
+        const url = URL.createObjectURL(blob);
+        document.getElementById('md-viewer').src = url;
+      }, 500);
+    </script>
+</body>
+</html>

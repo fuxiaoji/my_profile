@@ -1,0 +1,11 @@
+const viewer = document.getElementById('md-viewer');
+// 写入 zero-md
+viewer.innerHTML = '';
+const scriptEl = document.createElement('script');
+scriptEl.type = 'text/markdown';
+scriptEl.text = normalized;
+viewer.appendChild(scriptEl);
+// If it does not re-render automatically, call render()
+if (viewer.render) {
+    viewer.render();
+}

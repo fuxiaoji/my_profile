@@ -16,6 +16,7 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -25,9 +26,9 @@
               body: ['"Source Sans 3"', '"Noto Sans SC"', 'system-ui', 'sans-serif'],
             },
             colors: {
-              paper: '#fafaf8',
-              accent: { DEFAULT: '#c2410c', soft: '#ffedd5', muted: '#ea580c' },
-              depth: { DEFAULT: '#0f766e' },
+              paper: '#f7f3ee',
+              accent: { DEFAULT: '#b45309', soft: '#fef3c7', muted: '#92400e' },
+              depth: { DEFAULT: '#155e75' },
             },
             boxShadow: {
               card: '0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 40px rgba(28, 25, 23, 0.06)',
@@ -38,16 +39,25 @@
     </script>
     <style>
       :root {
-        --bg-color: #fafaf8;
+        --bg-color: #f7f3ee;
         --text-color: #1c1917;
-        --accent-color: #3730a3;
+        --accent-color: #92400e;
       }
       body {
         margin: 0;
         padding: 0;
         min-height: 100vh;
         background-color: var(--bg-color);
+        background-image: radial-gradient(ellipse 100% 70% at 102% -10%, rgba(253, 230, 138, 0.35), transparent 55%), radial-gradient(ellipse 80% 55% at -8% 100%, rgba(165, 243, 252, 0.2), transparent 50%);
         color: var(--text-color);
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        z-index: 20;
       }
       ::selection {
         background-color: var(--accent-color);
@@ -59,11 +69,12 @@
       .tree-dir.expanded > .tree-header .tree-icon { transform: rotate(90deg); }
     </style>
   </head>
-  <body class="font-body text-stone-800 antialiased selection:bg-accent selection:text-white flex flex-col min-h-screen">
+  <body class="font-body text-stone-800 antialiased selection:bg-accent selection:text-white flex min-h-screen flex-col">
     <header class="sticky top-0 z-40 w-full border-b border-stone-200/60 bg-paper/80 backdrop-blur-md">
       <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <a href="index.html" class="font-heading text-lg font-bold text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
-          FVIN
+        <a href="index.html" class="inline-flex items-center gap-2 font-heading text-lg font-bold text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+          <iconify-icon icon="solar:folder-favourite-bookmark-bold-duotone" class="text-xl text-amber-700"></iconify-icon>
+          笔记仓
         </a>
         <nav class="hidden items-center gap-6 text-sm outline-none font-medium text-stone-600 sm:flex">
           <a href="index.html#focus" class="cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">关注领域</a>
@@ -75,17 +86,24 @@
       </div>
     </header>
 
-    <main class="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12 sm:py-20 lg:py-24">
-      <div class="flex flex-col gap-4">
+    <main class="relative z-30 mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-12 sm:py-20 lg:py-24">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+        <div class="flex flex-col gap-4">
         <h1 class="font-heading text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl lg:text-5xl">
           笔记目录
         </h1>
         <p class="max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
-          存放平时整理的学习笔记及课件。支持点击展开文件夹。
+          课件、手记都在这。
+          点文件夹就展开。
         </p>
+        </div>
+        <a href="https://picsum.photos/seed/notes-hero/720/460" target="_blank" class="group overflow-hidden rounded-3xl border border-amber-200/80 bg-white/80 shadow-sm">
+          <img src="https://picsum.photos/seed/notes-hero/720/460" alt="笔记页占位图" class="h-44 w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+        </a>
       </div>
       
       <div class="mt-8 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+        <p class="mb-3 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-stone-500"><iconify-icon icon="solar:notes-bold-duotone" class="text-base text-teal-700"></iconify-icon>Notebook Tree</p>
         <div id="tree-container" class="text-sm">
           <p class="text-stone-500">正在加载笔记目录...</p>
         </div>
@@ -107,7 +125,7 @@
           html += `
             <div class="tree-header flex items-center cursor-pointer py-1.5 px-2 rounded hover:bg-stone-100 text-stone-800 font-medium" onclick="this.parentElement.classList.toggle('expanded')">
               <span class="tree-icon mr-2 text-stone-400">▶</span>
-              <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5.172a2 2 0 011.414.586l1.828 1.828A2 2 0 0013.828 7H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+              <iconify-icon icon="solar:folder-with-files-bold-duotone" class="mr-2 text-lg text-amber-600"></iconify-icon>
               ${node.name}
             </div>
             <div class="tree-children border-l ml-3 pl-4 border-stone-200">
@@ -124,7 +142,7 @@
           return html;
         } else {
           // File
-          let icon = '<svg class="w-4 h-4 mr-2 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
+          let icon = '<iconify-icon icon="solar:file-text-bold-duotone" class="mr-2 text-lg text-stone-500"></iconify-icon>';
           
           let actionUrl = '#';
           if (node.name.toLowerCase().endsWith('.md')) {
@@ -135,7 +153,7 @@
 
           let extClasses = "text-stone-700 hover:text-accent hover:underline";
           if (node.name.toLowerCase().endsWith('.pdf')) {
-            icon = '<svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>';
+            icon = '<iconify-icon icon="solar:file-pdf-bold-duotone" class="mr-2 text-lg text-red-500"></iconify-icon>';
           }
 
           return `
@@ -157,7 +175,7 @@
           rootHtml += `
             <div class="tree-header flex items-center cursor-pointer py-1.5 px-2 rounded hover:bg-stone-100 text-stone-800 font-bold" onclick="this.parentElement.classList.toggle('expanded')">
               <span class="tree-icon mr-2 text-stone-400">▶</span>
-              <svg class="w-5 h-5 mr-2 text-stone-700" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5.172a2 2 0 011.414.586l1.828 1.828A2 2 0 0013.828 7H18a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+              <iconify-icon icon="solar:folder-cloud-bold-duotone" class="mr-2 text-xl text-teal-700"></iconify-icon>
               ${data.name}
             </div>
             <div class="tree-children border-l ml-3 pl-4 border-stone-200">
