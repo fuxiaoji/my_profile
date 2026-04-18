@@ -145,53 +145,17 @@
       </main>
     </div>
     <script>
-      const articles = [
-        {
-          title: '京东稳定币业务',
-          cover: 'https://picsum.photos/seed/jd-stablecoin/760/420',
-          md: '文章/京东稳定币业务.md',
-          docx: '文章/京东稳定币业务.docx',
-          date: '2026-04-14',
-          tags: ['Web3', '金融', '稳定币'],
-          summary: '从稳定币技术原理、香港监管沙盒到京东生态整合逻辑，分析其 Web3 支付布局。',
-        },
-        {
-          title: '人工智能在银行活跃度用户识别应用',
-          cover: 'https://picsum.photos/seed/ai-banking/760/420',
-          md: '文章/人工智能在银行活跃度用户识别应用.md',
-          docx: '文章/人工智能在银行活跃度用户识别应用.docx',
-          date: '2026-04-14',
-          tags: ['AI', '银行', '建模'],
-          summary: '以金融建模竞赛为背景，讨论客户活跃度识别、特征工程与超参数优化。',
-        },
-        {
-          title: '全面发钱的有效性分析',
-          cover: 'https://picsum.photos/seed/cash-policy/760/420',
-          md: '文章/全面发钱的有效性分析.md',
-          docx: '文章/全面发钱的有效性分析.docx',
-          date: '2026-04-14',
-          tags: ['宏观', '政策', '经济'],
-          summary: '用数学建模与案例拆解“发钱引发通胀等于没发”的常见质疑。',
-        },
-        {
-          title: '美国关税新政下日用品制造业出海策略研究',
-          cover: 'https://picsum.photos/seed/tariff-manufacturing/760/420',
-          md: '文章/美国关税新政下日用品制造业出海策略研究_修订版.md',
-          docx: '文章/美国关税新政下日用品制造业出海策略研究_修订版.docx',
-          date: '2026-04-14',
-          tags: ['产业', '出海', '关税'],
-          summary: '聚焦关税新政、原产地规则与菲律宾 / 越南等替代路径的合规风险。',
-        },
-        {
-          title: '越南政坛巨变——列宁主义国家市场化转型之路',
-          cover: 'https://picsum.photos/seed/vietnam-policy/760/420',
-          md: '文章/越南政坛巨变——列宁主义国家市场化转型之路.md',
-          docx: null,
-          date: '2025-07-21',
-          tags: ['政经', '越南', '制度'],
-          summary: '以越南“四柱”为切口，讨论权力分散、民主化路径与市场化转型的制度逻辑。',
-        },
-      ];
+      let articles = [];
+
+      fetch('articles.json')
+        .then(res => res.json())
+        .then(data => {
+          articles = data;
+          const tags = ['全部', ...new Set(articles.flatMap(a => a.tags))];
+          allTags.splice(0, allTags.length, ...tags);
+          renderFilters();
+          renderArticles();
+        });
 
       const tagFilters = document.getElementById('tag-filters');
       const grid = document.getElementById('articles-grid');

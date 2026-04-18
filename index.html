@@ -53,7 +53,7 @@
               card: '0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 40px rgba(28, 25, 23, 0.06)',
             },
             animation: {
-              marquee: 'marquee 50s linear infinite',
+              marquee: 'marquee 50s cubic-bezier(0.25, 1, 0.5, 1) infinite',
             },
             keyframes: {
               marquee: {
@@ -127,6 +127,10 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      .scroll-mask {
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      }
       @media (prefers-reduced-motion: reduce) {
         * {
           scroll-behavior: auto !important;
@@ -161,7 +165,7 @@
             <span class="font-heading text-base text-stone-900">傅文基</span>
           </a>
 
-          <nav class="flex flex-1 items-center justify-start gap-4 overflow-x-auto px-2 text-sm font-medium text-stone-600 sm:justify-center sm:gap-6 lg:overflow-hidden scrollbar-hide">
+          <nav class="flex flex-1 items-center justify-start gap-4 overflow-x-auto px-2 text-sm font-medium text-stone-600 sm:justify-center sm:gap-6 lg:overflow-hidden scrollbar-hide scroll-mask">
             <a
               href="#focus"
               class="shrink-0 cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"

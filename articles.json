@@ -1,0 +1,67 @@
+[
+  {
+    "title": "京东稳定币业务",
+    "cover": "https://picsum.photos/seed/jd-stablecoin/760/420",
+    "md": "文章/京东稳定币业务.md",
+    "docx": "文章/京东稳定币业务.docx",
+    "date": "2026-04-14",
+    "tags": [
+      "Web3",
+      "金融",
+      "稳定币"
+    ],
+    "summary": "拆监管，也拆业务。"
+  },
+  {
+    "title": "人工智能在银行活跃度用户识别应用",
+    "cover": "https://picsum.photos/seed/ai-banking/760/420",
+    "md": "文章/人工智能在银行活跃度用户识别应用.md",
+    "docx": "文章/人工智能在银行活跃度用户识别应用.docx",
+    "date": "2026-04-14",
+    "tags": [
+      "AI",
+      "银行",
+      "建模"
+    ],
+    "summary": "建模细节很硬。"
+  },
+  {
+    "title": "全面发钱的有效性分析",
+    "cover": "https://picsum.photos/seed/cash-policy/760/420",
+    "md": "文章/全面发钱的有效性分析.md",
+    "docx": "文章/全面发钱的有效性分析.docx",
+    "date": "2026-04-14",
+    "tags": [
+      "宏观",
+      "政策",
+      "经济"
+    ],
+    "summary": "别凭感觉谈政策。"
+  },
+  {
+    "title": "美国关税新政下日用品制造业出海策略研究",
+    "cover": "https://picsum.photos/seed/tariff-manufacturing/760/420",
+    "md": "文章/美国关税新政下日用品制造业出海策略研究_修订版.md",
+    "docx": "文章/美国关税新政下日用品制造业出海策略研究_修订版.docx",
+    "date": "2026-04-14",
+    "tags": [
+      "产业",
+      "出海",
+      "关税"
+    ],
+    "summary": "合规避坑指南。"
+  },
+  {
+    "title": "越南政坛巨变——列宁主义国家市场化转型之路",
+    "cover": "https://picsum.photos/seed/vietnam-policy/760/420",
+    "md": "文章/越南政坛巨变——列宁主义国家市场化转型之路.md",
+    "docx": null,
+    "date": "2025-07-21",
+    "tags": [
+      "政经",
+      "越南",
+      "制度"
+    ],
+    "summary": "制度变化很关键。"
+  }
+]
