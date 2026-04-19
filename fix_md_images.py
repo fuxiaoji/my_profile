@@ -1,5 +1,6 @@
 import os
 import re
+import urllib.parse
 
 dirs = [
     "6788471044_【推演战报】next war_Korea 荫新第一次高规之旅",
@@ -23,12 +24,17 @@ for d in dirs:
     with open(md_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # replace images/... with 文章/d/images/...
-    # handle cases where path starts with images/
+    def repl(match):
+        return urllib.parse.quote(match.group(0))
+
     def replace_img(match):
         img_path = match.group(1)
-        if img_path.startswith("images/"):
-            return f"![图片](文章/{d}/{img_path})"
+        # It's currently '文章/7917127587_【推演战报】第七舰队 想定9封锁立本/images/img_0001.jpg'
+        # Or something else
+        if "文章/" in img_path:
+            # We need to URL encode the path to handle spaces
+            encoded = urllib.parse.quote(img_path)
+            return f"![图片]({encoded})"
         return match.group(0)
     
     new_content = re.sub(r'!\[.*?\]\((.*?)\)', replace_img, content)

@@ -737,86 +737,8 @@ flowchart TB
             </a>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <a
-              href="article-viewer.html?file=文章/越南政坛巨变——列宁主义国家市场化转型之路.md"
-              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-            >
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-accent">
-                政经 · 站内阅读
-              </p>
-              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                越南政坛巨变——列宁主义国家市场化转型之路
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-stone-600">
-                权力结构、「四驾马车」与民主化改革叙事；列宁式政党转型阶段梳理。
-              </p>
-              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
-            </a>
-
-            <a
-              href="article-viewer.html?file=文章/京东稳定币业务.md"
-              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-            >
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-depth">
-                Web3 · 金融
-              </p>
-              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                京东稳定币业务
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-stone-600">
-                稳定币与平台金融结合的专题稿，已转为 Markdown 站内阅读。
-              </p>
-              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
-            </a>
-
-            <a
-              href="article-viewer.html?file=文章/美国关税新政下日用品制造业出海策略研究_修订版.md"
-              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-paper p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-            >
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-accent">
-                产业 · 出海
-              </p>
-              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                美国关税新政下日用品制造业出海策略研究
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-stone-600">
-                关税冲击下的制造业策略修订稿，已转为 Markdown 站内阅读。
-              </p>
-              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
-            </a>
-
-            <a
-              href="article-viewer.html?file=文章/全面发钱的有效性分析.md"
-              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-            >
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
-                宏观 · 政策
-              </p>
-              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                全面发钱的有效性分析
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-stone-600">
-                对全民货币刺激类政策的有效性讨论，已转为 Markdown 站内阅读。
-              </p>
-              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
-            </a>
-
-            <a
-              href="article-viewer.html?file=文章/人工智能在银行活跃度用户识别应用.md"
-              class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-            >
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
-                金融科技 · AI
-              </p>
-              <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                人工智能在银行活跃用户识别中的应用
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-stone-600">
-                银行业务场景下的用户活跃度与模型应用，已转为 Markdown 站内阅读。
-              </p>
-              <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
-            </a>
+          <div id="latest-articles-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+             <!-- Dynamically populated via JS -->
           </div>
         </section>
 
@@ -1358,6 +1280,42 @@ flowchart TB
             });
           }, 50);
         }
+      });
+      
+      // 动态加载文章列表到首页
+      document.addEventListener('DOMContentLoaded', () => {
+        const grid = document.getElementById('latest-articles-grid');
+        if (!grid) return;
+        
+        fetch('articles.json')
+          .then(res => res.json())
+          .then(articles => {
+            const latest = articles.slice(0, 6);
+            grid.innerHTML = '';
+            latest.forEach((article, index) => {
+              const bgClass = index === 2 ? 'bg-paper' : 'bg-white';
+              const textClass = index === 1 ? 'text-depth' : (index % 2 === 0 ? 'text-accent' : 'text-stone-600');
+              const tagsStr = (article.tags || []).slice(0, 2).join(' · ');
+              
+              const a = document.createElement('a');
+              a.href = `article-viewer.html?file=${encodeURIComponent(article.md)}`;
+              a.className = `group flex cursor-pointer flex-col rounded-2xl border border-stone-200 ${bgClass} p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper`;
+              a.innerHTML = `
+                <p class="text-[11px] font-semibold uppercase tracking-wider ${textClass}">
+                  ${tagsStr}
+                </p>
+                <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  ${article.title}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600 line-clamp-2">
+                  ${article.summary || ''}
+                </p>
+                <span class="mt-4 text-xs text-stone-500">Markdown · 阅读全文</span>
+              `;
+              grid.appendChild(a);
+            });
+          })
+          .catch(err => console.error("Error loading articles:", err));
       });
     </script>
   </body>

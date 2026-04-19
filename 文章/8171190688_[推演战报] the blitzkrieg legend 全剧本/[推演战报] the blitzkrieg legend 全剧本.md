@@ -16,7 +16,7 @@
 
 “鉴于阿登地区复杂的地形，我们应该明白阿登地区是无法被装甲部队通过。”—菲利普·贝当
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0001.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0001.jpg)
 
 
 
@@ -28,10 +28,10 @@
 
 在匈牙利的群山中，被打暴的德军指挥官微闭双眼，“好想在平原再飙一次车啊”眼前浮现出的是法国战役……
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0002.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0002.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0003.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0003.jpg)
 
 
 
@@ -97,10 +97,10 @@
 
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0004.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0004.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0005.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0005.jpg)
 
 
 
@@ -114,10 +114,10 @@
 伞兵和空降兵突袭巴黎法国投降战报结束。
 完结撒花（当然不是
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0006.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0006.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0007.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0007.jpg)
 
 
 
@@ -129,13 +129,13 @@
 
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0008.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0008.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0009.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0009.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0010.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0010.jpg)
 
 
 <details>
@@ -180,7 +180,7 @@
 机动阶段和战斗阶段结束，
 可以看得出来阿登森林当中，步兵部队确实难以跟上大部队的步伐。在这种地形复杂，只能通过道路移动的地方，一定要注意预备标记的运用，这不只是为了多出来的四分之一的移动力，更是为了在某些关键性的路口让移动阶段的部队打下进击直接通过。现在德军并没有使出全力还有装甲部队正处于预备状态。
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0011.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0011.jpg)
 
 
 
@@ -210,10 +210,10 @@
 
 第一回合结束，在几个重点地区德军拼了一下运气取得了成功。特别是在色当地区，但盟军也有运气好的地方，装骑四师抵挡住了德军装甲师两次进攻，还通过反突袭咬掉了几个营，也反映出阿登地区确实不适合装甲部队进攻。
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0012.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0012.jpg)
 
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0013.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0013.jpg)
 
 
 
@@ -254,7 +254,7 @@
 这种剧本如果人太密集了，装甲部队太多动起来，实在是痛苦，我老感觉有部队移动了两次，但太多了也看不出来。
 德军在南方的孤注一掷取得了巨大成功，夜晚中马斯河桥上的法军误将前进中的十装甲师看成了在前线败退的第二骑兵师，等反应过来之后为时已晚。德军虽然损失不大，但是付出的补给有些难以接受，之前是靠着储备强行进攻这回合恢复所需要的补给在前线，实在是有些难以接受。
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0014.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0014.jpg)
 
 
 
@@ -266,7 +266,7 @@
 
 中路七装和六装也进展良好，这次总算是重创了第四骑兵师。
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0015.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0015.jpg)
 
 
 
@@ -279,7 +279,7 @@
 北路我现在才发现情况十分危急前线的第三装甲师过于突进，法国的机动力量都在比利时在这里完全可能复刻之前在匈牙利遇到的包围吃o的情况。
 现在北线的步兵师还在清理要塞
 
-![图片](文章/8171190688_[推演战报] the blitzkrieg legend 全剧本/images/img_0016.jpg)
+![图片](%E6%96%87%E7%AB%A0/8171190688_%5B%E6%8E%A8%E6%BC%94%E6%88%98%E6%8A%A5%5D%20the%20blitzkrieg%20legend%20%E5%85%A8%E5%89%A7%E6%9C%AC/images/img_0016.jpg)
 
 
 
