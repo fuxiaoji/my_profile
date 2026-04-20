@@ -179,6 +179,16 @@
               项目
             </a>
             <a
+              href="tieba-spider.html"
+              class="shrink-0 cursor-pointer text-accent font-medium relative hover:text-amber-800 transition-colors"
+            >
+              贴吧爬虫
+              <span class="absolute -top-1.5 -right-2 flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+              </span>
+            </a>
+            <a
               href="#background"
               class="shrink-0 cursor-pointer transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
             >
@@ -608,7 +618,7 @@ flowchart TB
           <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 class="font-heading text-2xl font-semibold text-stone-900">
-                GitHub 项目
+                开源项目 & 在线实验
               </h2>
               <p class="mt-1 text-sm text-stone-600">
                 选自
@@ -620,12 +630,30 @@ flowchart TB
                 >
                   github.com/fuxiaoji
                 </a>
-                的公开仓库；点击卡片跳转源码。
+                的公开仓库及部分独立在线 API 实验项目。
               </p>
             </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="tieba-spider.html"
+              class="group flex cursor-pointer flex-col rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper relative overflow-hidden"
+            >
+              <div class="absolute -right-4 -top-4 rounded-full bg-amber-100 p-6 opacity-50 transition-transform group-hover:scale-110">
+                <iconify-icon icon="solar:spider-bold-duotone" class="text-4xl text-amber-500"></iconify-icon>
+              </div>
+              <div class="relative z-10 flex items-center justify-between gap-2">
+                <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  贴吧爬虫核心引擎
+                </h3>
+                <span class="text-[11px] font-bold text-amber-700 bg-amber-200/50 px-2 py-0.5 rounded-full">LIVE API</span>
+              </div>
+              <p class="relative z-10 mt-3 text-sm leading-relaxed text-stone-600">
+                在网页端直接调用的无头爬虫接口。分析贴主内容并榨取帖子数据。
+              </p>
+              <span class="relative z-10 mt-4 text-xs font-medium text-accent">立即体验 →</span>
+            </a>
             <a
               href="https://github.com/fuxiaoji/crawler_for_biddingprofile"
               target="_blank"
