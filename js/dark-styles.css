@@ -1,0 +1,191 @@
+/* ===== Dark Mode Overrides ===== */
+/* 因为使用 Tailwind CDN + class 策略，这里补充 body 级别的暗色覆盖 */
+
+html.dark body {
+  background-color: #1a1a1a !important;
+  background-image: radial-gradient(
+      ellipse 100% 70% at 102% -10%,
+      rgba(180, 83, 9, 0.12),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 80% 55% at -8% 100%,
+      rgba(21, 94, 117, 0.1),
+      transparent 50%
+    ) !important;
+  color: #e7e5e4 !important;
+}
+
+html.dark body::before {
+  opacity: 0.02;
+}
+
+/* 卡片、边框 */
+html.dark .bg-white,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95,
+html.dark .bg-white\/80,
+html.dark .bg-white\/85 {
+  background-color: #262626 !important;
+}
+
+html.dark .bg-paper,
+html.dark .bg-paper\/85,
+html.dark .bg-paper\/80 {
+  background-color: #1f1f1f !important;
+}
+
+html.dark .bg-stone-50,
+html.dark .bg-stone-50\/80 {
+  background-color: #262626 !important;
+}
+
+html.dark .bg-stone-100 {
+  background-color: #333 !important;
+}
+
+html.dark .border-stone-200,
+html.dark .border-stone-200\/80,
+html.dark .border-stone-100 {
+  border-color: #404040 !important;
+}
+
+/* 文字颜色 */
+html.dark .text-stone-900,
+html.dark .text-stone-800 {
+  color: #e7e5e4 !important;
+}
+
+html.dark .text-stone-700 {
+  color: #d6d3d1 !important;
+}
+
+html.dark .text-stone-600 {
+  color: #a8a29e !important;
+}
+
+html.dark .text-stone-500 {
+  color: #78716c !important;
+}
+
+html.dark .text-stone-400 {
+  color: #57534e !important;
+}
+
+/* Header 暗色 */
+html.dark #global-header,
+html.dark header {
+  background-color: rgba(26, 26, 26, 0.85) !important;
+  border-bottom-color: #404040 !important;
+}
+
+html.dark .backdrop-blur-md {
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Footer 暗色 */
+html.dark footer {
+  background-color: #1a1a1a !important;
+  border-top-color: #404040 !important;
+}
+
+/* 渐变覆盖 */
+html.dark .from-paper\/90 {
+  --tw-gradient-from: rgba(26, 26, 26, 0.9) !important;
+}
+
+/* 标签按钮 */
+html.dark .tag-chip-active {
+  background: #d97706 !important;
+  color: #fff !important;
+  border-color: #d97706 !important;
+}
+
+/* 代码块 */
+html.dark code {
+  background-color: #333 !important;
+  color: #e7e5e4 !important;
+}
+
+/* Markdown 内容暗色 */
+html.dark .markdown-body {
+  background-color: transparent !important;
+  color: #d6d3d1 !important;
+}
+
+html.dark .markdown-body h1,
+html.dark .markdown-body h2,
+html.dark .markdown-body h3,
+html.dark .markdown-body h4,
+html.dark .markdown-body h5,
+html.dark .markdown-body h6 {
+  color: #e7e5e4 !important;
+}
+
+html.dark .markdown-body a {
+  color: #f59e0b !important;
+}
+
+html.dark .markdown-body blockquote {
+  border-left-color: #525252 !important;
+  color: #a8a29e !important;
+}
+
+html.dark .markdown-body table th,
+html.dark .markdown-body table td {
+  border-color: #404040 !important;
+}
+
+html.dark .markdown-body table tr {
+  background-color: transparent !important;
+}
+
+html.dark .markdown-body table tr:nth-child(2n) {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+html.dark .markdown-body pre {
+  background-color: #1e1e1e !important;
+}
+
+/* 搜索弹窗暗色 */
+html.dark #search-box {
+  background-color: #262626 !important;
+  border-color: #404040 !important;
+}
+
+/* 选中文字 */
+html.dark ::selection {
+  background-color: #d97706;
+  color: #fff;
+}
+
+/* 滚动条 */
+html.dark ::-webkit-scrollbar {
+  width: 6px;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 3px;
+}
+
+/* 渐变背景卡片 */
+html.dark .bg-gradient-to-br {
+  background-image: none !important;
+  background-color: #262626 !important;
+}
+
+/* accent-soft 暗色 */
+html.dark .bg-accent-soft\/50,
+html.dark .bg-accent-soft\/30 {
+  background-color: rgba(180, 83, 9, 0.1) !important;
+}
+
+/* hover 状态 */
+html.dark .hover\:bg-stone-100:hover,
+html.dark .hover\:bg-stone-50:hover {
+  background-color: #333 !important;
+}
