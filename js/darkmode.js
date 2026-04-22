@@ -9,7 +9,7 @@
   function getPreferred() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return stored;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return 'light'; // 强制默认使用明色（Light）模式
   }
 
   function applyTheme(theme) {
