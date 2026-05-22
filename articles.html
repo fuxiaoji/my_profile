@@ -169,7 +169,9 @@
       fetch('articles.json')
         .then(res => res.json())
         .then(data => {
-          articles = data;
+          articles = data
+            .slice()
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
           // 动态更新文章计数
           const lang = (typeof getLang === 'function') ? getLang() : 'zh';
           const countEl = document.getElementById('article-count');
