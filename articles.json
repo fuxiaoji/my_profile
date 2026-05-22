@@ -133,5 +133,18 @@
       "制度"
     ],
     "summary": "制度变化很关键。"
+  },
+  {
+    "title": "VibePad：用手柄操控电脑",
+    "cover": "https://picsum.photos/seed/vibepad/760/420",
+    "md": "文章/vibepad.md",
+    "docx": null,
+    "date": "2026-05-22",
+    "tags": [
+      "工具",
+      "效率",
+      "AI"
+    ],
+    "summary": "手柄替代键鼠，躺着也能批阅代码。"
   }
 ]
