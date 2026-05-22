@@ -89,6 +89,19 @@
       :root {
         color-scheme: light;
       }
+      .aurora-layer {
+        position: fixed;
+        inset: -20% -10% auto -10%;
+        height: 55vh;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.65;
+        filter: blur(50px) saturate(1.15);
+        background: radial-gradient(60% 80% at 15% 30%, rgba(190, 242, 100, 0.45), transparent 55%),
+          radial-gradient(70% 90% at 70% 20%, rgba(125, 211, 252, 0.35), transparent 60%),
+          radial-gradient(60% 80% at 85% 65%, rgba(253, 230, 138, 0.35), transparent 65%);
+        mix-blend-mode: screen;
+      }
       body::before {
         content: "";
         position: fixed;
@@ -112,6 +125,22 @@
             rgba(165, 243, 252, 0.2),
             transparent 50%
           );
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.55);
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(18px) saturate(1.2);
+      }
+      .springy {
+        transition: transform 0.55s cubic-bezier(0.22, 1.61, 0.36, 1), box-shadow 0.35s ease;
+      }
+      .springy:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      }
+      .springy:active {
+        transform: translateY(-2px) scale(0.99);
       }
       .font-heading {
         font-family: 'Source Serif 4', 'Noto Serif SC', Georgia, serif;
@@ -166,10 +195,11 @@
   </head>
 
   <body class="min-h-screen text-stone-800 antialiased overflow-x-hidden">
+    <div class="aurora-layer" aria-hidden="true"></div>
     <div class="relative z-10 flex min-h-screen flex-col">
       <header
         id="global-header"
-        class="pointer-events-auto fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-paper/85 px-4 py-3 backdrop-blur-md opacity-0 -translate-y-full"
+        class="pointer-events-auto fixed inset-x-0 top-0 z-40 border-b border-stone-200/80 bg-paper/85 px-4 py-3 backdrop-blur-md opacity-0 -translate-y-full glass-panel"
       >
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
           <a
@@ -404,8 +434,9 @@ flowchart TB
           </div>
 
           <aside
-            class="rounded-2xl border border-stone-200/90 bg-white/80 p-6 shadow-card backdrop-blur-sm"
+            class="rounded-2xl border border-stone-200/90 bg-white/80 p-6 shadow-card backdrop-blur-sm glass-panel springy"
             aria-label="关注维度摘要"
+            data-parallax="0.08"
           >
             <p class="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
               现在在做的几件事
@@ -445,7 +476,7 @@ flowchart TB
           </aside>
         </section>
 
-        <section id="todolist" class="mt-20 space-y-5">
+        <section id="todolist" class="mt-20 space-y-5" data-parallax="0.04">
           <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 class="font-heading text-2xl font-semibold text-stone-900">
@@ -461,7 +492,7 @@ flowchart TB
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm glass-panel springy">
               <div class="flex items-center justify-between gap-2">
                 <p class="text-sm font-semibold text-stone-800">俾斯麦兵棋 C++ 重写</p>
                 <span class="text-[11px] font-medium text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">进行中</span>
@@ -472,7 +503,7 @@ flowchart TB
               <a href="https://github.com/fuxiaoji/wargame" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-xs font-medium text-accent">查看仓库 →</a>
             </div>
 
-            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm glass-panel springy">
               <div class="flex items-center justify-between gap-2">
                 <p class="text-sm font-semibold text-stone-800">博弈特化深度学习架构</p>
                 <span class="text-[11px] font-medium text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">进行中</span>
@@ -482,7 +513,7 @@ flowchart TB
               </p>
             </div>
 
-            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm glass-panel springy">
               <div class="flex items-center justify-between gap-2">
                 <p class="text-sm font-semibold text-stone-800">手撕 Transformer · CS226</p>
                 <span class="text-[11px] font-medium text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">进行中</span>
@@ -492,7 +523,7 @@ flowchart TB
               </p>
             </div>
 
-            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm glass-panel springy">
               <div class="flex items-center justify-between gap-2">
                 <p class="text-sm font-semibold text-stone-800">VibePad 手柄控制</p>
                 <span class="text-[11px] font-medium text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">进行中</span>
@@ -503,7 +534,7 @@ flowchart TB
               <a href="https://github.com/fuxiaoji/VibePad" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-xs font-medium text-accent">查看仓库 →</a>
             </div>
 
-            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div class="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm glass-panel springy">
               <div class="flex items-center justify-between gap-2">
                 <p class="text-sm font-semibold text-stone-800">区块链深度学习测试平台</p>
                 <span class="text-[11px] font-medium text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">规划中</span>
@@ -515,7 +546,7 @@ flowchart TB
           </div>
         </section>
 
-        <section id="focus" class="mt-20 space-y-5 focus-scroll" data-focus-scroll>
+        <section id="focus" class="mt-20 space-y-5 focus-scroll" data-focus-scroll data-parallax="0.02">
           <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 class="font-heading text-2xl font-semibold text-stone-900">
@@ -1532,6 +1563,27 @@ flowchart TB
           })
           .catch(err => console.error("Error loading articles:", err));
       });
+
+      const parallaxItems = Array.from(document.querySelectorAll('[data-parallax]'));
+      let parallaxTicking = false;
+
+      function updateParallax() {
+        const scrollTop = window.scrollY;
+        parallaxItems.forEach((el) => {
+          const speed = parseFloat(el.dataset.parallax || '0');
+          if (!speed) return;
+          el.style.transform = `translate3d(0, ${scrollTop * speed}px, 0)`;
+        });
+        parallaxTicking = false;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (parallaxTicking) return;
+        parallaxTicking = true;
+        requestAnimationFrame(updateParallax);
+      });
+
+      window.addEventListener('load', updateParallax);
     </script>
     <!-- Enhanced modules -->
     <script src="js/i18n.js"></script>
