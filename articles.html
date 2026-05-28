@@ -35,6 +35,8 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
     <!-- Dark mode styles -->
     <link rel="stylesheet" href="js/dark-styles.css" />
+    <link rel="stylesheet" href="js/content-evolution.css?v=content-evolution" />
+    <link rel="stylesheet" href="js/mouse-effects.css?v=mouse-effects" />
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -93,10 +95,10 @@
       }
     </style>
   </head>
-  <body class="min-h-screen text-stone-800 antialiased">
-    <div class="relative z-30 mx-auto max-w-6xl px-4 pb-20 pt-8 sm:pt-10">
-      <header class="flex flex-col gap-4 border-b border-stone-200 pb-6">
-        <div class="flex flex-wrap items-center justify-between gap-3">
+  <body class="content-shell min-h-screen text-stone-800 antialiased">
+    <div class="content-frame relative z-30 mx-auto max-w-6xl px-4 pb-20 pt-8 sm:pt-10">
+      <header class="content-reveal content-glass flex flex-col gap-5 rounded-[2rem] p-4 sm:p-6" data-stagger>
+        <div class="content-nav flex flex-wrap items-center justify-between gap-3 rounded-full px-4 py-3">
           <a href="index.html" class="flex shrink-0 items-center gap-3">
             <img src="photo/logo.png" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white object-cover shadow-sm" alt="logo" />
             <span class="font-heading text-lg font-semibold text-stone-900">傅文基</span>
@@ -110,7 +112,7 @@
           </nav>
         </div>
 
-        <div class="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
+        <div class="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
         <div class="space-y-3">
           <a
             href="index.html"
@@ -120,10 +122,10 @@
             ← 返回首页
           </a>
           <div>
-            <p class="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
+            <p class="content-eyebrow text-xs font-medium uppercase text-stone-500">
               Articles · Markdown Library
             </p>
-            <h1 class="font-heading text-3xl font-semibold text-stone-900 sm:text-4xl" data-i18n="articles.page.title">
+            <h1 class="font-heading text-4xl font-semibold text-stone-900 sm:text-5xl" data-i18n="articles.page.title">
               文章列表
             </h1>
             <p class="mt-2 max-w-2xl text-sm leading-relaxed text-stone-600" data-i18n="articles.page.desc">
@@ -132,10 +134,10 @@
           </div>
         </div>
         <div class="grid gap-3">
-          <a href="https://picsum.photos/seed/fuwenji-article-hero/740/440" target="_blank" class="group overflow-hidden rounded-3xl border border-amber-200/80 bg-white/80 shadow-sm">
-            <img src="https://picsum.photos/seed/fuwenji-article-hero/740/440" alt="文章封面占位图" class="h-36 w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+          <a href="https://picsum.photos/seed/fuwenji-article-hero/740/440" target="_blank" class="group overflow-hidden rounded-[1.6rem] border border-white/70 bg-white/45 shadow-sm">
+            <img src="https://picsum.photos/seed/fuwenji-article-hero/740/440" alt="文章封面占位图" class="h-40 w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
           </a>
-          <div class="rounded-3xl border border-stone-200 bg-white/85 px-4 py-3 text-sm text-stone-600 shadow-sm">
+          <div class="reader-side-card rounded-[1.35rem] px-4 py-3 text-sm text-stone-600">
             <p class="flex items-center gap-2 font-medium text-stone-800"><iconify-icon icon="solar:book-2-bold-duotone" class="text-base text-amber-700"></iconify-icon><span id="article-count">当前共 — 篇</span></p>
             <p class="mt-1 flex items-center gap-2"><iconify-icon icon="solar:bolt-circle-bold-duotone" class="text-base text-teal-700"></iconify-icon>金融 / Web3 / AI / 政经</p>
           </div>
@@ -144,7 +146,7 @@
       </header>
 
       <main class="mt-10 space-y-10">
-        <section class="space-y-4">
+        <section class="content-reveal space-y-5" data-stagger>
           <div class="flex items-center justify-between gap-4">
             <h2 class="font-heading text-2xl font-semibold text-stone-900" data-i18n="articles.page.all">全部文章</h2>
             <a
@@ -156,10 +158,9 @@
             </a>
           </div>
 
-          <div id="tag-filters" class="flex flex-wrap gap-2"></div>
-          <div id="articles-grid" class="grid gap-4 md:grid-cols-2"></div>
+          <div id="tag-filters" class="filter-rail flex flex-wrap gap-2 rounded-[1.35rem] p-2"></div>
+          <div id="articles-grid" class="articles-bento-grid"></div>
           <p id="empty-hint" class="hidden text-sm text-stone-500" data-i18n="articles.page.empty">该标签下暂时没有文章。</p>
-          </div>
         </section>
       </main>
     </div>
@@ -196,9 +197,38 @@
         tagFilters.innerHTML = allTags
           .map((tag) => {
             const active = tag === activeTag ? 'tag-chip-active' : '';
-            return `<button data-tag="${tag}" class="rounded-full border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-accent/40 hover:text-accent ${active}">${tag}</button>`;
+            const pressed = tag === activeTag ? 'true' : 'false';
+            return `<button data-tag="${tag}" aria-pressed="${pressed}" class="tag-filter-btn rounded-full px-3.5 py-2 text-xs font-semibold ${active}">${tag}</button>`;
           })
           .join('');
+      }
+
+      function animateArticleGrid() {
+        const cards = grid.querySelectorAll('[data-article-card]');
+        cards.forEach((card, index) => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(14px)';
+          window.setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 35 * index);
+        });
+      }
+
+      function getArticleVariant(index) {
+        const variants = [
+          'article-card--feature',
+          'article-card--wide',
+          'article-card--compact',
+          'article-card--compact',
+          'article-card--text',
+          'article-card--tall',
+          'article-card--compact',
+          'article-card--wide',
+          'article-card--compact',
+          'article-card--text'
+        ];
+        return variants[index % variants.length];
       }
 
       function renderArticles() {
@@ -216,32 +246,41 @@
         const noDocxLabel = lang === 'en' ? 'No DOCX' : '无 DOCX';
 
         grid.innerHTML = list
-          .map((a) => {
+          .map((a, index) => {
             const tagHtml = a.tags
               .map(
                 (t) =>
-                  `<span class="rounded-full bg-stone-100 px-2 py-1 text-[11px] text-stone-600">#${t}</span>`
+                  `<span class="article-tag rounded-full px-2.5 py-1 text-[11px] font-medium">#${t}</span>`
               )
               .join('');
             const docxBtn = a.docx
-              ? `<a href="${a.docx}" download class="rounded-full border border-stone-300 px-3 py-1 text-xs text-stone-700 transition-colors hover:border-accent/40 hover:text-accent">${docxLabel}</a>`
-              : `<span class="rounded-full border border-stone-200 px-3 py-1 text-xs text-stone-400">${noDocxLabel}</span>`;
+              ? `<a href="${a.docx}" download class="rounded-full border border-sky-200/70 bg-sky-50/70 px-3 py-1 text-xs font-medium text-sky-700 transition-colors hover:border-sky-300 hover:bg-sky-100/80">${docxLabel}</a>`
+              : `<span class="rounded-full border border-stone-200/80 bg-white/50 px-3 py-1 text-xs text-stone-400">${noDocxLabel}</span>`;
 
-            return `<article class="overflow-hidden rounded-3xl border border-stone-200 bg-white/95 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-              <img src="${a.cover}" alt="${a.title}" class="h-40 w-full object-cover" loading="lazy" />
-              <div class="p-5">
-              <div class="flex items-start justify-between gap-3">
-                <p class="inline-flex items-center gap-1 text-xs text-stone-500"><iconify-icon icon="solar:calendar-bold-duotone" class="text-base text-amber-700"></iconify-icon>${a.date}</p>
-                ${docxBtn}
+            const variant = getArticleVariant(index);
+            const isCompact = variant === 'article-card--compact';
+            const titleSize = variant === 'article-card--feature'
+              ? 'text-2xl sm:text-3xl'
+              : (variant === 'article-card--compact' ? 'text-base' : 'text-xl');
+
+            return `<article data-article-card class="article-card ${variant} transition-all duration-300">
+              <a href="article-viewer.html?file=${encodeURIComponent(a.md)}" class="absolute inset-0 z-[2]" aria-label="${a.title}"></a>
+              <img src="${a.cover}" alt="${a.title}" class="article-card-cover" loading="lazy" />
+              <div class="article-card-shade"></div>
+              <div class="article-card-body">
+              <div class="mb-2 flex items-start justify-between gap-3">
+                <p class="article-card-meta inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/20 px-2.5 py-1 text-xs text-white/75 backdrop-blur-md"><iconify-icon icon="solar:calendar-bold-duotone" class="text-base text-cyan-200"></iconify-icon>${a.date}</p>
+                <span class="article-docx relative z-[4]">${docxBtn}</span>
               </div>
-              <h3 class="mt-3 font-heading text-xl font-semibold text-stone-900">${a.title}</h3>
-              <p class="mt-3 text-sm leading-relaxed text-stone-600">${a.summary}</p>
-              <div class="mt-4 flex flex-wrap gap-2">${tagHtml}</div>
-              <a href="article-viewer.html?file=${encodeURIComponent(a.md)}" class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"><iconify-icon icon="solar:arrow-right-up-bold-duotone" class="text-base"></iconify-icon>${readLabel}</a>
+              <h3 class="article-card-title font-heading ${titleSize} font-semibold">${a.title}</h3>
+              <p class="article-card-summary mt-2 text-sm leading-relaxed">${a.summary}</p>
+              <div class="article-card-tags mt-3 flex flex-wrap gap-2">${tagHtml}</div>
+              ${isCompact ? '' : `<span class="mt-4 inline-flex w-fit items-center gap-1 rounded-full bg-white/18 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md"><iconify-icon icon="solar:arrow-right-up-bold-duotone" class="text-base"></iconify-icon>${readLabel}</span>`}
               </div>
             </article>`;
           })
           .join('');
+        animateArticleGrid();
       }
 
       tagFilters.addEventListener('click', (e) => {
@@ -249,7 +288,13 @@
         if (!btn) return;
         activeTag = btn.dataset.tag;
         renderFilters();
-        renderArticles();
+        grid.style.opacity = '0.35';
+        grid.style.transform = 'translateY(6px)';
+        window.setTimeout(() => {
+          renderArticles();
+          grid.style.opacity = '1';
+          grid.style.transform = 'translateY(0)';
+        }, 120);
       });
 
       // Re-render on language change
@@ -274,6 +319,8 @@
     <script src="js/darkmode.js"></script>
     <script src="js/search.js"></script>
     <script src="js/progress.js"></script>
-    <script src="js/toolbar.js"></script>
+    <script src="js/page-transitions.js?v=content-evolution"></script>
+    <script src="js/mouse-effects.js?v=mouse-effects"></script>
+    <script src="js/toolbar.js?v=mouse-effects"></script>
   </body>
 </html>

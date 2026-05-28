@@ -1,0 +1,22 @@
+.fx-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 70;
+}
+
+[data-mouse-effects-toggle][aria-pressed='true'] iconify-icon {
+  color: #0891b2;
+}
+
+.dark [data-mouse-effects-toggle][aria-pressed='true'] iconify-icon {
+  color: #67e8f9;
+}
+
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .fx-canvas {
+    display: none !important;
+  }
+}

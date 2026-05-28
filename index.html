@@ -7,20 +7,20 @@
     <title>傅文基 · 个人网站</title>
     <meta
       name="description"
-      content="西南财经大学金融（经管实验班）本科在读，金融科技与 Web3 方向；记录投研、建模与长文写作。"
+      content="傅文基，西南财经大学金融学（经管国际化创新实验班）本科在读，关注金融投研、AI Agent、深度学习与开源工程。"
     />
     <meta name="view-transition" content="same-origin" />
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="傅文基 · 个人网站" />
-    <meta property="og:description" content="西南财经大学金融（经管实验班）本科在读，金融科技与 Web3 方向；记录投研、建模与长文写作。" />
+    <meta property="og:description" content="西南财经大学金融学（经管国际化创新实验班）本科在读，关注金融投研、AI Agent、深度学习与开源工程。" />
     <meta property="og:url" content="https://www.fuwenji.asia/" />
     <meta property="og:image" content="https://www.fuwenji.asia/photo/logo.PNG" />
     <meta property="og:site_name" content="傅文基" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="傅文基 · 个人网站" />
-    <meta name="twitter:description" content="西南财经大学金融（经管实验班）本科在读，金融科技与 Web3 方向；记录投研、建模与长文写作。" />
+    <meta name="twitter:description" content="西南财经大学金融学（经管国际化创新实验班）本科在读，关注金融投研、AI Agent、深度学习与开源工程。" />
     <meta name="twitter:image" content="https://www.fuwenji.asia/photo/logo.PNG" />
     <!-- Canonical -->
     <link rel="canonical" href="https://www.fuwenji.asia/" />
@@ -36,6 +36,8 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
     <!-- Dark mode styles -->
     <link rel="stylesheet" href="js/dark-styles.css" />
+    <link rel="stylesheet" href="js/content-evolution.css?v=content-evolution" />
+    <link rel="stylesheet" href="js/mouse-effects.css?v=mouse-effects" />
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -153,6 +155,7 @@
             rgba(56, 189, 248, 0.18),
             transparent 60%
           );
+        background-attachment: fixed;
       }
       body::after {
         content: "";
@@ -214,7 +217,7 @@
         position: relative;
       }
       .section-soft-transition::before {
-        content: "";
+        content: none;
         position: absolute;
         top: -54px;
         left: 0;
@@ -236,6 +239,197 @@
         box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(30px) saturate(2);
         padding: 0.55rem 1.1rem;
+      }
+      .tech-shell [class*="bg-white"],
+      .tech-shell [class*="bg-paper"],
+      .tech-shell [class*="bg-stone-50"],
+      .tech-shell [class*="bg-stone-100"] {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+      }
+      .tech-shell .text-stone-900,
+      .tech-shell .text-stone-800 {
+        color: #1c1917 !important;
+      }
+      .tech-shell .text-stone-700,
+      .tech-shell .text-stone-600 {
+        color: #57534e !important;
+      }
+      .tech-shell .text-stone-500 {
+        color: #78716c !important;
+      }
+      .tech-shell .border-stone-300,
+      .tech-shell .border-stone-200,
+      .tech-shell .border-stone-100,
+      .tech-shell .border-stone-200\/80,
+      .tech-shell .border-stone-200\/90 {
+        border-color: rgba(255, 255, 255, 0.12) !important;
+      }
+      .tech-shell #learning-map {
+        opacity: 0.18;
+        filter: saturate(1.25) drop-shadow(0 24px 70px rgba(14, 165, 233, 0.2));
+        transform: translateY(16vh) scale(0.92);
+      }
+      .tech-shell #learning-map svg {
+        opacity: 0.62;
+      }
+      .hero-glass-stage {
+        min-height: 100vh;
+        padding-top: clamp(6.5rem, 12vh, 9rem);
+      }
+      .hero-copy-panel {
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.16));
+        box-shadow: 0 24px 80px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(24px) saturate(1.7);
+      }
+      .intro-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 50% 45%, rgba(14, 165, 233, 0.18), transparent 24%),
+          radial-gradient(circle at 35% 60%, rgba(99, 102, 241, 0.16), transparent 26%),
+          rgba(244, 246, 251, 0.78);
+        backdrop-filter: blur(28px) saturate(1.6);
+      }
+      .intro-card {
+        width: min(520px, calc(100vw - 2rem));
+        border: 1px solid rgba(255, 255, 255, 0.84);
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.24));
+        box-shadow: 0 30px 100px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        padding: 2rem;
+        text-align: center;
+      }
+      .intro-orbit {
+        position: relative;
+        margin: 0 auto 1.25rem;
+        height: 88px;
+        width: 88px;
+        border-radius: 9999px;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.18), rgba(255, 255, 255, 0.1) 58%);
+        box-shadow: 0 0 44px rgba(14, 165, 233, 0.35);
+      }
+      .intro-orbit::before,
+      .intro-orbit::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+      .intro-orbit::after {
+        inset: 31px;
+        background: #38bdf8;
+        border: 0;
+        box-shadow: 0 0 24px rgba(56, 189, 248, 0.9);
+      }
+      .intro-progress {
+        margin-top: 1.5rem;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 9999px;
+        background: rgba(148, 163, 184, 0.22);
+      }
+      .intro-progress span {
+        display: block;
+        height: 100%;
+        width: 42%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #38bdf8, #818cf8, #22d3ee);
+        box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+        animation: intro-scan 1.2s ease-in-out infinite alternate;
+      }
+      @keyframes intro-scan {
+        from { transform: translateX(-15%); }
+        to { transform: translateX(150%); }
+      }
+      html.dark {
+        color-scheme: dark;
+      }
+      html.dark body {
+        background-color: #080b12 !important;
+        background-image:
+          radial-gradient(circle at 16% 14%, rgba(59, 130, 246, 0.16), transparent 30%),
+          radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.12), transparent 32%),
+          radial-gradient(circle at 56% 86%, rgba(124, 58, 237, 0.1), transparent 34%),
+          linear-gradient(135deg, #080b12 0%, #0d1320 44%, #08111d 100%) !important;
+      }
+      html.dark body::after {
+        opacity: 0.22;
+        background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 34%),
+          linear-gradient(300deg, rgba(125, 211, 252, 0.08), transparent 38%);
+      }
+      html.dark .aurora-layer {
+        opacity: 0.28;
+        filter: blur(52px) saturate(1.15) contrast(1.05);
+        mix-blend-mode: screen;
+      }
+      html.dark .aurora-mid {
+        opacity: 0.16;
+      }
+      html.dark .aurora-bottom {
+        opacity: 0.22;
+      }
+      html.dark .glass-panel {
+        background: rgba(12, 18, 30, 0.66) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(22px) saturate(1.18) !important;
+      }
+      html.dark .liquid-glass {
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.72), rgba(8, 13, 24, 0.54)) !important;
+        border-color: rgba(148, 163, 184, 0.16) !important;
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38),
+          inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(22px) saturate(1.18) contrast(1.02) !important;
+      }
+      html.dark .liquid-glass::before {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(125, 211, 252, 0.025) 42%, rgba(255, 255, 255, 0) 72%);
+        opacity: 0.75;
+      }
+      html.dark .pill-header {
+        background: rgba(8, 13, 24, 0.72);
+        border-color: rgba(148, 163, 184, 0.18);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px) saturate(1.15);
+      }
+      html.dark .tech-shell [class*="bg-white"],
+      html.dark .tech-shell [class*="bg-paper"],
+      html.dark .tech-shell [class*="bg-stone-50"],
+      html.dark .tech-shell [class*="bg-stone-100"] {
+        background-color: rgba(12, 18, 30, 0.62) !important;
+      }
+      html.dark .tech-shell .text-stone-900,
+      html.dark .tech-shell .text-stone-800 {
+        color: #f8fafc !important;
+      }
+      html.dark .tech-shell .text-stone-700,
+      html.dark .tech-shell .text-stone-600 {
+        color: #cbd5e1 !important;
+      }
+      html.dark .tech-shell .text-stone-500 {
+        color: #94a3b8 !important;
+      }
+      html.dark .hero-copy-panel {
+        border-color: rgba(148, 163, 184, 0.16);
+        background: linear-gradient(145deg, rgba(12, 18, 30, 0.72), rgba(8, 13, 24, 0.48));
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(22px) saturate(1.14);
+      }
+      html.dark .intro-overlay {
+        background:
+          radial-gradient(circle at 50% 45%, rgba(59, 130, 246, 0.16), transparent 24%),
+          radial-gradient(circle at 35% 60%, rgba(20, 184, 166, 0.12), transparent 26%),
+          rgba(5, 9, 18, 0.9);
+      }
+      html.dark .intro-card {
+        border-color: rgba(148, 163, 184, 0.18);
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.74), rgba(8, 13, 24, 0.58));
+        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
       .springy {
         transition: transform 0.6s cubic-bezier(0.16, 1.5, 0.32, 1), box-shadow 0.35s ease;
@@ -300,14 +494,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   </head>
 
-  <body class="min-h-screen text-stone-800 antialiased overflow-x-hidden">
+  <body class="tech-shell min-h-screen text-stone-800 antialiased overflow-x-hidden">
+    <div class="intro-overlay" id="intro-overlay" aria-hidden="true">
+      <div class="intro-card">
+        <div class="intro-orbit"></div>
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-sky-200">
+          FUWENJI SYSTEM
+        </p>
+        <p class="mt-3 font-heading text-2xl font-semibold text-stone-900">
+          金融市场 × 代码实验室
+        </p>
+        <p class="mt-3 text-sm leading-relaxed text-stone-600">
+          正在加载研究路径、项目与文章索引
+        </p>
+        <div class="intro-progress"><span></span></div>
+      </div>
+    </div>
     <div class="aurora-layer" aria-hidden="true"></div>
     <div class="aurora-layer aurora-mid" aria-hidden="true"></div>
     <div class="aurora-layer aurora-bottom" aria-hidden="true"></div>
     <div class="relative z-10 flex min-h-screen flex-col">
       <header
         id="global-header"
-        class="pointer-events-auto fixed inset-x-0 top-0 z-40 px-4 py-3 opacity-0 -translate-y-full"
+        class="pointer-events-auto fixed inset-x-0 top-0 z-40 px-4 py-3"
       >
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 pill-header">
           <a
@@ -474,12 +683,12 @@ flowchart TB
 
         <section
           aria-labelledby="hero-title"
-          class="relative z-10 grid gap-12 mt-[100vh] pt-12 after:absolute after:inset-y-0 after:w-[100vw] after:left-1/2 after:-translate-x-1/2 after:bg-paper/95 after:-z-10 before:-z-10 before:absolute before:-top-[15vh] before:w-[100vw] before:left-1/2 before:-translate-x-1/2 before:h-[15vh] before:bg-gradient-to-b before:from-transparent before:to-paper/95 pb-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start transition-opacity duration-1000 px-2 sm:px-6"
+          class="hero-glass-stage relative z-10 grid items-start gap-10 pb-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] transition-opacity duration-1000 px-2 sm:px-6"
           id="hero-content"
         >
-          <div class="space-y-8">
+          <div class="hero-copy-panel rounded-3xl p-6 sm:p-8 space-y-7">
             <p class="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-              SWUFE · Finance &amp; management pilot · Fintech &amp; Web3
+              SWUFE · Finance · AI Agent · Open-source Engineering
             </p>
             <h1
               id="hero-title"
@@ -489,8 +698,7 @@ flowchart TB
               <span class="text-accent leading-[1.4]">找可验证的问题与叙事</span>。
             </h1>
             <p class="max-w-xl text-base leading-loose text-stone-600 sm:text-lg sm:leading-[1.85]">
-              来自重庆，西南财经大学<strong class="font-medium text-stone-800">金融（经管实验班）</strong>本科在读。关心交易与投研、金融科技与
-              Web3，也用数据抓取、建模和 LLM 工具提高交付效率。本站汇总公开项目、写作与简历入口。
+              来自重庆，西南财经大学<strong class="font-medium text-stone-800">金融学（经管国际化创新实验班）</strong>本科在读。做过中泰证券行研与基金服务实习，也在 AI Agent、深度学习游戏智能体、数据爬虫与 Web3 应用上持续开源。
             </p>
             <div class="flex flex-wrap items-center gap-2 text-xs text-stone-600 pt-2">
               <span
@@ -500,7 +708,7 @@ flowchart TB
                   class="h-1.5 w-1.5 rounded-full bg-depth"
                   aria-hidden="true"
                 ></span>
-                本科在读 · 绩点约 3.3/4
+                GPA 3.3/4 · Rank 前 30%
               </span>
               <span
                 class="inline-flex items-center rounded-full border border-transparent bg-stone-100 px-3 py-1.5"
@@ -510,17 +718,24 @@ flowchart TB
               <span
                 class="inline-flex items-center rounded-full border border-transparent bg-stone-100 px-3 py-1.5"
               >
-                CET-4 500+
+                创新创业 / 社会实践奖学金
               </span>
             </div>
 
             <div class="flex flex-wrap items-center gap-3 pt-1">
               <a
-                href="简历%20(2).pdf"
+                href="files/resume-internet.pdf"
                 download
                 class="cursor-pointer rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-colors duration-200 hover:bg-indigo-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
               >
-                下载简历（PDF）
+                下载互联网简历
+              </a>
+              <a
+                href="files/resume-finance.pdf"
+                download
+                class="cursor-pointer rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 shadow-sm transition-colors duration-200 hover:border-accent/40 hover:bg-accent-soft/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              >
+                下载金融简历
               </a>
               <a
                 href="https://github.com/fuxiaoji"
@@ -705,12 +920,12 @@ flowchart TB
                   </h3>
                 </div>
                 <p class="mt-4 text-xs leading-relaxed text-stone-600">
-                  模拟与实盘经验、ETF 与行业轮动；金融科技建模与量化学习项目并行。
+                  ETF 资产配置、海外关税专题研报、Wind / Choice 信息清洗；把宏观判断落到可复核的数据表。
                 </p>
                 <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
                   <li>· 全国 ETF 模拟赛（前 2% · 二等）</li>
+                  <li>· 中泰证券行研与基金服务实习</li>
                   <li>· 校金融科技建模大赛（二等）</li>
-                  
                 </ul>
               </article>
 
@@ -731,7 +946,7 @@ flowchart TB
                   </h3>
                 </div>
                 <p class="mt-4 text-xs leading-relaxed text-stone-600">
-                  关注协议与产品逻辑，把「谁能做什么、风险在哪」说清楚。
+                  理解 Web3 行业逻辑和链上应用边界，能独立编写、审计并部署 Solidity 智能合约。
                 </p>
                 <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
                   <li>· 校内区块链社团与分享</li>
@@ -757,12 +972,12 @@ flowchart TB
                   </h3>
                 </div>
                 <p class="mt-4 text-xs leading-relaxed text-stone-600">
-                  抓取清洗、建模与可视化；用 Cursor / Claude 等工具压缩重复劳动。
+                  从数据采集、特征工程到 AI Agent 应用开发；用 Codex / Claude Code / Copilot 提升交付效率。
                 </p>
                 <ul class="mt-4 space-y-1.5 text-xs text-stone-600">
-                  <li>· Python / Jupyter 工作流</li>
-                  <li>· 提示词与结构化输出</li>
-                  <li>· 爬虫与增量数据（见项目）</li>
+                  <li>· Spring AI / LangChain4j / RAG</li>
+                  <li>· MCP Server 与 Agent Skills</li>
+                  <li>· 高并发爬虫与结构化导出</li>
                 </ul>
               </article>
 
@@ -872,7 +1087,7 @@ flowchart TB
             </div>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="home-bento-grid">
             <a
               href="tieba-spider.html"
               class="group flex cursor-pointer flex-col rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper relative overflow-hidden liquid-glass springy"
@@ -888,7 +1103,7 @@ flowchart TB
                 <span class="text-[11px] font-bold text-amber-700 bg-amber-200/50 px-2 py-0.5 rounded-full">LIVE API</span>
               </div>
               <p class="relative z-10 mt-3 text-sm leading-relaxed text-stone-600">
-                在网页端直接调用的无头爬虫接口。分析贴主内容并榨取帖子数据。
+                基于 Python 异步并发机制与内置防封策略，解析复杂嵌套 Web 结构和多媒体资源。
               </p>
               <span class="relative z-10 mt-4 text-xs font-medium text-accent">立即体验 →</span>
             </a>
@@ -901,18 +1116,18 @@ flowchart TB
               <span class="glass-noise" aria-hidden="true"></span>
               <div class="flex items-center justify-between gap-2">
                 <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                  crawler_for_biddingprofile
+                  招投标数据定向爬虫
                 </h3>
                 <span class="text-[11px] font-medium text-depth">Python</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-stone-600">
-                重庆市公共资源交易平台中标结果爬虫：多年数据抓取与增量更新实战。
+                面向政务网站历史招投标数据，构建自动化增量采集策略，实现全量抓取与结构化导出。
               </p>
               <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
             </a>
 
             <a
-              href="https://github.com/fuxiaoji/quant_test"
+              href="https://github.com/fuxiaoji/reprodue_fama_model"
               target="_blank"
               rel="noopener noreferrer"
               class="group flex cursor-pointer flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper liquid-glass springy"
@@ -920,12 +1135,12 @@ flowchart TB
               <span class="glass-noise" aria-hidden="true"></span>
               <div class="flex items-center justify-between gap-2">
                 <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                  quant_test
+                  Fama-French 模型复现
                 </h3>
                 <span class="text-[11px] font-medium text-depth">Python</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-stone-600">
-                量化学习与策略实验笔记代码，配合课程与自建练习。
+                模块化复现三因子模型，完成长周期量化因子数据提取、收益率测算与实证分析。
               </p>
               <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
             </a>
@@ -977,12 +1192,12 @@ flowchart TB
               <span class="glass-noise" aria-hidden="true"></span>
               <div class="flex items-center justify-between gap-2">
                 <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                  wargame
+                  bismark hunt
                 </h3>
-                <span class="text-[11px] font-medium text-depth">GitHub</span>
+                <span class="text-[11px] font-medium text-depth">C++ / PyTorch</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-stone-600">
-                追击俾斯麦兵棋电子化，并用深度学习训练。
+                C++/TypeScript 双栈兵棋 AI 演化框架，PyTorch 训练 200+ 多风格 AI，胜率提升 40%。
               </p>
               <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
             </a>
@@ -996,12 +1211,12 @@ flowchart TB
               <span class="glass-noise" aria-hidden="true"></span>
               <div class="flex items-center justify-between gap-2">
                 <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                  controller
+                  VibePad
                 </h3>
-                <span class="text-[11px] font-medium text-depth">GitHub</span>
+                <span class="text-[11px] font-medium text-depth">Input Mapping</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-stone-600">
-                用手柄取代鼠标键盘，任何坐姿都能 vibe coding。
+                将物理手柄指令重映射为系统级键鼠流与快捷组合宏，用手柄控制电脑。
               </p>
               <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
             </a>
@@ -1015,12 +1230,12 @@ flowchart TB
               <span class="glass-noise" aria-hidden="true"></span>
               <div class="flex items-center justify-between gap-2">
                 <h3 class="font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
-                  ai-class-assistant
+                  AI 实时听课助手
                 </h3>
-                <span class="text-[11px] font-medium text-depth">GitHub</span>
+                <span class="text-[11px] font-medium text-depth">LLM</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-stone-600">
-                上课老师提问辅助助手。
+                基于音频流处理与大语言模型意图识别，结合本地课件生成增强答案。
               </p>
               <span class="mt-4 text-xs font-medium text-accent">查看仓库 →</span>
             </a>
@@ -1064,7 +1279,7 @@ flowchart TB
             </a>
           </div>
 
-          <div id="latest-articles-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div id="latest-articles-grid" class="home-article-bento">
              <!-- Dynamically populated via JS -->
           </div>
         </section>
@@ -1100,46 +1315,57 @@ flowchart TB
               简历摘要
             </h2>
             <p class="mt-1 max-w-2xl text-sm text-stone-600">
-              与 PDF 简历一致的核心条目；更新以简历文件为准。
+              根据互联网版与金融版两份新简历同步，分别覆盖工程开发、金融投研与数据建模经历。
             </p>
           </div>
 
           <div class="grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <div class="space-y-4 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
               <h3 class="font-heading text-sm font-semibold text-stone-900">
-                比赛与职务
+                教育、实习与荣誉
               </h3>
               <ul class="space-y-3 text-sm text-stone-600">
                 <li>
-                  <span class="font-semibold text-stone-800">2024.11</span>
-                  第三届全国 ETF 模拟投资挑战赛 · 前 2% · 二等奖；优秀仿真交易团队。
+                  <span class="font-semibold text-stone-800">2024.09–2028.07</span>
+                  西南财经大学金融学（经管国际化创新实验班）本科，GPA 3.3/4，Rank 前 30%。
+                </li>
+                <li>
+                  <span class="font-semibold text-stone-800">2025.07–08</span>
+                  中泰证券深圳分部行研与基金服务实习生：参与私募基金备案、前置尽调材料与招募说明书；独立完成海外关税方向专题研报。
                 </li>
                 <li>
                   <span class="font-semibold text-stone-800">2024.11</span>
-                  西南财经大学金融科技建模大赛 · 二等奖（团队前 10%）。
+                  第三届全国 ETF 模拟投资挑战赛 · 全国前 2% · 二等奖；三个月模拟实盘总资产突破 100 万，录得 6% 绝对收益。
                 </li>
                 <li>
-                  <span class="font-semibold text-stone-800">2025.01–03</span>
-                  Top Analyst 股票研究报告挑战赛 · 三等奖。
+                  <span class="font-semibold text-stone-800">2026.05</span>
+                  西南财经大学金融科技建模大赛 · 二等奖（前 10%），贯通非结构化数据爬取、特征工程、模型预测与可视化。
                 </li>
                 <li>
-                  院排球队、足球队；红十字会急救员；金融投资协会研发部副部；联创「区块链」本科社团。
+                  创新创业奖学金、社会实践奖学金；金融投资协会研发部副部长，联合创立西财区块链协会。
                 </li>
               </ul>
             </div>
 
             <div class="space-y-4 rounded-2xl border border-stone-200 bg-stone-50/80 p-6 shadow-sm">
               <h3 class="font-heading text-sm font-semibold text-stone-900">
-                实习与证书
+                技能与工程方向
               </h3>
               <ul class="space-y-3 text-sm text-stone-600">
                 <li>
-                  <span class="font-semibold text-stone-800">2025.7–8</span>
-                  中泰证券深圳分部：私募基金备案支持、尽职调查材料；海外关税相关行研，Wind / Choice。
+                  <span class="font-semibold text-stone-800">金融投研</span>
+                  熟悉宏观经济周期、证券市场运行逻辑与基金实盘交易机制，使用 Wind / Choice 做海外宏观信息挖掘、收集与清洗。
                 </li>
-                <li>基金从业资格证；英语四级 500+。</li>
                 <li>
-                  技能摘要：证券交易实务、Web3 平台与合约、数据抓取与建模、LLM 提示词与 AI 工具链。
+                  <span class="font-semibold text-stone-800">工程开发</span>
+                  Python、C++、TypeScript、Solidity、Stata；具备高复杂度爬虫、并发采集、小型游戏引擎与链上应用开发经验。
+                </li>
+                <li>
+                  <span class="font-semibold text-stone-800">AI Agent</span>
+                  熟悉 Spring AI、LangChain4j、RAG、PGvector、MCP、多 Agent 协作和 Prompt 工程。
+                </li>
+                <li>
+                  基金从业资格证；MCM / ICM 建模经验；院排球队与足球队成员、红十字会注册急救员。
                 </li>
               </ul>
             </div>
@@ -1446,12 +1672,14 @@ flowchart TB
       gsap.registerPlugin(ScrollTrigger);
 
       document.addEventListener('DOMContentLoaded', () => {
-        // 设置初始隐藏状态，由外部窗口滚动触发动画
-        gsap.set("#hero-content", { autoAlpha: 0 });
-        gsap.set("#hero-title", { y: 30, autoAlpha: 0 });
-        gsap.set("section[aria-labelledby='hero-title'] p", { y: 30, autoAlpha: 0 });
-        gsap.set("section[aria-labelledby='hero-title'] aside", { x: 30, autoAlpha: 0 });
-        gsap.set("section[aria-labelledby='hero-title'] div.flex", { y: 30, autoAlpha: 0 });
+        window.scrollTo(0, 0);
+        gsap.set("#intro-overlay", { autoAlpha: 1 });
+        gsap.set("#hero-content", { y: 24, autoAlpha: 0 });
+        gsap.set("#hero-title", { y: 18, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] p", { y: 16, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] aside", { y: 20, autoAlpha: 0 });
+        gsap.set("section[aria-labelledby='hero-title'] div.flex", { y: 16, autoAlpha: 0 });
+        gsap.set("#global-header", { y: -18, autoAlpha: 0 });
         gsap.set("#map-legend", { y: 20, autoAlpha: 0 });
         
         // 等待 Mermaid 渲染完成（使用 MutationObserver 监听 svg 加入）
@@ -1551,18 +1779,47 @@ flowchart TB
 
             const sweepElements = [...otherNodes, ...edges]; // rootNodes已处理
             
-            const tl = gsap.timeline({ defaults: { ease: "power1.inOut" } }).timeScale(2.5);
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-            // 1. 显现起始课程 (放大特写)
-            tl.to(wrapper, { autoAlpha: 1, duration: 0.8 })
-              // 2. 然后视图恢复整体比例 (呈现整棵树)
-              .to(wrapper, { scale: 1, duration: 4.5, ease: "power2.inOut" }, "<")
-              
-              // 3. 起点（位于最顶层）闪烁发光
-              .fromTo(rootNodes, 
-                { filter: "brightness(2.5) drop-shadow(0 0 20px rgba(251,191,36,0.8))" }, 
-                { filter: "brightness(1) drop-shadow(0 0 0px rgba(251,191,36,0))", duration: 1.2, stagger: 0.1 }, 
-              "-=4.0");
+            // Keep the map as a quiet system diagram behind the hero instead of the first visual target.
+            gsap.set(wrapper, { transformOrigin: "center center", scale: 0.92, autoAlpha: 0.32 });
+            gsap.set(rootNodes.concat(otherNodes), { autoAlpha: 0.5 });
+            gsap.set(subgraphs, { autoAlpha: 0.18 });
+            gsap.set(edges, {
+              strokeDasharray: "none",
+              strokeDashoffset: 0,
+              autoAlpha: 0.28,
+              stroke: "#7dd3fc",
+              strokeWidth: 2
+            });
+            edges.forEach(edge => {
+              if (edge._glow) gsap.set(edge._glow, { autoAlpha: 0 });
+            });
+
+            tl.to(".intro-card", { y: -12, scale: 0.98, autoAlpha: 0, duration: 0.55, delay: 0.85 })
+              .to("#intro-overlay", { autoAlpha: 0, duration: 0.55, pointerEvents: "none" }, "<")
+              .to("#global-header", { y: 0, autoAlpha: 1, duration: 0.65 }, "-=0.25")
+              .to("#hero-content", { y: 0, autoAlpha: 1, duration: 0.75 }, "-=0.42")
+              .to("#hero-title", { y: 0, autoAlpha: 1, duration: 0.65 }, "-=0.45")
+              .to("section[aria-labelledby='hero-title'] p", { y: 0, autoAlpha: 1, duration: 0.55, stagger: 0.08 }, "-=0.42")
+              .to("section[aria-labelledby='hero-title'] div.flex", { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.06 }, "-=0.36")
+              .to("section[aria-labelledby='hero-title'] aside", { y: 0, autoAlpha: 1, duration: 0.6 }, "-=0.45")
+              .fromTo(wrapper, { y: 20 }, { y: 0, autoAlpha: 0.34, duration: 1.2 }, "-=0.7");
+
+            ScrollTrigger.create({
+              trigger: "#todolist",
+              start: "top 75%",
+              end: "+=500px",
+              scrub: true,
+              animation: gsap.to("#learning-map", {
+                opacity: 0,
+                y: -80,
+                scale: 0.88,
+                ease: "none"
+              })
+            });
+
+            return;
 
             const animStart = "-=3.6";
 
@@ -1645,6 +1902,18 @@ flowchart TB
       document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('latest-articles-grid');
         if (!grid) return;
+
+        function getHomeArticleVariant(index) {
+          const variants = [
+            'article-card--feature',
+            'article-card--wide',
+            'article-card--compact',
+            'article-card--compact',
+            'article-card--text',
+            'article-card--tall'
+          ];
+          return variants[index % variants.length];
+        }
         
         fetch('articles.json')
           .then(res => res.json())
@@ -1654,34 +1923,37 @@ flowchart TB
             const latest = shuffled.slice(0, 6);
             grid.innerHTML = '';
             latest.forEach((article, index) => {
-              const bgClass = index === 2 ? 'bg-paper' : 'bg-white';
-              const textClass = index === 1 ? 'text-depth' : (index % 2 === 0 ? 'text-accent' : 'text-stone-600');
-              const tagsStr = (article.tags || []).slice(0, 2).join(' · ');
+              const tags = (article.tags || []).slice(0, 3);
+              const tagHtml = tags
+                .map(tag => `<span class="article-tag rounded-full px-2.5 py-1 text-[11px] font-medium">#${tag}</span>`)
+                .join('');
+              const variant = getHomeArticleVariant(index);
+              const titleSize = variant === 'article-card--feature'
+                ? 'text-2xl sm:text-3xl'
+                : (variant === 'article-card--compact' ? 'text-base' : 'text-xl');
+              const isCompact = variant === 'article-card--compact';
               
               const a = document.createElement('a');
               a.href = `article-viewer.html?file=${encodeURIComponent(article.md)}`;
-              a.className = `group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-stone-200 ${bgClass} p-0 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper`;
+              a.className = `article-card ${variant} group cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper`;
               const cover = article.cover || 'https://picsum.photos/seed/placeholder/760/420';
               
               a.innerHTML = `
-                <div class="h-32 w-full overflow-hidden relative">
-                  <img src="${cover}" alt="${article.title} 装饰图" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/10 to-transparent"></div>
-                </div>
-                <div class="flex flex-col flex-1 p-5 relative z-10 ${bgClass}">
-                  <p class="text-[11px] font-semibold uppercase tracking-wider ${textClass}">
-                    ${tagsStr}
+                <img src="${cover}" alt="${article.title} 装饰图" class="article-card-cover" loading="lazy" />
+                <div class="article-card-shade"></div>
+                <div class="article-card-body">
+                  <p class="article-card-meta mb-2 inline-flex w-fit items-center gap-1 rounded-full border border-white/20 bg-black/20 px-2.5 py-1 text-xs text-white/75 backdrop-blur-md">
+                    <iconify-icon icon="solar:book-2-bold-duotone" class="text-base text-cyan-200"></iconify-icon>
+                    Markdown
                   </p>
-                  <h3 class="mt-3 font-heading text-base font-semibold text-stone-900 group-hover:text-accent">
+                  <h3 class="article-card-title font-heading ${titleSize} font-semibold">
                     ${article.title}
                   </h3>
-                  <p class="mt-2 text-sm leading-relaxed text-stone-600 line-clamp-2">
+                  <p class="article-card-summary mt-2 text-sm leading-relaxed">
                     ${article.summary || ''}
                   </p>
-                  <div class="mt-auto pt-4 flex items-center justify-between">
-                    <span class="text-xs text-stone-500">Markdown · 阅读全文</span>
-                    <iconify-icon icon="solar:arrow-right-up-bold-duotone" class="text-lg text-stone-400 group-hover:text-accent transition-colors"></iconify-icon>
-                  </div>
+                  <div class="article-card-tags mt-3 flex flex-wrap gap-2">${tagHtml}</div>
+                  ${isCompact ? '' : `<span class="mt-4 inline-flex w-fit items-center gap-1 rounded-full bg-white/18 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md"><iconify-icon icon="solar:arrow-right-up-bold-duotone" class="text-base"></iconify-icon>阅读全文</span>`}
                 </div>
               `;
               grid.appendChild(a);
@@ -1716,6 +1988,7 @@ flowchart TB
     <script src="js/darkmode.js"></script>
     <script src="js/search.js"></script>
     <script src="js/progress.js"></script>
-    <script src="js/toolbar.js"></script>
+    <script src="js/mouse-effects.js?v=mouse-effects"></script>
+    <script src="js/toolbar.js?v=mouse-effects"></script>
   </body>
 </html>
