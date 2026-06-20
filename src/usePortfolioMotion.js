@@ -18,11 +18,18 @@ export function usePortfolioMotion(scope, pathname) {
         return
       }
 
-      gsap.timeline()
-        .set('.route-curtain', { yPercent: 100 })
-        .to('.route-curtain', { yPercent: 0, duration: .72, ease: 'power4.inOut' })
-        .set('.route-curtain', { yPercent: -100 })
-        .to('.route-curtain', { yPercent: -200, duration: .9, ease: 'power4.inOut' })
+      if (pathname !== '/') {
+        gsap.timeline()
+          .set('.route-curtain', { display: 'flex', clipPath: 'inset(100% 0 0 0)' })
+          .set('.route-curtain span', { yPercent: 120 })
+          .to('.route-curtain', { clipPath: 'inset(0% 0 0 0)', duration: .5, ease: 'power4.inOut' })
+          .to('.route-curtain span', { yPercent: 0, duration: .45, ease: 'power3.out' }, '-=.2')
+          .to('.route-curtain span', { yPercent: -120, duration: .35, ease: 'power3.in' }, '+=.1')
+          .to('.route-curtain', { clipPath: 'inset(0 0 100% 0)', duration: .72, ease: 'power4.inOut' }, '-=.1')
+          .set('.route-curtain', { display: 'none' })
+      } else {
+        gsap.set('.route-curtain', { display: 'none' })
+      }
 
       if (pathname === '/') {
         const counter = { value: 0 }
@@ -70,21 +77,20 @@ export function usePortfolioMotion(scope, pathname) {
 
         gsap.fromTo('.profile-grid > *', { y: 120, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .18, duration: 1.25, ease: 'power4.out', scrollTrigger: { trigger: '.profile-grid', start: 'top 78%' } })
         gsap.to('.portrait img', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top bottom', end: 'bottom top', scrub: 1.1 } })
-        if (window.matchMedia('(min-width: 801px)').matches) {
+        if (window.matchMedia('(min-width: 701px)').matches) {
           const photoTrack = document.querySelector('.photo-track')
-          const photoSticky = document.querySelector('.photo-sticky')
           const photoDistance = () => Math.max(1, photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08)
           gsap.to(photoTrack, {
             x: () => -photoDistance(),
             ease: 'none',
-            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.25, pin: photoSticky, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true },
+            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.25, pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true },
           })
           gsap.fromTo('.photo-frame', { clipPath: 'inset(0 0 100% 0)', yPercent: 12 }, { clipPath: 'inset(0 0 0% 0)', yPercent: 0, duration: 1.3, stagger: .07, ease: 'power4.out', scrollTrigger: { trigger: '.photo-section', start: 'top 68%' } })
           gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.4 } }))
         }
         gsap.fromTo('.capabilities-section article', { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, stagger: .12, duration: 1.1, ease: 'power4.out', scrollTrigger: { trigger: '.capabilities-section', start: 'top 58%' } })
         gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
-        gsap.fromTo('.featured-article, .article-stack > a, .notes-entry', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .13, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.home-articles', start: 'top 78%' } })
+        gsap.fromTo('.home-article-card, .library-actions > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .1, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.home-article-cards', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
       } else {
         gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25, clearProps: 'clipPath' })
