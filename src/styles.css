@@ -161,13 +161,17 @@ html:lang(zh-CN) .section-heading h2 { padding-block: .06em .12em; font-size: cl
 
 .capabilities-section { padding: 15vh 3vw; color: var(--paper); background: var(--ink); }
 .capability-list { margin-left: 8vw; }
-.capabilities-section article { display: grid; grid-template-columns: 6vw .75fr 1fr; align-items: start; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.3); }
+.capabilities-section article { display: grid; grid-template-columns: 6vw .7fr 1.3fr; align-items: start; padding: 3rem 0; border-top: 1px solid rgba(255,255,255,.3); }
 .capabilities-section article:last-child { border-bottom: 1px solid rgba(255,255,255,.4); }
 .capabilities-section article span { font: .65rem "DM Mono"; }
 .capabilities-section h3 { margin: 0; font-size: clamp(2rem, 5vw, 5.5rem); letter-spacing: -.07em; }
-.capabilities-section article > div { justify-self: end; max-width: 38rem; }
+.capabilities-section article > div { justify-self: stretch; max-width: 48rem; }
 .capability-tools { font: .65rem/1.6 "DM Mono"; text-align: right; opacity: .75; }
-.capability-desc { margin-top: 1rem; font-size: .92rem; line-height: 1.75; text-align: left; color: rgba(240,238,231,.78); }
+.capability-desc { display: block; margin-top: 1.2rem; font-size: clamp(.95rem, 1.25vw, 1.15rem); line-height: 1.75; text-align: left; color: rgba(240,238,231,.9); }
+.capability-detail ul { margin: 2rem 0 0; padding: 0; list-style: none; }
+.capability-detail li { padding: .8rem 0; display: grid; grid-template-columns: 2.2rem 1fr; gap: .8rem; border-top: 1px solid rgba(255,255,255,.16); }
+.capability-detail li > span { padding-top: .2rem; font: .55rem "DM Mono"; opacity: .5; }
+.capability-detail li p { font-size: .82rem; line-height: 1.65; color: rgba(240,238,231,.68); }
 
 .library-section { padding: 16vh 3vw 20vh; background: var(--paper); }
 .library-grid { margin-left: 8vw; display: grid; grid-template-columns: 1.15fr .85fr; }
@@ -324,9 +328,12 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
   .photo-frame > div, .photo-frame-1 > div, .photo-frame-2 > div, .photo-frame-3 > div { height: 64vh; }
   .photo-end { flex-basis: 82vw; height: 64vh; scroll-snap-align: center; }
   .capability-list { margin-left: 0; }
-  .capabilities-section article { grid-template-columns: 2rem 1fr; }
+  .capabilities-section article { grid-template-columns: 2rem 1fr; padding: 2.5rem 0; }
   .capabilities-section article > div { grid-column: 2; justify-self: start; margin-top: .9rem; }
   .capability-tools { text-align: left; }
+  .capability-desc { margin-top: 1rem; font-size: .92rem; }
+  .capability-detail ul { margin-top: 1.5rem; }
+  .capability-detail li { grid-template-columns: 1.8rem 1fr; }
   .awards-grid { grid-template-columns: 1fr; margin-left: 0; }
   .awards-grid article { min-height: 60vw; }
   .library-grid { margin-left: 0; grid-template-columns: 1fr; }
