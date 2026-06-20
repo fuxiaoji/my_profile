@@ -94,11 +94,11 @@ export const projects = [
 ]
 
 export const capabilities = [
-  ['AI SYSTEMS', 'RAG / Agent / MCP / Multi-Agent / PGvector', 'AI 应用系统'],
-  ['MODEL & GAME', 'PyTorch / Transformer / LSTM / Evolutionary RL', '模型与游戏 AI'],
-  ['ENGINEERING', 'Python / C++ / TypeScript / Solidity / Stata', '全栈工程'],
-  ['3D & INTERACTIVE', 'UE5 / Unity / Blender / Shader / Animation', '三维与交互'],
-  ['RESEARCH', 'Financial Modeling / Data Mining / SEO / GEO', '研究与数据'],
+  ['AI SYSTEMS', 'RAG / Agent / MCP / Multi-Agent / PGvector', 'AI 应用系统', '熟悉 Spring AI、LangChain4j 等框架，能独立完成文档 ETL、向量检索、查询增强、工具调用与多 Agent 协作的完整应用链路。', 'Builds complete AI application flows with Spring AI, LangChain4j, document ETL, vector retrieval, tool use and multi-agent orchestration.'],
+  ['MODEL & GAME', 'PyTorch / Transformer / LSTM / Evolutionary RL', '模型与游戏 AI', '掌握 PyTorch、Transformer 与 LSTM，能把强化学习和遗传演化框架落到游戏 AI；完成过 200+ 不同难度与风格模型的训练和调用。', 'Applies PyTorch, Transformers, LSTMs, reinforcement learning and evolutionary methods to production game AI pipelines.'],
+  ['ENGINEERING', 'Python / C++ / TypeScript / Solidity / Stata', '全栈工程', '具备后端与全栈开发经验，可实现小型 C++ 游戏引擎、TypeScript 前端、Solidity 链上应用，以及复杂网页的定向采集与结构化导出。', 'Works across backend and full-stack systems, small C++ game engines, TypeScript interfaces, Solidity apps and complex web data pipelines.'],
+  ['3D & INTERACTIVE', 'UE5 / Unity / Blender / Shader / Animation', '三维与交互', '掌握 UE5 蓝图/C++、Unity 与 Blender，能独立完成场景建模、贴图、灯光、Shader、镜头和动画流程。', 'Uses UE5 Blueprint/C++, Unity and Blender across modeling, texturing, lighting, shaders, camera work and animation.'],
+  ['RESEARCH', 'Financial Modeling / Data Mining / SEO / GEO', '研究与数据', '具备数学建模与复杂问题求解能力，可贯通数据获取、特征工程、预测建模与可视化；也能用结构化内容和 TDK 优化搜索与生成式推荐。', 'Connects data acquisition, feature engineering, predictive modeling and visualization, with practical SEO and generative-engine optimization.'],
 ]
 
 export const facts = [

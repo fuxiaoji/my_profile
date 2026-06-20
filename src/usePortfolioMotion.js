@@ -50,7 +50,13 @@ export function usePortfolioMotion(scope, pathname) {
           gsap.fromTo(heading.querySelector('h2'), { yPercent: 70, skewY: 7, clipPath: 'inset(0 0 100% 0)' }, {
             yPercent: 0, skewY: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.55, ease: 'power4.out',
             scrollTrigger: { trigger: heading, start: 'top 82%' },
+            clearProps: 'clipPath',
           })
+        })
+
+        gsap.fromTo('.home-project-tile', { y: 90, scale: .88, rotate: (index) => index % 2 ? 3 : -3, autoAlpha: 0 }, {
+          y: 0, scale: 1, rotate: 0, autoAlpha: 1, duration: 1.25, stagger: .13, ease: 'power4.out',
+          scrollTrigger: { trigger: '.home-project-mosaic', start: 'top 76%' },
         })
 
         gsap.utils.toArray('.project-card').forEach((card) => {
@@ -66,17 +72,19 @@ export function usePortfolioMotion(scope, pathname) {
         gsap.to('.portrait img', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top bottom', end: 'bottom top', scrub: 1.1 } })
         if (window.matchMedia('(min-width: 801px)').matches) {
           const photoTrack = document.querySelector('.photo-track')
+          const photoSticky = document.querySelector('.photo-sticky')
+          const photoDistance = () => Math.max(1, photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08)
           gsap.to(photoTrack, {
-            x: () => -(photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08),
+            x: () => -photoDistance(),
             ease: 'none',
-            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: 'bottom bottom', scrub: 1.25, invalidateOnRefresh: true },
+            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.25, pin: photoSticky, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true },
           })
           gsap.fromTo('.photo-frame', { clipPath: 'inset(0 0 100% 0)', yPercent: 12 }, { clipPath: 'inset(0 0 0% 0)', yPercent: 0, duration: 1.3, stagger: .07, ease: 'power4.out', scrollTrigger: { trigger: '.photo-section', start: 'top 68%' } })
-          gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: 'bottom bottom', scrub: 1.4 } }))
+          gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.4 } }))
         }
         gsap.fromTo('.capabilities-section article', { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, stagger: .12, duration: 1.1, ease: 'power4.out', scrollTrigger: { trigger: '.capabilities-section', start: 'top 58%' } })
         gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
-        gsap.fromTo('.library-grid > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .18, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.library-grid', start: 'top 78%' } })
+        gsap.fromTo('.featured-article, .article-stack > a, .notes-entry', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .13, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.home-articles', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
       } else {
         gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25, clearProps: 'clipPath' })
