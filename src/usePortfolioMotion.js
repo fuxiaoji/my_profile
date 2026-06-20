@@ -75,12 +75,13 @@ export function usePortfolioMotion(scope, pathname) {
           gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: 'bottom bottom', scrub: 1.4 } }))
         }
         gsap.fromTo('.capabilities-section article', { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, stagger: .12, duration: 1.1, ease: 'power4.out', scrollTrigger: { trigger: '.capabilities-section', start: 'top 58%' } })
-        gsap.fromTo('.awards-grid article', { y: 120, scale: .94, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, stagger: .16, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.awards-grid', start: 'top 78%' } })
+        gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
+        gsap.fromTo('.library-grid > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .18, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.library-grid', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
       } else {
-        gsap.fromTo('.writing-hero h1', { yPercent: 80, scaleX: .72, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .35 })
-        const articleLinks = gsap.utils.toArray('.article-index a')
-        if (articleLinks.length) gsap.fromTo(articleLinks, { x: -90, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: .9, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.article-index', start: 'top 82%' } })
+        gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25 })
+        const indexItems = gsap.utils.toArray('.content-index > a, .notes-grid > a')
+        if (indexItems.length) gsap.fromTo(indexItems, { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .045, ease: 'power3.out', delay: .5 })
       }
     }, scope)
 
