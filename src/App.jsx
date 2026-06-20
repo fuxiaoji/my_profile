@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { awards, capabilities, facts, projects } from './data'
+import { usePortfolioMotion } from './usePortfolioMotion'
 
 const nav = [['Work', '#work'], ['Profile', '#profile'], ['Writing', '/writing'], ['Contact', '#contact']]
 
@@ -30,7 +31,12 @@ function SectionTitle({ index, children, light = false }) {
 function Home() {
   return (
     <main>
-      <section className="hero" aria-labelledby="hero-title">
+      <div className="opening" aria-hidden="true">
+        <div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" />
+        <p className="opening-label"><span>FU WENJI / PORTFOLIO</span></p>
+        <strong className="opening-count">000</strong>
+      </div>
+      <section id="top" className="hero" aria-labelledby="hero-title">
         <div className="hero-top"><p className="eyebrow">AI BUILDER × FINANCE MIND</p><p>CHENGDU / CN<br />30.67° N, 104.06° E</p></div>
         <h1 id="hero-title"><span>FU</span><span>WENJI</span></h1>
         <div className="hero-bottom">
@@ -106,7 +112,10 @@ function Writing() {
     <main className="writing-page">
       <div className="writing-hero"><p className="eyebrow">INDEX / WRITING</p><h1>Ideas in<br /><i>progress.</i></h1><p>金融、AI、兵棋和那些暂时没有分类的念头。</p></div>
       <div className="article-index">
-        {articles.map((article, index) => <a href={article.url || '#'} key={article.title}><span>{String(index + 1).padStart(2, '0')}</span><h2>{article.title}</h2><p>{article.date || article.category || 'FIELD NOTE'}</p><Arrow /></a>)}
+        {articles.map((article, index) => {
+          const source = article.url || (article.md ? `https://github.com/fuxiaoji/my_profile/blob/main/${article.md.split('/').map(encodeURIComponent).join('/')}` : '#')
+          return <a href={source} target="_blank" rel="noreferrer" key={article.title}><span>{String(index + 1).padStart(2, '0')}</span><h2>{article.title}</h2><p>{article.date || article.category || 'FIELD NOTE'}</p><Arrow /></a>
+        })}
       </div>
       <Link className="back-home" to="/">← Back home</Link>
     </main>
@@ -114,5 +123,8 @@ function Writing() {
 }
 
 export default function App() {
-  return <Shell><Routes><Route path="/" element={<Home />} /><Route path="/writing" element={<Writing />} /></Routes></Shell>
+  const location = useLocation()
+  const scope = useRef(null)
+  usePortfolioMotion(scope, location.pathname)
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true" /><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/writing" element={<Writing />} /></Routes></Shell></div>
 }
