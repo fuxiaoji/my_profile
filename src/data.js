@@ -70,3 +70,18 @@ export const awards = [
   ['+6%', '三个月 ETF 模拟实盘收益率'],
   ['2,300+ H', '《战地》系列体验与系统观察'],
 ]
+
+export const photographs = [
+  ['078b88b66a8b2f1bab00e072ffdf7fe0.jpg', 'FIELD / 01'],
+  ['19fe9711f293690d0f284f205ef2e987.jpg', 'FIELD / 02'],
+  ['25c4d98036115c98f231c62d90005970.jpeg', 'FIELD / 03'],
+  ['8562470192cf76943e9acf21df4fd607.jpg', 'FIELD / 04'],
+  ['8d1acd0f8314c9a56308436e2af3702d.jpg', 'FIELD / 05'],
+  ['IMG_2874.jpeg', 'FIELD / 06'],
+  ['IMG_3421.jpeg', 'FIELD / 07'],
+  ['IMG_3893.jpeg', 'FIELD / 08'],
+  ['IMG_4098.jpeg', 'FIELD / 09'],
+  ['IMG_4212.jpeg', 'FIELD / 10'],
+  ['IMG_4984.JPG', 'FIELD / 11'],
+  ['d8548023ca6e0f529fa56d584ad7b6dd.jpg', 'FIELD / 12'],
+]

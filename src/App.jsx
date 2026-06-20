@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
-import { awards, capabilities, facts, projects } from './data'
+import { awards, capabilities, facts, photographs, projects } from './data'
 import { usePortfolioMotion } from './usePortfolioMotion'
 
 const nav = [['Work', '#work'], ['Profile', '#profile'], ['Writing', '/writing'], ['Contact', '#contact']]
@@ -78,6 +78,25 @@ function Home() {
           <div className="portrait"><img src="/photo/IMG_5292.jpeg" alt="傅文基的生活摄影" /></div>
           <div className="profile-copy"><p>我是傅文基。</p><p>金融学本科生，也是独立开发者。喜欢把看似不相干的领域接起来：用强化学习做兵棋 AI，用金融模型拆现实问题，再把过程公开成代码。</p><p>我在找一段能碰到真实产品、真实用户和硬问题的开发实习。</p></div>
           <dl className="facts">{facts.map(([value, label]) => <div key={value}><dt>{value}</dt><dd>{label}</dd></div>)}</dl>
+        </div>
+      </section>
+
+      <section className="photo-section" aria-label="影像记录">
+        <div className="photo-sticky">
+          <div className="photo-heading">
+            <p className="eyebrow">LIFE, TRAVEL & IN-BETWEENS</p>
+            <h2>FIELD<br /><i>NOTES.</i></h2>
+            <p>继续滚动 / 影像向左移动</p>
+          </div>
+          <div className="photo-track">
+            {photographs.map(([file, label], index) => (
+              <figure className={`photo-frame photo-frame-${index % 4}`} key={file}>
+                <div><img src={`/photo/${file}`} alt="生活与旅途影像" loading="lazy" decoding="async" /></div>
+                <figcaption><span>{label}</span><span>FU WENJI ARCHIVE</span></figcaption>
+              </figure>
+            ))}
+            <div className="photo-end"><span>12 MOMENTS</span><strong>KEEP<br />LOOKING.</strong></div>
+          </div>
         </div>
       </section>
 

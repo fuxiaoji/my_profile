@@ -102,6 +102,27 @@ p { margin: 0; }
 .facts dt { color: var(--acid); font-size: 1.35rem; letter-spacing: -.04em; }
 .facts dd { margin: .5rem 0 0; font: .68rem/1.5 "DM Mono"; color: rgba(240,238,231,.65); }
 
+.photo-section { position: relative; height: 480vh; color: var(--ink); background: var(--paper); }
+.photo-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.photo-heading { position: absolute; z-index: 2; left: 3vw; top: 12vh; width: 41vw; pointer-events: none; }
+.photo-heading h2 { margin: 1.2rem 0 0; font-size: clamp(5rem, 11.5vw, 12rem); line-height: .67; letter-spacing: -.1em; }
+.photo-heading h2 i { margin-left: 6vw; color: var(--coral); font-family: Georgia, serif; font-weight: 400; }
+.photo-heading > p:last-child { margin: 4vh 0 0 7vw; font: .62rem "DM Mono"; }
+.photo-track { position: absolute; left: 45vw; top: 9vh; height: 82vh; display: flex; align-items: center; gap: 7vw; padding-right: 8vw; will-change: transform; }
+.photo-frame { flex: 0 0 auto; width: clamp(260px, 27vw, 460px); margin: 0; }
+.photo-frame > div { height: 57vh; overflow: hidden; background: #d7d5cf; }
+.photo-frame img { width: 100%; height: 116%; object-fit: cover; will-change: transform; }
+.photo-frame-1 { width: clamp(360px, 39vw, 650px); transform: translateY(9vh); }
+.photo-frame-1 > div { height: 46vh; }
+.photo-frame-2 { width: clamp(240px, 23vw, 390px); transform: translateY(-8vh); }
+.photo-frame-2 > div { height: 62vh; }
+.photo-frame-3 { width: clamp(390px, 42vw, 700px); transform: translateY(6vh); }
+.photo-frame-3 > div { height: 51vh; }
+.photo-frame figcaption { padding-top: .8rem; display: flex; justify-content: space-between; border-top: 1px solid var(--ink); font: .56rem "DM Mono"; }
+.photo-end { flex: 0 0 70vw; height: 70vh; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; background: var(--acid); }
+.photo-end span { font: .62rem "DM Mono"; }
+.photo-end strong { font-size: clamp(4rem, 10vw, 10rem); line-height: .72; letter-spacing: -.09em; }
+
 .capabilities-section { padding: 15vh 3vw; color: var(--paper); background: var(--blue); }
 .capabilities-section > .eyebrow { margin-bottom: 8vh; }
 .capabilities-section article { display: grid; grid-template-columns: 8vw 1fr 1fr; align-items: center; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,.4); }
@@ -156,6 +177,15 @@ p { margin: 0; }
   .project-body, .project-card:nth-child(even) .project-body { padding: 2rem 0; min-height: 55vh; }
   .profile-grid { grid-template-columns: 1fr; }
   .portrait { height: 70vh; }
+  .photo-section { height: auto; padding: 12vh 0; overflow: hidden; }
+  .photo-sticky { position: relative; height: auto; overflow: visible; }
+  .photo-heading { position: relative; left: auto; top: auto; width: auto; padding: 0 3vw 8vh; }
+  .photo-heading h2 { font-size: 22vw; }
+  .photo-track { position: relative; left: auto; top: auto; height: auto; padding: 0 7vw 3vh; gap: 6vw; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scrollbar-width: none; will-change: auto; }
+  .photo-track::-webkit-scrollbar { display: none; }
+  .photo-frame, .photo-frame-1, .photo-frame-2, .photo-frame-3 { width: 78vw; transform: none; scroll-snap-align: center; }
+  .photo-frame > div, .photo-frame-1 > div, .photo-frame-2 > div, .photo-frame-3 > div { height: 64vh; }
+  .photo-end { flex-basis: 82vw; height: 64vh; scroll-snap-align: center; }
   .capabilities-section article { grid-template-columns: 2rem 1fr; }
   .capabilities-section article p { grid-column: 2; justify-self: start; text-align: left; margin-top: .7rem; }
   .awards-grid { grid-template-columns: 1fr; margin-left: 0; }

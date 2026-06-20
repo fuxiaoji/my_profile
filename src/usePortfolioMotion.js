@@ -64,6 +64,16 @@ export function usePortfolioMotion(scope, pathname) {
 
         gsap.fromTo('.profile-grid > *', { y: 120, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .18, duration: 1.25, ease: 'power4.out', scrollTrigger: { trigger: '.profile-grid', start: 'top 78%' } })
         gsap.to('.portrait img', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top bottom', end: 'bottom top', scrub: 1.1 } })
+        if (window.matchMedia('(min-width: 801px)').matches) {
+          const photoTrack = document.querySelector('.photo-track')
+          gsap.to(photoTrack, {
+            x: () => -(photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08),
+            ease: 'none',
+            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: 'bottom bottom', scrub: 1.25, invalidateOnRefresh: true },
+          })
+          gsap.fromTo('.photo-frame', { clipPath: 'inset(0 0 100% 0)', yPercent: 12 }, { clipPath: 'inset(0 0 0% 0)', yPercent: 0, duration: 1.3, stagger: .07, ease: 'power4.out', scrollTrigger: { trigger: '.photo-section', start: 'top 68%' } })
+          gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: 'bottom bottom', scrub: 1.4 } }))
+        }
         gsap.fromTo('.capabilities-section article', { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, stagger: .12, duration: 1.1, ease: 'power4.out', scrollTrigger: { trigger: '.capabilities-section', start: 'top 58%' } })
         gsap.fromTo('.awards-grid article', { y: 120, scale: .94, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, stagger: .16, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.awards-grid', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
