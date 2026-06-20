@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { awards, capabilities, facts, photographs, projects } from './data'
 import { useLanguage } from './i18n'
 import { usePortfolioMotion } from './usePortfolioMotion'
@@ -9,11 +9,12 @@ const githubFile = (path, repo = 'my_profile') => `https://github.com/fuxiaoji/$
 
 function Shell({ children }) {
   const { t, toggle } = useLanguage()
+  const navItems = [['/projects', t.navWork], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
   return <div className="site-shell">
     <header className="nav-shell">
       <Link className="wordmark" to="/" aria-label={t.home}>FWJ<span>®</span></Link>
       <nav aria-label="主导航">
-        <Link to="/projects">{t.navWork}</Link><Link to="/writing">{t.navArticles}</Link><Link to="/study">{t.navNotes}</Link><a href="/#profile">{t.navProfile}</a>
+        {navItems.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : undefined}>{label}</NavLink>)}
       </nav>
       <div className="nav-actions"><span className="availability"><i /> {t.available}</span><button type="button" onClick={toggle} aria-label="切换语言">{t.language}</button></div>
     </header>{children}
@@ -24,12 +25,13 @@ function SectionTitle({ index, title, subtitle, light = false }) {
   return <div className={`section-heading ${light ? 'light' : ''}`}><span>({index})</span><div><h2>{title}</h2><p>{subtitle}</p></div></div>
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, detailed = false }) {
   const { language } = useLanguage(); const english = language === 'en'
-  return <a className="project-card" href={project.link} target="_blank" rel="noreferrer">
-    <div className={`project-visual ${project.tone}`}><span className="project-no">{project.no}</span><div className="orb" /><div className="metric"><strong>{project.metric}</strong><small>{english ? project.enMetricLabel : project.metricLabel}</small></div></div>
-    <div className="project-body"><div><p>{project.period} / {english ? project.enSubtitle : project.subtitle}</p><h3>{project.title}</h3></div><p className="project-copy">{english ? project.enCopy : project.copy}</p><ul>{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><Arrow /></div>
-  </a>
+  const detailLines = english ? project.enDetails : project.details
+  return <article className={`project-card ${detailed ? 'project-card-detailed' : ''}`}>
+    <a className={`project-visual ${project.tone}`} href={project.link} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub`}><span className="project-no">{project.no}</span><div className="orb" /><div className="metric"><strong>{project.metric}</strong><small>{english ? project.enMetricLabel : project.metricLabel}</small></div></a>
+    <div className="project-body"><div><p>{project.period} / {english ? project.enSubtitle : project.subtitle}</p><h3>{project.title}</h3></div><p className="project-copy">{english ? project.enCopy : project.copy}</p>{detailed && <ol className="project-details">{detailLines.map((line, index) => <li key={line}><span>0{index + 1}</span>{line}</li>)}</ol>}<ul className="project-tags">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><a className="github-link" href={project.link} target="_blank" rel="noreferrer"><span>GITHUB</span><span>{project.link.replace('https://github.com/', '')}</span><Arrow /></a></div>
+  </article>
 }
 
 function Subscribe() {
@@ -63,7 +65,12 @@ function Home() {
 function PageHero({ kicker, title, lead }) { return <header className="index-hero"><p className="eyebrow">{kicker}</p><h1>{title}</h1><p>{lead}</p></header> }
 function IndexShell({ children }) { const { t } = useLanguage(); return <main className="index-page">{children}<Link className="back-home" to="/">← {t.home}</Link></main> }
 
-function ProjectsPage() { const { t } = useLanguage(); return <IndexShell><PageHero kicker="01 / WORK" title={t.projectsTitle} lead={t.projectsLead} /><div className="project-list index-projects">{projects.map(project => <ProjectCard project={project} key={project.title} />)}</div></IndexShell> }
+function ProjectsPage() { const { t } = useLanguage(); return <IndexShell><PageHero kicker="01 / WORK" title={t.projectsTitle} lead={t.projectsLead} /><div className="project-list index-projects">{projects.map(project => <ProjectCard project={project} detailed key={project.title} />)}</div></IndexShell> }
+
+function AboutPage() {
+  const { t, language } = useLanguage()
+  return <IndexShell><PageHero kicker="04 / PROFILE" title={t.profile} lead={t.bio1} /><section className="about-index"><div className="about-portrait"><img src="/photo/IMG_5292.jpeg" alt="傅文基与朋友" /></div><div><p className="about-lead">{t.bio2}</p><dl className="facts">{facts.map(([value, zhLabel, enLabel]) => <div key={value}><dt>{value}</dt><dd>{language === 'zh' ? zhLabel : enLabel}</dd></div>)}</dl></div></section><Subscribe /></IndexShell>
+}
 
 function ArticlesPage() {
   const { t } = useLanguage(); const [articles, setArticles] = useState([])
@@ -80,5 +87,5 @@ function NotesPage() {
 
 export default function App() {
   const location = useLocation(); const scope = useRef(null); usePortfolioMotion(scope, location.pathname)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true" /><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /></Routes></Shell></div>
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true" /><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }

@@ -79,7 +79,7 @@ export function usePortfolioMotion(scope, pathname) {
         gsap.fromTo('.library-grid > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .18, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.library-grid', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
       } else {
-        gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25 })
+        gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25, clearProps: 'clipPath' })
         const indexItems = gsap.utils.toArray('.content-index > a, .notes-grid > a')
         if (indexItems.length) gsap.fromTo(indexItems, { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .045, ease: 'power3.out', delay: .5 })
       }

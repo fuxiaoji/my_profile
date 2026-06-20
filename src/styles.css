@@ -36,6 +36,8 @@ p { margin: 0; }
 .nav-shell nav a { position: relative; }
 .nav-shell nav a::after { content: ""; position: absolute; height: 1px; inset: auto 100% -5px 0; background: currentColor; transition: inset .35s cubic-bezier(.76,0,.24,1); }
 .nav-shell nav a:hover::after { inset-right: 0; }
+.nav-shell nav a.active::after { inset-right: 0; height: 2px; }
+.nav-shell nav a.active { font-weight: 600; }
 .availability { justify-self: end; font: .62rem "DM Mono"; text-transform: uppercase; }
 .availability i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: .45rem; background: var(--acid); box-shadow: 0 0 0 4px rgba(233,255,63,.18); }
 .nav-actions { justify-self: end; display: flex; align-items: center; gap: 1.2rem; }
@@ -87,11 +89,16 @@ p { margin: 0; }
 .project-body > div p { font: .63rem "DM Mono"; text-transform: uppercase; }
 .project-body h3 { margin: .6rem 0 0; font-size: clamp(2.5rem, 5vw, 5rem); line-height: .9; letter-spacing: -.07em; }
 .project-copy { max-width: 31rem; font-size: clamp(.95rem, 1.25vw, 1.15rem); line-height: 1.65; }
-.project-body ul { margin: auto 0 0; padding: 0; list-style: none; }
-.project-body li { padding: .7rem 0; border-top: 1px solid var(--line); font: .62rem "DM Mono"; text-transform: uppercase; }
-.project-body > span { position: absolute; right: 0; top: 2rem; font-size: 1.5rem; transition: transform .45s cubic-bezier(.16,1,.3,1); }
-.project-card:nth-child(even) .project-body > span { right: 2.5rem; }
-.project-card:hover .project-body > span { transform: translate(8px,-8px); }
+.project-tags { margin: auto 0 0; padding: 0; list-style: none; }
+.project-tags li { padding: .7rem 0; border-top: 1px solid var(--line); font: .62rem "DM Mono"; text-transform: uppercase; }
+.project-details { margin: .5rem 0 1rem; padding: 0; list-style: none; counter-reset: detail; }
+.project-details li { display: grid; grid-template-columns: 2.2rem 1fr; gap: .8rem; padding: 1rem 0; border-top: 1px solid var(--line); font-size: .85rem; line-height: 1.65; }
+.project-details li > span { font: .58rem "DM Mono"; opacity: .6; }
+.github-link { margin-top: 1.5rem; padding: 1rem 0; display: grid; grid-template-columns: 5rem 1fr auto; gap: 1rem; align-items: center; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font: .6rem "DM Mono"; text-transform: none; }
+.github-link span:nth-child(2) { overflow-wrap: anywhere; opacity: .65; }
+.github-link span:last-child { font-size: 1.2rem; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+.github-link:hover span:last-child { transform: translate(6px,-6px); }
+.project-card-detailed { min-height: min(88vw, 940px); }
 .section-cta { margin: 12vh 0 0 auto; width: min(34rem, 100%); padding: 1.4rem 0; display: flex; justify-content: space-between; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font: .7rem "DM Mono"; text-transform: uppercase; }
 
 .profile-section { padding: 15vh 3vw 20vh; color: var(--paper); background-color: #30352f; background-image: radial-gradient(circle at 15% 70%, rgba(170,183,159,.18), transparent 32%); }
@@ -177,6 +184,7 @@ p { margin: 0; }
 .index-page { min-height: 100vh; padding: 16vh 3vw 12vh; background: var(--paper); }
 .index-hero { min-height: 72vh; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; }
 .index-hero h1 { grid-column: 1 / -1; align-self: center; margin: 0; max-width: 9em; font-size: clamp(5rem, 15vw, 15rem); line-height: .75; letter-spacing: -.1em; text-transform: uppercase; }
+html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 12vw, 12rem); line-height: 1.08; letter-spacing: -.075em; }
 .index-hero > p:last-child { grid-column: 2; max-width: 36rem; font-size: clamp(1rem, 1.6vw, 1.5rem); line-height: 1.5; }
 .index-projects { margin-top: 12vh; }
 .content-index { margin: 10vh 0 15vh; }
@@ -191,6 +199,10 @@ p { margin: 0; }
 .notes-grid h2 { margin: auto 0 1rem; font-size: clamp(1.2rem, 2vw, 2rem); letter-spacing: -.04em; overflow-wrap: anywhere; }
 .notes-grid > a > span:last-child { align-self: flex-end; font-size: 1.2rem; }
 .back-home { display: inline-block; padding-top: 1rem; border-top: 1px solid var(--ink); font: .67rem "DM Mono"; }
+.about-index { margin: 10vh 0 16vh 8vw; display: grid; grid-template-columns: 1.1fr 1fr; gap: 6vw; align-items: start; }
+.about-portrait { height: 72vh; overflow: hidden; }
+.about-portrait img { width: 100%; height: 115%; object-fit: cover; }
+.about-lead { margin-bottom: 10vh; font-size: clamp(1.3rem, 2.5vw, 2.4rem); line-height: 1.45; letter-spacing: -.04em; }
 
 .writing-page { min-height: 100vh; padding: 15vh 3vw 8vh; background: var(--paper); }
 .writing-hero { min-height: 70vh; display: flex; flex-direction: column; }
@@ -223,6 +235,7 @@ p { margin: 0; }
   .project-card:nth-child(even) .project-visual { order: 0; }
   .project-visual { min-height: 70vh; }
   .project-body, .project-card:nth-child(even) .project-body { padding: 2rem 0; min-height: 55vh; }
+  .project-card-detailed { min-height: 0; }
   .profile-grid { grid-template-columns: 1fr; }
   .portrait { height: 70vh; }
   .awards-strip { margin-left: 0; grid-template-columns: repeat(2, 1fr); }
@@ -249,9 +262,12 @@ p { margin: 0; }
   .index-hero { grid-template-columns: 1fr; }
   .index-hero h1, .index-hero > p:last-child { grid-column: 1; }
   .index-hero h1 { font-size: 20vw; }
+  html:lang(zh-CN) .index-hero h1 { font-size: 19vw; line-height: 1.12; }
   .content-index > a { grid-template-columns: 2rem 1fr 2rem; }
   .content-index small { display: none; }
   .notes-grid { margin-left: 0; grid-template-columns: 1fr; }
+  .about-index { margin-left: 0; grid-template-columns: 1fr; }
+  .about-portrait { height: 68vh; }
   .contact-links { grid-template-columns: 1fr; }
   .contact-links a { border-right: 0; border-bottom: 1px solid var(--ink); padding-left: 0 !important; }
   .article-index a { grid-template-columns: 2rem 1fr 2rem; }
