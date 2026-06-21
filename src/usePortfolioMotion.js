@@ -39,6 +39,7 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         const intro = gsap.timeline({ defaults: { ease: 'power4.inOut' }, onComplete: () => { document.body.style.overflow = '' } })
         intro
           .set('.opening', { display: 'grid', autoAlpha: 1 })
+          .set('.opening-compare', { autoAlpha: 0, y: 12 })
           .set('.opening-panel', { scaleY: 1 })
           .set('.opening-label span', { yPercent: 120 })
           .set('.opening-count', { autoAlpha: 1 })
@@ -50,14 +51,15 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
             if (node) node.textContent = String(Math.round(counter.value)).padStart(3, '0')
           } })
           .to('.opening-label span', { yPercent: 0, duration: .75 }, .15)
-          .to('.opening-count, .opening-label', { autoAlpha: 0, y: -14, duration: .35 }, openingVariant === 'v1' ? 1.62 : 1.82)
           .to('.opening-panel', openingVariant === 'v1'
             ? { scaleY: 0, transformOrigin: 'top', duration: 1.15, stagger: .08 }
             : { scaleY: 0, duration: 1.28, stagger: { each: .11, from: 'center' }, ease: 'power4.inOut' }, openingVariant === 'v1' ? 1.75 : 1.95)
+          .to('.opening-count, .opening-label', { autoAlpha: 0, y: -14, duration: .4 }, openingVariant === 'v1' ? 2.35 : 2.55)
           .to('.opening', { autoAlpha: 0, duration: .01 })
           .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'power3.out' }, openingVariant === 'v1' ? 2.02 : 2.32)
           .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.35, stagger: .12 }, openingVariant === 'v1' ? 2.1 : 2.42)
           .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, openingVariant === 'v1' ? 2.65 : 2.92)
+          .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, openingVariant === 'v1' ? 3.35 : 3.65)
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {
           xPercent: 0, scaleX: 1, ease: 'power3.out',
