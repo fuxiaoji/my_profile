@@ -9,8 +9,10 @@ export function usePortfolioMotion(scope, pathname) {
     if (!scope.current) return undefined
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    window.scrollTo(0, 0)
-    window.requestAnimationFrame(() => window.scrollTo(0, 0))
+    const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    resetScroll()
+    window.requestAnimationFrame(() => window.requestAnimationFrame(resetScroll))
+    const resetTimer = window.setTimeout(resetScroll, 120)
 
     const context = gsap.context(() => {
       if (reduceMotion) {
@@ -37,16 +39,29 @@ export function usePortfolioMotion(scope, pathname) {
         const intro = gsap.timeline({ defaults: { ease: 'power4.inOut' }, onComplete: () => { document.body.style.overflow = '' } })
         intro
           .set('.hero h1 span', { yPercent: 125, scaleX: .68, transformOrigin: 'left bottom' })
+          .set('.hero-watermark', { xPercent: 24, autoAlpha: 0 })
           .set('.hero-top > *, .hero-bottom > *', { y: 30, autoAlpha: 0 })
-          .to(counter, { value: 100, duration: 1.8, ease: 'power2.inOut', onUpdate: () => {
+          .set('.opening-word span', { yPercent: 125, scaleY: .72, transformOrigin: 'bottom' })
+          .set('.opening-meta span', { y: -24, autoAlpha: 0 })
+          .set('.opening-grid', { scaleX: 0 })
+          .set('.opening-progress i', { scaleX: 0 })
+          .to(counter, { value: 100, duration: 2.35, ease: 'power2.inOut', onUpdate: () => {
             const node = document.querySelector('.opening-count')
             if (node) node.textContent = String(Math.round(counter.value)).padStart(3, '0')
           } })
-          .to('.opening-label span', { yPercent: 0, duration: .75 }, .15)
-          .to('.opening-panel', { scaleY: 0, transformOrigin: 'top', duration: 1.15, stagger: .08 }, 1.75)
-          .to('.opening', { autoAlpha: 0, duration: .01 })
-          .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.35, stagger: .12 }, 2.1)
-          .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, 2.65)
+          .to('.opening-grid', { scaleX: 1, duration: 1.35, ease: 'power3.inOut' }, .05)
+          .to('.opening-meta span', { y: 0, autoAlpha: 1, duration: .7, stagger: .12 }, .18)
+          .to('.opening-label span', { yPercent: 0, duration: .75 }, .28)
+          .to('.opening-word span', { yPercent: 0, scaleY: 1, duration: 1.05, stagger: .1, ease: 'power4.out' }, .42)
+          .to('.opening-progress i', { scaleX: 1, duration: 2.15, ease: 'power2.inOut' }, .18)
+          .to('.opening-word', { xPercent: 8, scaleX: .82, letterSpacing: '-.16em', duration: .85, ease: 'power3.inOut' }, 1.65)
+          .to('.opening-meta, .opening-label, .opening-count', { y: -18, autoAlpha: 0, duration: .45, stagger: .035 }, 2.18)
+          .to('.opening-panel', { scaleY: 0, duration: 1.18, stagger: { each: .07, from: 'center' } }, 2.32)
+          .to('.opening-grid, .opening-word, .opening-progress', { autoAlpha: 0, duration: .45 }, 2.5)
+          .to('.opening', { autoAlpha: 0, duration: .01 }, 3.52)
+          .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.68)
+          .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.45, stagger: .13 }, 2.76)
+          .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, 3.18)
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {
           xPercent: 0, scaleX: 1, ease: 'power3.out',
@@ -100,6 +115,7 @@ export function usePortfolioMotion(scope, pathname) {
     }, scope)
 
     return () => {
+      window.clearTimeout(resetTimer)
       document.body.style.overflow = ''
       context.revert()
     }

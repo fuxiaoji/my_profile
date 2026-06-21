@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Link, NavLink, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { awards, capabilities, facts, photographs, projects } from './data'
 import { useLanguage } from './i18n'
 import { usePortfolioMotion } from './usePortfolioMotion'
@@ -7,8 +7,10 @@ import { usePortfolioMotion } from './usePortfolioMotion'
 function Arrow() { return <span aria-hidden="true">↗</span> }
 const githubFile = (path, repo = 'my_profile') => `https://github.com/fuxiaoji/${repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}`
 const githubRaw = path => `https://raw.githubusercontent.com/fuxiaoji/my_profile/main/${path.split('/').map(encodeURIComponent).join('/')}`
+const noteCdn = path => `https://cdn.jsdelivr.net/gh/fuxiaoji/note@main/${path.split('/').map(encodeURIComponent).join('/')}`
 const articleMarkdown = import.meta.glob('/文章/**/*.md', { query: '?raw', import: 'default' })
 const articleFallbacks = ['/photo/19fe9711f293690d0f284f205ef2e987.jpg', '/photo/8562470192cf76943e9acf21df4fd607.jpg', '/photo/d8548023ca6e0f529fa56d584ad7b6dd.jpg', '/photo/8d1acd0f8314c9a56308436e2af3702d.jpg']
+const MarkdownContent = lazy(() => import('./MarkdownContent'))
 
 function Shell({ children }) {
   const { t, toggle } = useLanguage()
@@ -62,7 +64,7 @@ function Home() {
   const { t, language } = useLanguage(); const [featuredArticles, setFeaturedArticles] = useState([])
   useEffect(() => { fetch('/articles.json').then(r => r.json()).then(data => setFeaturedArticles(data.slice(0, 8))).catch(() => setFeaturedArticles([])) }, [])
   return <main>
-    <div className="opening" aria-hidden="true"><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><p className="opening-label"><span>FU WENJI / PORTFOLIO</span></p><strong className="opening-count">000</strong></div>
+    <div className="opening" aria-hidden="true"><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-grid" /><div className="opening-meta"><span>PORTFOLIO / 2026</span><span>CHENGDU · 30.67°N</span></div><div className="opening-word"><span>F</span><span>W</span><span>J</span></div><p className="opening-label"><span>ENGINEERING · FINANCE · SYSTEMS</span></p><div className="opening-progress"><i /></div><strong className="opening-count">000</strong></div>
     <section id="top" className="hero" aria-labelledby="hero-title"><div className="hero-watermark" aria-hidden="true">傅文基</div><div className="hero-top"><p className="eyebrow">{t.heroRole}</p><p>CHENGDU / CN<br />30.67° N, 104.06° E</p></div><h1 id="hero-title"><span>FU</span><span>WENJI</span></h1><div className="hero-bottom"><p className="hero-intro">{t.heroLine}</p><p className="scroll-note">{t.explore} <b>↓</b></p></div></section>
 
     <section className="manifesto"><p className="eyebrow">{t.introKicker}</p><p className="manifesto-copy">{t.intro}</p><p className="manifesto-cn">{t.introDetail}</p></section>
@@ -99,19 +101,6 @@ function ArticlesPage() {
 }
 
 const headingId = (text, index) => `section-${index}-${text.replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '').toLowerCase()}`
-function MarkdownContent({ source }) {
-  let headingIndex = -1
-  return <div className="article-prose">{source.split(/\r?\n/).map((line, index) => {
-    const heading = line.match(/^(#{1,4})\s+(.+)/)
-    if (heading) { headingIndex += 1; const Tag = `h${Math.min(heading[1].length + 1, 4)}`; return <Tag id={headingId(heading[2], headingIndex)} key={index}>{heading[2]}</Tag> }
-    const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)/)
-    if (image) return null
-    if (/^[-*]\s+/.test(line)) return <p className="article-list-line" key={index}><span>—</span>{line.replace(/^[-*]\s+/, '')}</p>
-    if (/^>\s*/.test(line)) return <blockquote key={index}>{line.replace(/^>\s*/, '')}</blockquote>
-    if (!line.trim()) return null
-    return <p key={index}>{line.replace(/\*\*|__/g, '')}</p>
-  })}</div>
-}
 
 function ArticleDetailPage() {
   const { articleId } = useParams(); const { language } = useLanguage(); const [articles, setArticles] = useState([]); const [source, setSource] = useState('')
@@ -127,7 +116,8 @@ function ArticleDetailPage() {
   if (!article) return <main className="article-detail"><p className="eyebrow">LOADING / WRITING</p></main>
   const headings = []; source.split(/\r?\n/).forEach(line => { const match = line.match(/^(#{1,4})\s+(.+)/); if (match) headings.push(match[2]) })
   const recommendations = articles.map((item, itemIndex) => ({ ...item, itemIndex })).filter(item => item.itemIndex !== index).sort((a, b) => (b.tags || []).filter(tag => article.tags?.includes(tag)).length - (a.tags || []).filter(tag => article.tags?.includes(tag)).length).slice(0, 3)
-  return <main className="article-detail"><header className="article-detail-hero"><Link to="/writing">← {language === 'zh' ? '返回文章库' : 'Writing index'}</Link><p className="eyebrow">{article.tags?.join(' / ')} · {article.date}</p><h1>{article.title}</h1><p>{article.summary}</p></header><div className="article-layout"><aside><p className="eyebrow">CONTENTS / 目录</p>{headings.length ? headings.map((heading, headingIndex) => <a href={`#${headingId(heading, headingIndex)}`} key={`${heading}-${headingIndex}`}><span>{String(headingIndex + 1).padStart(2, '0')}</span>{heading}</a>) : <p>{language === 'zh' ? '正文阅读' : 'Article'}</p>}</aside>{source ? <MarkdownContent source={source} /> : <div className="article-prose"><p>{article.summary}</p><p>{language === 'zh' ? '原文内容正在迁移到新版阅读器，可暂时前往源文件查看。' : 'The full text is being migrated into the new reader.'}</p><a className="source-article-link" href={githubFile(article.md)} target="_blank" rel="noreferrer">{language === 'zh' ? '查看原始文章' : 'Open source article'} <Arrow /></a></div>}</div><section className="related-writing"><p className="eyebrow">RELATED / 相似推荐</p><div>{recommendations.map(item => <Link to={`/writing/${item.itemIndex}`} key={item.title}><span>{item.date}</span><h2>{item.title}</h2><p>{item.summary}</p><Arrow /></Link>)}</div></section></main>
+  const articleDir = article.md.slice(0, article.md.lastIndexOf('/') + 1)
+  return <main className="article-detail"><header className="article-detail-hero"><Link to="/writing">← {language === 'zh' ? '返回文章库' : 'Writing index'}</Link><p className="eyebrow">{article.tags?.join(' / ')} · {article.date}</p><h1>{article.title}</h1><p>{article.summary}</p></header><div className="article-layout"><aside><p className="eyebrow">CONTENTS / 目录</p>{headings.length ? headings.map((heading, headingIndex) => <a href={`#${headingId(heading, headingIndex)}`} key={`${heading}-${headingIndex}`}><span>{String(headingIndex + 1).padStart(2, '0')}</span>{heading}</a>) : <p>{language === 'zh' ? '正文阅读' : 'Article'}</p>}</aside>{source ? <Suspense fallback={<div className="article-prose"><p>LOADING MARKDOWN…</p></div>}><MarkdownContent source={source} assetBase={githubRaw(articleDir)} /></Suspense> : <div className="article-prose"><p>{article.summary}</p><p>{language === 'zh' ? '原文内容正在迁移到新版阅读器，可暂时前往源文件查看。' : 'The full text is being migrated into the new reader.'}</p><a className="source-article-link" href={githubFile(article.md)} target="_blank" rel="noreferrer">{language === 'zh' ? '查看原始文章' : 'Open source article'} <Arrow /></a></div>}</div><section className="related-writing"><p className="eyebrow">RELATED / 相似推荐</p><div>{recommendations.map(item => <Link to={`/writing/${item.itemIndex}`} key={item.title}><span>{item.date}</span><h2>{item.title}</h2><p>{item.summary}</p><Arrow /></Link>)}</div></section></main>
 }
 
 const flattenNotes = (nodes, result = []) => { (nodes || []).forEach(node => node.type === 'file' ? result.push(node) : flattenNotes(node.children, result)); return result }
@@ -135,10 +125,38 @@ function NotesPage() {
   const { t } = useLanguage(); const [root, setRoot] = useState(null); const [selected, setSelected] = useState(0)
   useEffect(() => { fetch('/notes.json').then(r => r.json()).then(setRoot).catch(() => setRoot(null)) }, [])
   const folders = root?.children?.filter(node => node.type === 'directory') || []; const active = folders[selected]; const files = active ? flattenNotes(active.children, []) : []
-  return <IndexShell><PageHero kicker="03 / NOTES" title={t.notesTitle} lead={t.notesLead} /><div className="file-browser"><aside><div className="browser-label"><i /> NOTE REPOSITORY</div>{folders.map((folder, index) => <button className={selected === index ? 'active' : ''} type="button" onClick={() => setSelected(index)} key={folder.name}><span>▸</span><strong>{folder.name}</strong><small>{flattenNotes(folder.children, []).length}</small></button>)}</aside><section><header><span>note</span><b>/</b><strong>{active?.name || '—'}</strong><small>{files.length} FILES</small></header><div className="file-rows">{files.map((note, index) => <a href={githubFile(note.path.replace(/^note\//, ''), 'note')} target="_blank" rel="noreferrer" key={`${note.path}-${index}`}><span className="file-icon">{note.name.toLowerCase().endsWith('.pdf') ? 'PDF' : 'DOC'}</span><div><strong>{note.name}</strong><small>{note.path.split('/').slice(2, -1).join(' / ') || active?.name}</small></div><em>OPEN ↗</em></a>)}</div></section></div></IndexShell>
+  return <IndexShell><PageHero kicker="03 / NOTES" title={t.notesTitle} lead={t.notesLead} /><div className="file-browser"><aside><div className="browser-label"><i /> NOTE REPOSITORY</div>{folders.map((folder, index) => <button className={selected === index ? 'active' : ''} type="button" onClick={() => setSelected(index)} key={folder.name}><span>▸</span><strong>{folder.name}</strong><small>{flattenNotes(folder.children, []).length}</small></button>)}</aside><section><header><span>note</span><b>/</b><strong>{active?.name || '—'}</strong><small>{files.length} FILES</small></header><div className="file-rows">{files.map((note, index) => <Link to={`/study/view?path=${encodeURIComponent(note.path.replace(/^note\//, ''))}`} key={`${note.path}-${index}`}><span className="file-icon">{note.name.toLowerCase().endsWith('.pdf') ? 'PDF' : 'MD'}</span><div><strong>{note.name}</strong><small>{note.path.split('/').slice(2, -1).join(' / ') || active?.name}</small></div><em>READ ↗</em></Link>)}</div></section></div></IndexShell>
+}
+
+function NoteViewerPage() {
+  const [params] = useSearchParams(); const { language } = useLanguage(); const path = params.get('path') || ''; const name = path.split('/').pop() || 'Note'; const isPdf = /\.pdf$/i.test(path); const isMarkdown = /\.md$/i.test(path); const [source, setSource] = useState(''); const [error, setError] = useState('')
+  useEffect(() => {
+    setSource(''); setError('')
+    if (!isMarkdown) return undefined
+    let current = true
+    const localUrl = `/note/${path.split('/').map(encodeURIComponent).join('/')}`
+    const readMarkdown = async () => {
+      for (const url of [localUrl, noteCdn(path)]) {
+        try {
+          const response = await fetch(url)
+          const type = response.headers.get('content-type') || ''
+          if (!response.ok || type.includes('text/html')) continue
+          const text = await response.text()
+          if (current) setSource(text)
+          return
+        } catch { /* try the next source */ }
+      }
+      if (current) setError(language === 'zh' ? '笔记源文件当前不可用，请检查 note 子仓库。' : 'The note source is unavailable; check the note submodule.')
+    }
+    readMarkdown()
+    return () => { current = false }
+  }, [path, isMarkdown, language])
+  const headings = []; source.split(/\r?\n/).forEach(line => { const match = line.match(/^(#{1,4})\s+(.+)/); if (match) headings.push(match[2]) })
+  const directory = path.slice(0, path.lastIndexOf('/') + 1); const fileUrl = noteCdn(path)
+  return <main className="note-viewer"><header className="note-viewer-header"><Link to="/study">← {language === 'zh' ? '返回笔记库' : 'Notes index'}</Link><p className="eyebrow">{isPdf ? 'PDF DOCUMENT' : 'MARKDOWN NOTE'} / {path.split('/').slice(0, -1).join(' / ')}</p><h1>{name.replace(/\.(md|pdf)$/i, '')}</h1><div><a href={fileUrl} target="_blank" rel="noreferrer">{language === 'zh' ? '打开原文件' : 'Open original'} ↗</a><a href={fileUrl} download>{language === 'zh' ? '下载文件' : 'Download'} ↓</a></div></header>{isPdf ? <section className="pdf-reader"><div className="pdf-reader-bar"><span>PDF / {name}</span><span>{language === 'zh' ? '可缩放、翻页与打印' : 'Zoom, navigate and print'}</span></div><iframe title={name} src={fileUrl} /></section> : <div className="article-layout note-markdown-layout"><aside><p className="eyebrow">CONTENTS / 目录</p>{headings.length ? headings.map((heading, index) => <a href={`#${headingId(heading, index)}`} key={`${heading}-${index}`}><span>{String(index + 1).padStart(2, '0')}</span>{heading}</a>) : <p>{language === 'zh' ? '正文阅读' : 'Note content'}</p>}</aside>{source ? <Suspense fallback={<div className="article-prose"><p>LOADING MARKDOWN…</p></div>}><MarkdownContent source={source} assetBase={noteCdn(directory)} /></Suspense> : <div className="article-prose"><p>{error || (language === 'zh' ? '正在载入笔记…' : 'Loading note…')}</p></div>}</div>}</main>
 }
 
 export default function App() {
   const location = useLocation(); const scope = useRef(null); usePortfolioMotion(scope, location.pathname)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }
