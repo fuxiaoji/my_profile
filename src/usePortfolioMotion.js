@@ -37,6 +37,10 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         const counter = { value: 0 }
         document.body.style.overflow = 'hidden'
         const intro = gsap.timeline({ defaults: { ease: 'power4.inOut' }, onComplete: () => { document.body.style.overflow = '' } })
+        const updateCounter = () => {
+          const node = document.querySelector('.opening-count')
+          if (node) node.textContent = String(Math.round(counter.value)).padStart(3, '0')
+        }
         intro
           .set('.opening', { display: 'grid', autoAlpha: 1 })
           .set('.opening-compare', { autoAlpha: 0, y: 12 })
@@ -46,20 +50,39 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
           .set('.hero h1 span', { yPercent: 125, scaleX: .68, transformOrigin: 'left bottom' })
           .set('.hero-watermark', { xPercent: 24, autoAlpha: 0 })
           .set('.hero-top > *, .hero-bottom > *', { y: 30, autoAlpha: 0 })
-          .to(counter, { value: 100, duration: openingVariant === 'v1' ? 1.8 : 2.05, ease: 'power2.inOut', onUpdate: () => {
-            const node = document.querySelector('.opening-count')
-            if (node) node.textContent = String(Math.round(counter.value)).padStart(3, '0')
-          } })
-          .to('.opening-label span', { yPercent: 0, duration: .75 }, .15)
-          .to('.opening-panel', openingVariant === 'v1'
-            ? { scaleY: 0, transformOrigin: 'top', duration: 1.15, stagger: .08 }
-            : { scaleY: 0, duration: 1.28, stagger: { each: .11, from: 'center' }, ease: 'power4.inOut' }, openingVariant === 'v1' ? 1.75 : 1.95)
-          .to('.opening-count, .opening-label', { autoAlpha: 0, y: -14, duration: .4 }, openingVariant === 'v1' ? 2.35 : 2.55)
-          .to('.opening', { autoAlpha: 0, duration: .01 })
-          .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'power3.out' }, openingVariant === 'v1' ? 2.02 : 2.32)
-          .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.35, stagger: .12 }, openingVariant === 'v1' ? 2.1 : 2.42)
-          .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, openingVariant === 'v1' ? 2.65 : 2.92)
-          .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, openingVariant === 'v1' ? 3.35 : 3.65)
+
+        if (openingVariant === 'v1') {
+          intro
+            .to(counter, { value: 100, duration: 1.8, ease: 'power2.inOut', onUpdate: updateCounter }, 0)
+            .to('.opening-label span', { yPercent: 0, duration: .75 }, .15)
+            .to('.opening-panel', { scaleY: 0, transformOrigin: 'top', duration: 1.15, stagger: .08 }, 1.75)
+            .to('.opening-count, .opening-label', { autoAlpha: 0, y: -14, duration: .4 }, 2.35)
+            .to('.opening', { autoAlpha: 0, duration: .01 }, 2.98)
+            .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'power3.out' }, 2.02)
+            .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.35, stagger: .12 }, 2.1)
+            .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, 2.65)
+            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 3.35)
+        } else {
+          intro
+            .set('.opening-kicker span', { yPercent: -140, autoAlpha: 0 })
+            .set('.opening-cn span', { xPercent: 28, scaleX: .72, autoAlpha: 0, transformOrigin: 'right center' })
+            .set('.opening-name span', { yPercent: 125, scaleX: .56, transformOrigin: 'left bottom' })
+            .set('.opening-rule', { scaleX: 0 })
+            .to(counter, { value: 100, duration: 2.65, ease: 'power2.inOut', onUpdate: updateCounter }, 0)
+            .to('.opening-kicker span', { yPercent: 0, autoAlpha: 1, duration: .7, stagger: .1, ease: 'power3.out' }, .12)
+            .to('.opening-cn span', { xPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.15, ease: 'power4.out' }, .28)
+            .to('.opening-name span', { yPercent: 0, scaleX: 1, duration: 1.15, stagger: .11, ease: 'power4.out' }, .55)
+            .to('.opening-label span', { yPercent: 0, duration: .7 }, .72)
+            .to('.opening-rule', { scaleX: 1, duration: 1.35, ease: 'power3.inOut' }, .65)
+            .to('.opening-name', { xPercent: 9, scaleX: .78, duration: .9, ease: 'power3.inOut', transformOrigin: 'left center' }, 1.72)
+            .to('.opening-panel', { scaleY: 0, duration: 1.4, stagger: { each: .12, from: 'center' }, ease: 'power4.inOut' }, 2.48)
+            .to('.opening-kicker, .opening-cn, .opening-name, .opening-rule, .opening-count, .opening-label', { autoAlpha: 0, y: -18, duration: .48, stagger: .025 }, 2.72)
+            .to('.opening', { autoAlpha: 0, duration: .01 }, 4.08)
+            .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.78)
+            .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.5, stagger: .14, ease: 'power4.out' }, 2.92)
+            .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .95, stagger: .08 }, 3.42)
+            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 4.22)
+        }
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {
           xPercent: 0, scaleX: 1, ease: 'power3.out',
