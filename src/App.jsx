@@ -60,11 +60,11 @@ function HomeProjectMosaic() {
   return <div className="home-project-mosaic">{projects.slice(0, 5).map((project, index) => <a className={`home-project-tile tile-${index + 1} ${project.tone}`} href={project.link} target="_blank" rel="noreferrer" key={project.title}><span>{project.no}</span><div className="tile-shape" /><div><p>{project.period} / {english ? project.enSubtitle : project.subtitle}</p><h3>{project.title}</h3></div><strong>{project.metric}</strong><Arrow /></a>)}</div>
 }
 
-function Home() {
+function Home({ openingVariant = 'v1' }) {
   const { t, language } = useLanguage(); const [featuredArticles, setFeaturedArticles] = useState([])
   useEffect(() => { fetch('/articles.json').then(r => r.json()).then(data => setFeaturedArticles(data.slice(0, 8))).catch(() => setFeaturedArticles([])) }, [])
   return <main>
-    <div className="opening" aria-hidden="true"><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-grid" /><div className="opening-meta"><span>PORTFOLIO / 2026</span><span>CHENGDU · 30.67°N</span></div><div className="opening-word"><span>F</span><span>W</span><span>J</span></div><p className="opening-label"><span>ENGINEERING · FINANCE · SYSTEMS</span></p><div className="opening-progress"><i /></div><strong className="opening-count">000</strong></div>
+    <div className={`opening opening--${openingVariant}`} aria-hidden="true"><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><p className="opening-label"><span>FU WENJI / PORTFOLIO</span></p><strong className="opening-count">000</strong></div>
     <section id="top" className="hero" aria-labelledby="hero-title"><div className="hero-watermark" aria-hidden="true">傅文基</div><div className="hero-top"><p className="eyebrow">{t.heroRole}</p><p>CHENGDU / CN<br />30.67° N, 104.06° E</p></div><h1 id="hero-title"><span>FU</span><span>WENJI</span></h1><div className="hero-bottom"><p className="hero-intro">{t.heroLine}</p><p className="scroll-note">{t.explore} <b>↓</b></p></div></section>
 
     <section className="manifesto"><p className="eyebrow">{t.introKicker}</p><p className="manifesto-copy">{t.intro}</p><p className="manifesto-cn">{t.introDetail}</p></section>
@@ -80,6 +80,7 @@ function Home() {
     <section className="library-section"><SectionTitle index="04" title={t.library} subtitle={t.librarySub} /><div className="home-article-cards">{featuredArticles.map((article, index) => <Link className={`home-article-card article-card-${index + 1}`} to={`/writing/${index}`} key={article.title}><div className="article-card-cover"><img src={githubRaw(article.cover)} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = articleFallbacks[index % articleFallbacks.length] }} alt="" loading="lazy" /></div><span>{String(index + 1).padStart(2, '0')} / {article.date || 'FIELD NOTE'}</span><h3>{article.title}</h3><p>{article.summary}</p><small>{article.tags?.join(' / ')}</small><Arrow /></Link>)}</div><div className="library-actions"><Link className="all-writing-link" to="/writing">{language === 'zh' ? '查看全部文章' : 'View all writing'} <Arrow /></Link><Link className="notes-entry" to="/study"><span>NOTES / 笔记</span><strong>{language === 'zh' ? '进入文件浏览器' : 'Open file browser'}</strong><Arrow /></Link></div></section>
 
     <section id="contact" className="contact-section"><p className="eyebrow">{t.contactKicker}</p><h2>{t.contact}</h2><ResumePanel /><Subscribe /><div className="contact-links"><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="https://github.com/fuxiaoji" target="_blank" rel="noreferrer">GITHUB <Arrow /></a><a href="#top">BACK TO TOP ↑</a></div><footer><span>© 2026 FU WENJI</span><span>CHENGDU / CN</span><a href="#top">BACK TO TOP ↑</a></footer></section>
+    <nav className="opening-compare" aria-label="开屏动画版本比较"><span>OPENING TEST</span><a className={openingVariant === 'v1' ? 'active' : ''} href="/?opening=v1">01 原始版</a><a className={openingVariant === 'v2' ? 'active' : ''} href="/?opening=v2">02 第二版</a><a href={`/?opening=${openingVariant}&replay=${Date.now()}`}>重播 ↻</a></nav>
   </main>
 }
 
@@ -157,6 +158,6 @@ function NoteViewerPage() {
 }
 
 export default function App() {
-  const location = useLocation(); const scope = useRef(null); usePortfolioMotion(scope, location.pathname)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
+  const location = useLocation(); const scope = useRef(null); const openingVariant = new URLSearchParams(location.search).get('opening') === 'v2' ? 'v2' : 'v1'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search)
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }
