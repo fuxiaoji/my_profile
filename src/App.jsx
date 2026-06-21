@@ -20,7 +20,7 @@ const MarkdownContent = lazy(() => import('./MarkdownContent'))
 
 function Shell({ children }) {
   const { t, toggle } = useLanguage()
-  const navItems = [['/projects', t.navWork], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
+  const navItems = [['/projects', t.navWork], ['/game', t.navGame], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
   return <div className="site-shell">
     <header className="nav-shell">
       <Link className="wordmark" to="/" aria-label={t.home}>FWJ<span>®</span></Link>
@@ -66,7 +66,18 @@ function HomeProjectMosaic() {
   return <div className="home-project-mosaic">{projects.slice(0, 5).map((project, index) => <a className={`home-project-tile tile-${index + 1} ${project.tone}`} href={project.link} target="_blank" rel="noreferrer" key={project.title}><span>{project.no}</span><div className="tile-shape" /><div><p>{project.period} / {english ? project.enSubtitle : project.subtitle}</p><h3>{project.title}</h3></div><strong>{project.metric}</strong><Arrow /></a>)}</div>
 }
 
-function Home({ openingVariant = 'v1' }) {
+function GamePreviewSection() {
+  const { language } = useLanguage(); const zh = language === 'zh'
+  return <section className="game-preview-section">
+    <video className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video>
+    <div className="game-preview-overlay" />
+    <div className="game-preview-meta"><span>(GAME / REALTIME)</span><span>UE5 · BLENDER · AI</span></div>
+    <h2><span>PLAY.</span><span>BUILD.</span><span>SIMULATE.</span></h2>
+    <div className="game-preview-bottom"><div><p>{zh ? '游戏 AI、实时渲染与系统设计' : 'Game AI, realtime rendering and systems design'}</p><strong>{zh ? '我不只研究游戏规则，也把世界、镜头和行为做成可运行的体验。' : 'I study rules, then turn worlds, cameras and behaviours into playable systems.'}</strong></div><dl><div><dt>2300+</dt><dd>{zh ? '战地系列小时' : 'Battlefield hours'}</dd></div><div><dt>200+</dt><dd>{zh ? '演化 AI 模型' : 'evolved AI models'}</dd></div></dl><Link to="/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+  </section>
+}
+
+function Home({ openingVariant = 'v2' }) {
   const { t, language } = useLanguage(); const [featuredArticles, setFeaturedArticles] = useState([])
   useEffect(() => { fetch('/articles.json').then(r => r.json()).then(data => setFeaturedArticles(data.slice(0, 8))).catch(() => setFeaturedArticles([])) }, [])
   return <main>
@@ -77,6 +88,8 @@ function Home({ openingVariant = 'v1' }) {
 
     <section id="work" className="work-section home-work"><SectionTitle index="01" title={t.selected} subtitle={t.selectedSub} /><HomeProjectMosaic /><Link className="section-cta" to="/projects">{t.allProjects} <Arrow /></Link></section>
 
+    <GamePreviewSection />
+
     <section className="capabilities-section"><SectionTitle index="02" title={t.method} subtitle={t.methodSub} light /><div className="capability-list">{capabilities.map(([title, tools, zhTitle, zhDesc, enDesc, zhPoints, enPoints], i) => <article key={title}><span>0{i + 1}</span><h3>{language === 'zh' ? zhTitle : title}</h3><div className="capability-detail"><p className="capability-tools">{tools}</p><p className="capability-desc">{language === 'zh' ? zhDesc : enDesc}</p><ul>{(language === 'zh' ? zhPoints : enPoints).map((point, pointIndex) => <li key={point}><span>{String(pointIndex + 1).padStart(2, '0')}</span><p>{point}</p></li>)}</ul></div></article>)}</div></section>
 
     <section id="profile" className="profile-section"><SectionTitle index="03" title={t.profile} subtitle={t.profileSub} light /><div className="profile-grid"><div className="portrait"><img src="/photo/8562470192cf76943e9acf21df4fd607.jpg" alt="傅文基个人照" /></div><div className="profile-copy"><p>{t.hello}</p><p>{t.bio1}</p><p>{t.bio2}</p></div><dl className="facts">{facts.map(([value, zhLabel, enLabel]) => <div key={value}><dt>{value}</dt><dd>{language === 'zh' ? zhLabel : enLabel}</dd></div>)}</dl></div><div className="awards-strip">{awards.map(([value, zhLabel, enLabel]) => <article key={value}><strong>{value}</strong><p>{language === 'zh' ? zhLabel : enLabel}</p></article>)}</div></section>
@@ -86,7 +99,6 @@ function Home({ openingVariant = 'v1' }) {
     <section className="library-section"><SectionTitle index="04" title={t.library} subtitle={t.librarySub} /><div className="home-article-cards">{featuredArticles.map((article, index) => <Link className={`home-article-card article-card-${index + 1}`} to={`/writing/${index}`} key={article.title}><div className="article-card-cover"><img src={/^https?:/i.test(article.cover || '') ? articleFallbackCover(article) : githubRaw(article.cover)} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = articleFallbackCover(article) }} alt={`${article.title} 文章封面`} loading="lazy" /></div><span>{String(index + 1).padStart(2, '0')} / {article.date || 'FIELD NOTE'}</span><h3>{article.title}</h3><p>{article.summary}</p><small>{article.tags?.join(' / ')}</small><Arrow /></Link>)}</div><div className="library-actions"><Link className="all-writing-link" to="/writing">{language === 'zh' ? '查看全部文章' : 'View all writing'} <Arrow /></Link><Link className="notes-entry" to="/study"><span>NOTES / 笔记</span><strong>{language === 'zh' ? '进入文件浏览器' : 'Open file browser'}</strong><Arrow /></Link></div></section>
 
     <section id="contact" className="contact-section"><p className="eyebrow">{t.contactKicker}</p><h2>{t.contact}</h2><ResumePanel /><Subscribe /><div className="contact-links"><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="https://github.com/fuxiaoji" target="_blank" rel="noreferrer">GITHUB <Arrow /></a><a href="#top">BACK TO TOP ↑</a></div><footer><span>© 2026 FU WENJI</span><span>CHENGDU / CN</span><a href="#top">BACK TO TOP ↑</a></footer></section>
-    <nav className="opening-compare" aria-label="开屏动画版本比较"><span>OPENING TEST</span><a className={openingVariant === 'v1' ? 'active' : ''} href="/?opening=v1">01 原始版</a><a className={openingVariant === 'v2' ? 'active' : ''} href="/?opening=v2">02 第二版</a><a href={`/?opening=${openingVariant}&replay=${Date.now()}`}>重播 ↻</a></nav>
   </main>
 }
 
@@ -98,6 +110,42 @@ function ProjectsPage() { const { t } = useLanguage(); return <IndexShell><PageH
 function AboutPage() {
   const { t, language } = useLanguage()
   return <IndexShell><PageHero kicker="04 / PROFILE" title={t.profile} lead={t.bio1} /><section className="about-index"><div className="about-portrait"><img src="/photo/8562470192cf76943e9acf21df4fd607.jpg" alt="傅文基个人照" /></div><div><p className="about-lead">{t.bio2}</p><dl className="facts">{facts.map(([value, zhLabel, enLabel]) => <div key={value}><dt>{value}</dt><dd>{language === 'zh' ? zhLabel : enLabel}</dd></div>)}</dl></div></section><ResumePanel /><Subscribe /></IndexShell>
+}
+
+const gameLiteracy = [
+  ['01', 'STRATEGY / WARGAME', '策略与兵棋', '《钢铁雄心 IV》《维多利亚》各 1000+ 小时；体验 20+ 款硬核兵棋，持续产出攻略与战报。', '1,000+ hours each in Hearts of Iron IV and Victoria, plus 20+ hardcore wargames and a growing archive of guides and AARs.', '1000+ HRS × 2'],
+  ['02', 'FPS / BATTLEFIELD', '战场与载具', '战地系列 2300+ 小时；《战地 1》2000+ 小时，110 级，胜率 67%，熟悉步兵、载具和空战节奏。', '2,300+ hours across Battlefield; 2,000+ in Battlefield 1 with a 67% win rate and deep infantry, vehicle and air-combat literacy.', '67% WIN RATE'],
+  ['03', 'GaaS / ANIME', '长线内容', '长期体验原神、崩坏：星穹铁道、鸣潮等产品，理解内容版本节奏、角色驱动与抽卡商业化。', 'Long-term experience with major anime GaaS titles, with attention to update cadence, character-driven content and gacha monetisation.', 'LIVE OPS'],
+  ['04', 'ACTION / SIM', '动作与模拟', '战舰世界、骑马与砍杀、实况足球各 500+ 小时，并完整体验多款动作与开放世界作品。', '500+ hours each across World of Warships, Mount & Blade and PES, alongside completed action and open-world titles.', '500+ HRS'],
+]
+
+function GamePage() {
+  const { language } = useLanguage(); const zh = language === 'zh'
+  return <main className="game-page">
+    <section className="game-hero">
+      <video autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><div className="game-hero-shade" />
+      <div className="game-hero-meta"><span>05 / GAME & REALTIME</span><span>CHENGDU / 2026</span></div>
+      <h1><span>GAME</span><span>SYSTEMS</span></h1>
+      <div className="game-hero-intro"><p>{zh ? '游戏开发 / AI / 实时视觉' : 'Game development / AI / realtime visual'}</p><strong>{zh ? '理解规则，构建系统，再让世界动起来。' : 'Understand the rules. Build the system. Make the world move.'}</strong><a href="#game-work">{zh ? '向下探索' : 'Explore'} ↓</a></div>
+    </section>
+
+    <section className="game-statement" id="game-work"><p className="eyebrow">PROFILE / GAME</p><h2>{zh ? '从玩家经验，走向可运行的游戏系统。' : 'From player literacy to systems that run.'}</h2><div><p>{zh ? '我的游戏方向不是孤立的美术或代码练习：一端是对策略、战场、长线内容与动作循环的长期观察，另一端是 C++、PyTorch、UE5、Unity 与 Blender 的工程实践。' : 'My game practice connects years of player literacy with engineering across C++, PyTorch, UE5, Unity and Blender.'}</p><dl><div><dt>2300+</dt><dd>BATTLEFIELD HOURS</dd></div><div><dt>200+</dt><dd>EVOLVED AI MODELS</dd></div><div><dt>20+</dt><dd>HARDCORE WARGAMES</dd></div></dl></div></section>
+
+    <section className="game-case">
+      <div className="game-case-heading"><p className="eyebrow">01 / GAME AI</p><h2>BISMARCK<br />HUNT</h2><a href="https://github.com/fuxiaoji/wargame" target="_blank" rel="noreferrer">GITHUB / SOURCE <Arrow /></a></div>
+      <div className="game-case-copy"><p>{zh ? '把经典隐藏移动兵棋《追击俾斯麦》完整电子化，并构建可以大规模训练与观测的 AI 演化环境。' : 'A complete digital adaptation of the hidden-movement wargame, rebuilt as a scalable AI training environment.'}</p><ol><li><span>01</span>{zh ? 'C++ 并发仿真与 TypeScript 实时可视化组成异构架构。' : 'Heterogeneous C++ simulation and TypeScript realtime visualisation.'}</li><li><span>02</span>{zh ? '结合 Transformer、LSTM 与强化学习表达不完全信息决策。' : 'Transformer, LSTM and reinforcement learning for imperfect-information decisions.'}</li><li><span>03</span>{zh ? '演化 200+ 模型，最佳策略相对基线胜率提升 40%。' : 'Evolved 200+ models; the best strategy beat the baseline by 40%.'}</li></ol><div className="game-stack"><span>C++</span><span>PYTORCH</span><span>TRANSFORMER</span><span>LSTM</span><span>TYPESCRIPT</span></div></div>
+    </section>
+
+    <section className="game-wallpaper"><img src="/game/enchanted-forest.webp" alt={zh ? '魔法森林实时渲染作品' : 'Enchanted forest realtime render'} /><div><span>02 / ENVIRONMENT ART</span><h2>ENCHANTED<br />FOREST</h2><p>{zh ? '角色、植被、水面、体积光与景深共同组织的幻想场景练习。' : 'A fantasy environment study in character staging, foliage, water, volumetric light and depth of field.'}</p></div></section>
+
+    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid"><figure><video controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></video><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'Material, lighting, composition and camera study.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicle, character and environment.'}</p></figcaption></figure></div></section>
+
+    <section className="game-toolkit"><p className="eyebrow">04 / REALTIME CRAFT</p><div className="game-toolkit-grid"><article><span>01</span><h3>UE5</h3><p>Blueprint / C++ / Sequencer / Lighting</p></article><article><span>02</span><h3>UNITY</h3><p>Gameplay prototype / Interaction / Scene</p></article><article><span>03</span><h3>BLENDER</h3><p>Modeling / Texturing / Shader / Animation</p></article><article><span>04</span><h3>GAME AI</h3><p>PyTorch / RL / Evolution / Multi-agent</p></article></div></section>
+
+    <section className="game-literacy"><header><p className="eyebrow">05 / PLAYER LITERACY</p><h2>{zh ? '大量游玩不是数字，是对系统手感的长期采样。' : 'Playtime is long-term sampling of how systems feel.'}</h2></header><div>{gameLiteracy.map(([no, en, title, copy, enCopy, metric]) => <article key={no}><span>{no} / {en}</span><h3>{zh ? title : en}</h3><p>{zh ? copy : enCopy}</p><strong>{metric}</strong></article>)}</div></section>
+
+    <section className="game-contact"><p>GAME DEVELOPMENT / AI / REALTIME</p><h2>{zh ? '想一起做一个会动、会思考的世界？' : 'Build a world that moves and thinks?'}</h2><div><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="/files/resume-game.pdf" download>{zh ? '下载游戏方向简历' : 'Download game résumé'} <Arrow /></a><Link to="/">{zh ? '返回首页' : 'Back home'} <Arrow /></Link></div></section>
+  </main>
 }
 
 function ArticlesPage() {
@@ -164,6 +212,6 @@ function NoteViewerPage() {
 }
 
 export default function App() {
-  const location = useLocation(); const scope = useRef(null); const openingVariant = new URLSearchParams(location.search).get('opening') === 'v2' ? 'v2' : 'v1'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
+  const location = useLocation(); const scope = useRef(null); const openingVariant = 'v2'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search)
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/game" element={<GamePage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }

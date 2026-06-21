@@ -43,7 +43,6 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         }
         intro
           .set('.opening', { display: 'grid', autoAlpha: 1 })
-          .set('.opening-compare', { autoAlpha: 0, y: 12 })
           .set('.opening-panel', { scaleY: 1 })
           .set('.opening-label span', { yPercent: 120 })
           .set('.opening-count', { autoAlpha: 1 })
@@ -61,7 +60,6 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
             .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'power3.out' }, 2.02)
             .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.35, stagger: .12 }, 2.1)
             .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .9, stagger: .08 }, 2.65)
-            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 3.35)
         } else {
           intro
             .set('.opening-kicker span', { yPercent: -140, autoAlpha: 0 })
@@ -79,7 +77,6 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
             .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.48)
             .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.5, stagger: .14, ease: 'power4.out' }, 2.62)
             .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .95, stagger: .08 }, 3.12)
-            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 3.92)
         }
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {
@@ -99,6 +96,10 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
           y: 0, scale: 1, rotate: 0, autoAlpha: 1, duration: 1.25, stagger: .13, ease: 'power4.out',
           scrollTrigger: { trigger: '.home-project-mosaic', start: 'top 76%' },
         })
+
+        gsap.fromTo('.game-preview-section h2 span', { yPercent: 110, scaleX: .72, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.35, stagger: .12, ease: 'power4.out', scrollTrigger: { trigger: '.game-preview-section', start: 'top 68%' } })
+        gsap.fromTo('.game-preview-bottom > *', { y: 55, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .95, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.game-preview-section', start: 'top 45%' } })
+        gsap.to('.game-preview-video', { scale: 1.1, yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.game-preview-section', start: 'top bottom', end: 'bottom top', scrub: 1.2 } })
 
         gsap.utils.toArray('.project-card').forEach((card) => {
           const visual = card.querySelector('.project-visual')
@@ -126,8 +127,17 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
         gsap.fromTo('.home-article-card, .library-actions > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .1, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.home-article-cards', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
+      } else if (pathname === '/game') {
+        gsap.fromTo('.game-hero h1 span', { yPercent: 115, scaleX: .68, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.45, stagger: .14, delay: .42, ease: 'power4.out' })
+        gsap.fromTo('.game-hero-meta span, .game-hero-intro > *', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .08, delay: 1.05, ease: 'power3.out' })
+        gsap.to('.game-hero > video', { scale: 1.08, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.game-hero', start: 'top top', end: 'bottom top', scrub: 1.3 } })
+        gsap.fromTo('.game-statement h2, .game-case h2, .game-reels header h2, .game-literacy header h2, .game-contact h2', { yPercent: 45, scaleX: .78, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.3, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: '.game-statement', start: 'top 72%' } })
+        gsap.fromTo('.game-case-copy > *, .game-toolkit article, .game-literacy article', { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, stagger: .1, ease: 'power4.out', scrollTrigger: { trigger: '.game-case', start: 'top 66%' } })
+        gsap.to('.game-wallpaper img', { yPercent: -8, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.game-wallpaper', start: 'top bottom', end: 'bottom top', scrub: 1.2 } })
+        gsap.fromTo('.game-reel-grid figure', { clipPath: 'inset(100% 0 0 0)', y: 70 }, { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.35, stagger: .16, ease: 'power4.out', scrollTrigger: { trigger: '.game-reel-grid', start: 'top 78%' }, clearProps: 'clipPath' })
       } else {
-        gsap.fromTo('.index-hero h1', { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25, clearProps: 'clipPath' })
+        const indexTitle = document.querySelector('.index-hero h1')
+        if (indexTitle) gsap.fromTo(indexTitle, { yPercent: 70, scaleX: .74, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, scaleX: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.5, ease: 'power4.out', delay: .25, clearProps: 'clipPath' })
         const indexItems = gsap.utils.toArray('.content-index > a, .notes-grid > a')
         if (indexItems.length) gsap.fromTo(indexItems, { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .045, ease: 'power3.out', delay: .5 })
       }

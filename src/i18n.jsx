@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useState } from 'react'
 
 const copy = {
   zh: {
-    navWork: '项目', navArticles: '文章', navNotes: '笔记', navProfile: '关于', available: '正在寻找开发实习',
+    navWork: '项目', navGame: '游戏', navArticles: '文章', navNotes: '笔记', navProfile: '关于', available: '正在寻找开发实习',
     heroRole: 'AI 开发者 × 金融思考者', heroLine: '用工程验证想法，用系统理解复杂世界。', explore: '向下探索',
     introKicker: '我在做什么 / 2026', intro: '我构建能在真实问题中工作的智能系统。', introDetail: '金融训练我判断，工程让我验证，游戏教我理解系统。三个方向，最后都落到一件事：把复杂问题做成能运行、能观察、能迭代的产品。',
     selected: '精选项目', selectedSub: '从想法到可运行系统', allProjects: '查看全部项目',
@@ -19,7 +19,7 @@ const copy = {
     home: '返回首页', open: '查看原文', empty: '内容正在整理中', resume: '简历', language: 'EN',
   },
   en: {
-    navWork: 'Work', navArticles: 'Writing', navNotes: 'Notes', navProfile: 'Profile', available: 'Available for development internship',
+    navWork: 'Work', navGame: 'Game', navArticles: 'Writing', navNotes: 'Notes', navProfile: 'Profile', available: 'Available for development internship',
     heroRole: 'AI Builder × Finance Mind', heroLine: 'Build to verify ideas. Think in systems to understand complexity.', explore: 'Scroll to explore',
     introKicker: 'WHAT I DO / 2026', intro: 'I build intelligent systems that work on real problems.', introDetail: 'Finance trained my judgment. Engineering lets me test it. Games taught me how systems behave. All three lead to the same goal: products that run, reveal and improve.',
     selected: 'Selected Work', selectedSub: 'From an idea to a working system', allProjects: 'View all projects',
