@@ -37,12 +37,10 @@ p { margin: 0; }
 .opening--v2 .opening-panel:nth-child(3)::after { content: ""; position: absolute; inset: 0; opacity: .2; background-image: linear-gradient(rgba(32,34,30,.22) 1px, transparent 1px); background-size: 100% 12.5vh; }
 .opening-kicker { position: absolute; z-index: 3; top: 4vh; left: 3vw; right: 3vw; display: flex; justify-content: space-between; overflow: hidden; font: 500 .6rem "DM Mono"; letter-spacing: .12em; }
 .opening-kicker span { display: block; }
-.opening-cn { position: absolute; z-index: 3; top: 13vh; right: 4vw; overflow: hidden; font-size: clamp(5rem, 13vw, 13rem); font-weight: 600; line-height: .9; letter-spacing: -.1em; opacity: .26; }
+.opening-cn { position: absolute; z-index: 3; left: 50%; top: 48%; translate: -50% -50%; width: max-content; overflow: hidden; font-size: clamp(8rem, 21vw, 21rem); font-weight: 600; line-height: .9; letter-spacing: -.1em; opacity: .34; }
 .opening-cn span { display: block; white-space: nowrap; }
-.opening-name { position: absolute; z-index: 4; left: 3vw; top: 48%; translate: 0 -50%; display: flex; align-items: baseline; gap: .06em; overflow: hidden; font-size: clamp(7rem, 22vw, 22rem); font-weight: 700; line-height: .78; letter-spacing: -.12em; }
-.opening-name span { display: block; will-change: transform; }
 .opening-rule { position: absolute; z-index: 3; left: 3vw; right: 3vw; bottom: 10vh; height: 1px; background: rgba(32,34,30,.42); transform-origin: left; }
-.opening--v1 .opening-kicker, .opening--v1 .opening-cn, .opening--v1 .opening-name, .opening--v1 .opening-rule { display: none; }
+.opening--v1 .opening-kicker, .opening--v1 .opening-cn, .opening--v1 .opening-rule { display: none; }
 .opening--v2 .opening-label { color: var(--ink); }
 .opening--v2 .opening-count { color: var(--ink); }
 .opening-grid { position: absolute; z-index: 2; inset: 0; opacity: .18; background-image: linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 100% 12.5vh, 10vw 100%; transform-origin: left; }
@@ -415,8 +413,7 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
   .opening-progress { left: 5vw; right: 5vw; }
   .opening-kicker { left: 5vw; right: 5vw; }
   .opening-kicker span:first-child { display: none; }
-  .opening-cn { top: 17vh; right: -8vw; font-size: 24vw; }
-  .opening-name { left: 5vw; top: 48%; font-size: 28vw; }
+  .opening-cn { left: 51%; top: 45%; font-size: 25vw; }
   .opening-rule { left: 5vw; right: 5vw; }
   .opening-compare { right: .75rem; bottom: 4.5rem; left: .75rem; justify-content: center; }
   .opening-compare span { display: none; }

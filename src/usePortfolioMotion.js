@@ -65,23 +65,21 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         } else {
           intro
             .set('.opening-kicker span', { yPercent: -140, autoAlpha: 0 })
-            .set('.opening-cn span', { xPercent: 28, scaleX: .72, autoAlpha: 0, transformOrigin: 'right center' })
-            .set('.opening-name span', { yPercent: 125, scaleX: .56, transformOrigin: 'left bottom' })
+            .set('.opening-cn span', { yPercent: 115, scaleX: .7, autoAlpha: 0, transformOrigin: 'center bottom' })
             .set('.opening-rule', { scaleX: 0 })
             .to(counter, { value: 100, duration: 2.65, ease: 'power2.inOut', onUpdate: updateCounter }, 0)
             .to('.opening-kicker span', { yPercent: 0, autoAlpha: 1, duration: .7, stagger: .1, ease: 'power3.out' }, .12)
-            .to('.opening-cn span', { xPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.15, ease: 'power4.out' }, .28)
-            .to('.opening-name span', { yPercent: 0, scaleX: 1, duration: 1.15, stagger: .11, ease: 'power4.out' }, .55)
+            .to('.opening-cn span', { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.3, ease: 'power4.out' }, .28)
             .to('.opening-label span', { yPercent: 0, duration: .7 }, .72)
             .to('.opening-rule', { scaleX: 1, duration: 1.35, ease: 'power3.inOut' }, .65)
-            .to('.opening-name', { xPercent: 9, scaleX: .78, duration: .9, ease: 'power3.inOut', transformOrigin: 'left center' }, 1.72)
-            .to('.opening-panel', { scaleY: 0, duration: 1.4, stagger: { each: .12, from: 'center' }, ease: 'power4.inOut' }, 2.48)
-            .to('.opening-kicker, .opening-cn, .opening-name, .opening-rule, .opening-count, .opening-label', { autoAlpha: 0, y: -18, duration: .48, stagger: .025 }, 2.72)
-            .to('.opening', { autoAlpha: 0, duration: .01 }, 4.08)
-            .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.78)
-            .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.5, stagger: .14, ease: 'power4.out' }, 2.92)
-            .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .95, stagger: .08 }, 3.42)
-            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 4.22)
+            .to('.opening-cn span', { xPercent: 16, yPercent: -18, scaleX: .82, autoAlpha: .34, duration: .85, ease: 'power3.inOut' }, 1.58)
+            .to('.opening-panel', { scaleY: 0, duration: 1.4, stagger: { each: .12, from: 'center' }, ease: 'power4.inOut' }, 2.18)
+            .to('.opening-kicker, .opening-cn, .opening-rule, .opening-count, .opening-label', { autoAlpha: 0, y: -18, duration: .5, stagger: .025 }, 2.48)
+            .to('.opening', { autoAlpha: 0, duration: .01 }, 3.78)
+            .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.48)
+            .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.5, stagger: .14, ease: 'power4.out' }, 2.62)
+            .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .95, stagger: .08 }, 3.12)
+            .to('.opening-compare', { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out' }, 3.92)
         }
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {
