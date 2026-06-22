@@ -143,10 +143,10 @@ const gameLiteracy = [
 ]
 
 const gameVisuals = {
-  '01': [{ name: 'HEARTS OF IRON IV', code: 'IV' }, { name: 'VICTORIA', code: 'VIC' }, { name: 'HARDCORE WARGAMES', code: '20+' }],
-  '02': [{ name: 'BATTLEFIELD 1', code: 'BF1' }, { name: 'AIR / CAVALRY', code: '20★' }, { name: 'WIN RATE', code: '67%' }],
+  '01': [{ name: 'HEARTS OF IRON IV', image: '/game/covers/hoi4.jpg' }, { name: 'VICTORIA 3', image: '/game/covers/victoria3.jpg' }, { name: 'HARDCORE WARGAMES', code: '20+' }],
+  '02': [{ name: 'BATTLEFIELD 1', image: '/game/covers/battlefield1.jpg' }, { name: 'AIR / CAVALRY', code: '20★' }, { name: 'WIN RATE', code: '67%' }],
   '03': [{ name: '原神', image: '/game/logos/genshin.png' }, { name: '崩坏：星穹铁道', image: '/game/logos/star-rail.png' }, { name: '鸣潮', image: '/game/logos/wuthering-waves.png' }, { name: '洛克王国', image: '/game/logos/roco.png' }, { name: '异环', code: 'NTE' }],
-  '04': [{ name: 'WORLD OF WARSHIPS', code: 'WOWS' }, { name: 'MOUNT & BLADE', code: 'M&B' }, { name: 'BLACK MYTH', code: '悟空' }, { name: 'PES', code: 'PES' }],
+  '04': [{ name: 'WORLD OF WARSHIPS', image: '/game/covers/world-of-warships.jpg' }, { name: 'MOUNT & BLADE II', image: '/game/covers/bannerlord.jpg' }, { name: 'BLACK MYTH: WUKONG', image: '/game/covers/black-myth.jpg' }, { name: 'EFOOTBALL', image: '/game/covers/efootball.jpg' }],
 }
 
 function GamePage() {
@@ -172,7 +172,7 @@ function GamePage() {
 
     <section className="game-toolkit"><p className="eyebrow">04 / REALTIME CRAFT</p><div className="game-toolkit-grid"><article><span>01</span><h3>UE5</h3><p>Blueprint / C++ / Sequencer / Lighting</p></article><article><span>02</span><h3>UNITY</h3><p>Gameplay prototype / Interaction / Scene</p></article><article><span>03</span><h3>BLENDER</h3><p>Modeling / Texturing / Shader / Animation</p></article><article><span>04</span><h3>GAME AI</h3><p>PyTorch / RL / Evolution / Multi-agent</p></article></div></section>
 
-    <section id="player-literacy" className="game-literacy"><header><p className="eyebrow">05 / PLAYER LITERACY</p><h2>{zh ? '大量游玩不是数字，是对系统手感的长期采样。' : 'Playtime is long-term sampling of how systems feel.'}</h2></header><div>{gameLiteracy.map(([no, en, title, copy, enCopy, metric]) => <article key={no}><div className={`game-literacy-visual game-visual-${no}`}>{gameVisuals[no].map(item => <figure key={item.name}>{item.image ? <img src={item.image} alt="" /> : <b>{item.code}</b>}<figcaption>{item.name}</figcaption></figure>)}</div><span>{no} / {en}</span><h3>{zh ? title : en}</h3><p>{zh ? copy : enCopy}</p><strong>{metric}</strong></article>)}</div></section>
+    <section id="player-literacy" className="game-literacy"><header><p className="eyebrow">05 / PLAYER LITERACY</p><h2>{zh ? '大量游玩不是数字，是对系统手感的长期采样。' : 'Playtime is long-term sampling of how systems feel.'}</h2></header><div>{gameLiteracy.map(([no, en, title, copy, enCopy, metric]) => <article key={no}><div className={`game-literacy-visual game-visual-${no}`}>{gameVisuals[no].map(item => <figure className={item.image ? 'has-image' : 'is-stat'} key={item.name}>{item.image ? <img src={item.image} alt={`${item.name} 游戏视觉`} /> : <b>{item.code}</b>}<figcaption>{item.name}</figcaption></figure>)}</div><span>{no} / {en}</span><h3>{zh ? title : en}</h3><p>{zh ? copy : enCopy}</p><strong>{metric}</strong></article>)}</div></section>
 
     <section className="game-contact"><p>GAME DEVELOPMENT / AI / REALTIME</p><h2>{zh ? '想一起做一个会动、会思考的世界？' : 'Build a world that moves and thinks?'}</h2><div><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="/files/resume-game.pdf" download>{zh ? '下载游戏方向简历' : 'Download game résumé'} <Arrow /></a><Link to="/">{zh ? '返回首页' : 'Back home'} <Arrow /></Link></div></section>
   </main>

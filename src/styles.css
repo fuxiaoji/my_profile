@@ -493,10 +493,14 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .game-literacy article h3 { margin: 2.2rem 0 1rem; font-size: clamp(2.4rem, 5vw, 5rem); line-height: .9; letter-spacing: -.07em; }
 .game-literacy article p { max-width: 34rem; line-height: 1.65; opacity: .65; }
 .game-literacy article strong { margin-top: 2rem; font: 1rem "DM Mono"; color: #c6d38d; }
-.game-literacy-visual { height: 14rem; margin: -1.5rem -1.5rem 1.5rem; padding: 1.2rem; display: flex; align-items: stretch; gap: .75rem; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.4); }
+.game-literacy-visual { height: 16rem; margin: -1.5rem -1.5rem 1.5rem; padding: 1.2rem; display: flex; align-items: stretch; gap: .75rem; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.4); }
 .game-literacy-visual figure { position: relative; min-width: 0; flex: 1; margin: 0; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; border: 1px solid rgba(255,255,255,.28); }
+.game-literacy-visual figure.has-image::after { content: ''; position: absolute; inset: 38% 0 0; background: linear-gradient(transparent, rgba(6,9,10,.78)); pointer-events: none; }
+.game-literacy-visual figure.has-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.7,.1,1); }
+.game-literacy article:hover figure.has-image img { transform: scale(1.045); }
 .game-literacy-visual b { margin: auto; font-size: clamp(2.2rem, 5vw, 5rem); font-weight: 500; line-height: .75; letter-spacing: -.1em; }
-.game-literacy-visual figcaption { padding: .55rem; font: .48rem/1.3 "DM Mono"; letter-spacing: .03em; border-top: 1px solid rgba(255,255,255,.22); }
+.game-literacy-visual figcaption { position: relative; z-index: 2; padding: .55rem; font: .48rem/1.3 "DM Mono"; letter-spacing: .03em; border-top: 1px solid rgba(255,255,255,.22); }
+.game-literacy-visual figure.has-image figcaption { position: absolute; inset: auto 0 0; }
 .game-visual-01 { background: linear-gradient(120deg, #505d4b, #202a25 62%, #85816a); }
 .game-visual-01 figure:nth-child(1) { clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); }
 .game-visual-01 figure:nth-child(2) { translate: -.7rem 0; clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%); }
@@ -507,16 +511,16 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .game-visual-02 figure { z-index: 3; border: 0; }
 .game-visual-02 figure:first-child { flex: 1.5; }
 .game-visual-02 figure:first-child b { font-size: clamp(4rem, 8vw, 8rem); }
-.game-visual-03 { gap: .8rem; align-items: center; background: linear-gradient(125deg, #6a657a, #324a5a 55%, #829a95); }
-.game-visual-03 figure { min-width: 7.5rem; height: 10.5rem; flex: 0 0 7.5rem; border: 0; border-radius: 1rem; background: rgba(14,19,21,.58); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
-.game-visual-03 figure:nth-child(even) { transform: translateY(1rem); }
-.game-visual-03 img { width: 100%; aspect-ratio: 1; object-fit: cover; }
-.game-visual-03 b { font-size: 2.6rem; }
-.game-visual-03 figcaption { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.game-visual-02 figure:first-child { flex: 1.65; }
+.game-visual-03 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .6rem; align-items: center; background: linear-gradient(125deg, #6a657a, #324a5a 55%, #829a95); }
+.game-visual-03 figure { width: 100%; min-width: 0; height: 10.8rem; border: 0; border-radius: .8rem; background: rgba(14,19,21,.58); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+.game-visual-03 figure:nth-child(even) { transform: translateY(.75rem); }
+.game-visual-03 figure.has-image::after { display: none; }
+.game-visual-03 figure.has-image img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.game-visual-03 b { font-size: clamp(1.35rem, 3vw, 2.6rem); }
+.game-visual-03 figcaption { position: relative !important; margin-top: auto; white-space: normal; overflow-wrap: anywhere; text-align: center; }
 .game-visual-04 { background: linear-gradient(145deg, #563d36, #1e2527 55%, #5b6047); }
-.game-visual-04 figure { transform: skewX(-8deg); }
-.game-visual-04 figure > * { transform: skewX(8deg); }
-.game-visual-04 figure:nth-child(even) { translate: 0 1.2rem; }
+.game-visual-04 figure:nth-child(even) { translate: 0 .8rem; }
 .game-contact { padding: 15vh 3vw 8vh; color: #121512; background: #c6d38d; }
 .game-contact > p { font: .6rem "DM Mono"; }
 .game-contact h2 { max-width: 11em; margin: 10vh 0; font-size: clamp(4rem, 9vw, 9rem); line-height: .9; letter-spacing: -.08em; }
@@ -675,9 +679,10 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
   .game-toolkit-grid, .game-literacy > div { margin-left: 0; grid-template-columns: 1fr; }
   .game-toolkit article { min-height: 13rem; }
   .game-literacy article { min-height: 34rem; }
-  .game-literacy-visual { height: 13rem; }
-  .game-visual-03 { overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
-  .game-visual-03::-webkit-scrollbar { display: none; }
+  .game-literacy-visual { height: 14rem; }
+  .game-visual-03 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .3rem; padding-inline: .5rem; }
+  .game-visual-03 figure { height: 9.4rem; border-radius: .45rem; }
+  .game-visual-03 figcaption { padding: .35rem .15rem; font-size: .4rem; }
   .game-contact { padding-inline: 5vw; }
   .game-contact h2 { font-size: 15vw; }
   .game-contact > div { grid-template-columns: 1fr; }
