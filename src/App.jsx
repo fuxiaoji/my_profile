@@ -46,9 +46,32 @@ function ProjectCard({ project, detailed = false }) {
 }
 
 function Subscribe() {
-  const { t } = useLanguage(); const [email, setEmail] = useState('')
-  const submit = event => { event.preventDefault(); if (!email) return; window.location.href = `mailto:fuwenji61616@gmail.com?subject=${encodeURIComponent('订阅网站更新 / Subscribe')}&body=${encodeURIComponent(`订阅邮箱 / Subscriber: ${email}`)}` }
-  return <form className="subscribe-form" onSubmit={submit}><div><p className="eyebrow">NEWSLETTER / 通讯</p><h3>{t.subscribeTitle}</h3><p>{t.subscribeDesc}</p></div><div className="subscribe-control"><label><span className="sr-only">Email</span><input type="email" required value={email} onChange={event => setEmail(event.target.value)} placeholder={t.emailPlaceholder} /></label><button type="submit">{t.subscribe} <Arrow /></button><small>{t.subscribeHint}</small></div></form>
+  const { t, language } = useLanguage(); const [email, setEmail] = useState(''); const [status, setStatus] = useState('idle')
+  const submit = async event => {
+    event.preventDefault(); if (!email || status === 'loading') return
+    setStatus('loading')
+    try {
+      const response = await fetch('https://formspree.io/f/xbdwnzwj', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ email: email.trim(), _subject: 'New subscriber from fuwenji.asia' }) })
+      if (!response.ok) throw new Error('Subscription failed')
+      setEmail(''); setStatus('success')
+    } catch { setStatus('error') }
+  }
+  const message = status === 'success' ? (language === 'zh' ? '订阅成功，感谢关注。' : 'Subscribed. Thank you.') : status === 'error' ? (language === 'zh' ? '订阅失败，请稍后再试。' : 'Subscription failed. Please try again.') : t.subscribeHint
+  return <form className={`subscribe-form subscribe-${status}`} onSubmit={submit}><div><p className="eyebrow">NEWSLETTER / 通讯</p><h3>{t.subscribeTitle}</h3><p>{t.subscribeDesc}</p></div><div className="subscribe-control"><label><span className="sr-only">Email</span><input type="email" autoComplete="email" required value={email} onChange={event => { setEmail(event.target.value); if (status !== 'idle') setStatus('idle') }} placeholder={t.emailPlaceholder} /></label><button type="submit" disabled={status === 'loading'}>{status === 'loading' ? '…' : t.subscribe} <Arrow /></button><small role="status">{message}</small></div></form>
+}
+
+function ArticleCommunity() {
+  const { language } = useLanguage(); const commentsRef = useRef(null)
+  useEffect(() => {
+    const container = commentsRef.current
+    if (!container) return undefined
+    container.innerHTML = ''
+    const script = document.createElement('script')
+    Object.entries({ src: 'https://giscus.app/client.js', 'data-repo': 'fuxiaoji/my_profile', 'data-repo-id': 'R_kgDOSE-1gg', 'data-category': 'Announcements', 'data-category-id': 'DIC_kwDOSE-1gs4C9JnF', 'data-mapping': 'pathname', 'data-strict': '0', 'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'bottom', 'data-theme': 'light', 'data-lang': language === 'zh' ? 'zh-CN' : 'en', 'data-loading': 'lazy', crossorigin: 'anonymous', async: 'true' }).forEach(([key, value]) => script.setAttribute(key, value))
+    container.appendChild(script)
+    return () => { container.innerHTML = '' }
+  }, [language])
+  return <section className="article-community"><div className="article-comments"><header><p className="eyebrow">COMMENTS / 评论</p><span>{language === 'zh' ? '使用 GitHub 登录参与讨论' : 'Join with your GitHub account'}</span></header><div ref={commentsRef} /></div><Subscribe /></section>
 }
 
 function ResumePanel() {
@@ -158,7 +181,7 @@ function ArticlesPage() {
 const headingId = (text, index) => `section-${index}-${text.replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '').toLowerCase()}`
 
 function ArticleDetailPage() {
-  const { articleId } = useParams(); const { language } = useLanguage(); const [articles, setArticles] = useState([]); const [source, setSource] = useState('')
+  const { articleId } = useParams(); const { language } = useLanguage(); const [articles, setArticles] = useState([]); const [source, setSource] = useState(''); const [tocOpen, setTocOpen] = useState(true); const [activeHeading, setActiveHeading] = useState(0)
   useEffect(() => { fetch('/articles.json').then(r => r.json()).then(setArticles).catch(() => setArticles([])) }, [])
   const index = Number(articleId); const article = articles[index]
   useEffect(() => {
@@ -168,11 +191,26 @@ function ArticleDetailPage() {
     if (loader) loader().then(markdown => { if (current) setSource(markdown) }).catch(() => { if (current) setSource('') })
     return () => { current = false }
   }, [article])
+  useEffect(() => {
+    if (!source) return undefined
+    let frame = 0; let disposed = false
+    const syncActiveHeading = () => {
+      frame = 0
+      if (disposed) return
+      const nodes = [...document.querySelectorAll('.article-prose h2, .article-prose h3, .article-prose h4')]
+      if (!nodes.length) return
+      const current = nodes.reduce((active, node, headingIndex) => node.getBoundingClientRect().top <= 150 ? headingIndex : active, 0)
+      setActiveHeading(current)
+    }
+    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(syncActiveHeading) }
+    const start = window.requestAnimationFrame(() => { syncActiveHeading(); window.addEventListener('scroll', onScroll, { passive: true }) })
+    return () => { disposed = true; window.cancelAnimationFrame(start); if (frame) window.cancelAnimationFrame(frame); window.removeEventListener('scroll', onScroll) }
+  }, [source])
   if (!article) return <main className="article-detail"><p className="eyebrow">LOADING / WRITING</p></main>
   const headings = []; source.split(/\r?\n/).forEach(line => { const match = line.match(/^(#{1,4})\s+(.+)/); if (match) headings.push(match[2]) })
   const recommendations = articles.map((item, itemIndex) => ({ ...item, itemIndex })).filter(item => item.itemIndex !== index).sort((a, b) => (b.tags || []).filter(tag => article.tags?.includes(tag)).length - (a.tags || []).filter(tag => article.tags?.includes(tag)).length).slice(0, 3)
   const articleDir = article.md.slice(0, article.md.lastIndexOf('/') + 1)
-  return <main className="article-detail"><header className="article-detail-hero"><Link to="/writing">← {language === 'zh' ? '返回文章库' : 'Writing index'}</Link><p className="eyebrow">{article.tags?.join(' / ')} · {article.date}</p><h1>{article.title}</h1><p>{article.summary}</p></header><div className="article-layout"><aside><p className="eyebrow">CONTENTS / 目录</p>{headings.length ? headings.map((heading, headingIndex) => <a href={`#${headingId(heading, headingIndex)}`} key={`${heading}-${headingIndex}`}><span>{String(headingIndex + 1).padStart(2, '0')}</span>{heading}</a>) : <p>{language === 'zh' ? '正文阅读' : 'Article'}</p>}</aside>{source ? <Suspense fallback={<div className="article-prose"><p>LOADING MARKDOWN…</p></div>}><MarkdownContent source={source} assetBase={githubRaw(articleDir)} /></Suspense> : <div className="article-prose"><p>{article.summary}</p><p>{language === 'zh' ? '原文内容正在迁移到新版阅读器，可暂时前往源文件查看。' : 'The full text is being migrated into the new reader.'}</p><a className="source-article-link" href={githubFile(article.md)} target="_blank" rel="noreferrer">{language === 'zh' ? '查看原始文章' : 'Open source article'} <Arrow /></a></div>}</div><section className="related-writing"><p className="eyebrow">RELATED / 相似推荐</p><div>{recommendations.map(item => <Link to={`/writing/${item.itemIndex}`} key={item.title}><span>{item.date}</span><h2>{item.title}</h2><p>{item.summary}</p><Arrow /></Link>)}</div></section></main>
+  return <main className="article-detail"><header className="article-detail-hero"><Link to="/writing">← {language === 'zh' ? '返回文章库' : 'Writing index'}</Link><p className="eyebrow">{article.tags?.join(' / ')} · {article.date}</p><h1>{article.title}</h1><p>{article.summary}</p></header><div className={`article-layout ${tocOpen ? 'toc-open' : 'toc-collapsed'}`}><aside className={`article-toc ${tocOpen ? 'is-open' : 'is-collapsed'}`}><button className="article-toc-toggle" type="button" aria-expanded={tocOpen} aria-label={tocOpen ? (language === 'zh' ? '收起目录' : 'Collapse contents') : (language === 'zh' ? '展开目录' : 'Expand contents')} onClick={() => setTocOpen(open => !open)}><span>{tocOpen ? 'CONTENTS / 目录' : (language === 'zh' ? '目录' : 'CONTENTS')}</span><b>{tocOpen ? '←' : '→'}</b></button><div className="article-toc-list" aria-hidden={!tocOpen}>{headings.length ? headings.map((heading, headingIndex) => <a tabIndex={tocOpen ? undefined : -1} className={activeHeading === headingIndex ? 'active' : undefined} aria-current={activeHeading === headingIndex ? 'location' : undefined} href={`#${headingId(heading, headingIndex)}`} key={`${heading}-${headingIndex}`}><span>{String(headingIndex + 1).padStart(2, '0')}</span><em>{heading}</em></a>) : <p>{language === 'zh' ? '正文阅读' : 'Article'}</p>}</div><div className="article-toc-progress" aria-hidden="true"><i style={{ transform: `scaleY(${headings.length ? (activeHeading + 1) / headings.length : 0})` }} /></div></aside>{source ? <Suspense fallback={<div className="article-prose"><p>LOADING MARKDOWN…</p></div>}><MarkdownContent source={source} assetBase={githubRaw(articleDir)} /></Suspense> : <div className="article-prose"><p>{article.summary}</p><p>{language === 'zh' ? '原文内容正在迁移到新版阅读器，可暂时前往源文件查看。' : 'The full text is being migrated into the new reader.'}</p><a className="source-article-link" href={githubFile(article.md)} target="_blank" rel="noreferrer">{language === 'zh' ? '查看原始文章' : 'Open source article'} <Arrow /></a></div>}</div><ArticleCommunity /><section className="related-writing"><p className="eyebrow">RELATED / 相似推荐</p><div>{recommendations.map(item => <Link to={`/writing/${item.itemIndex}`} key={item.title}><span>{item.date}</span><h2>{item.title}</h2><p>{item.summary}</p><Arrow /></Link>)}</div></section></main>
 }
 
 const flattenNotes = (nodes, result = []) => { (nodes || []).forEach(node => node.type === 'file' ? result.push(node) : flattenNotes(node.children, result)); return result }
