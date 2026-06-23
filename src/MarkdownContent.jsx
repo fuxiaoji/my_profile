@@ -1,11 +1,17 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 
 const headingId = (text, index) => `section-${index}-${text.replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '').toLowerCase()}`
 const childText = children => Array.isArray(children) ? children.join('') : String(children)
 const resolveAsset = (src, base) => {
   if (!src || /^(https?:|data:|blob:)/i.test(src)) return src
-  const clean = src.replace(/^\.\//, '').replace(/^\//, '')
+  let clean = src.replace(/^\.\//, '').replace(/^\//, '')
+  try { clean = decodeURIComponent(clean) } catch { /* retain malformed legacy paths */ }
+  if (clean.startsWith('文章/') && base.includes('/main/')) {
+    const repositoryRoot = `${base.slice(0, base.indexOf('/main/') + 6)}`
+    return `${repositoryRoot}${clean.split('/').map(encodeURIComponent).join('/')}`
+  }
   return `${base}${clean.split('/').map(encodeURIComponent).join('/')}`
 }
 
@@ -17,7 +23,7 @@ export default function MarkdownContent({ source, assetBase = '' }) {
     return <Tag id={headingId(text, headingIndex)}>{children}</Tag>
   }
 
-  return <div className="article-prose"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{
+  return <div className="article-prose"><ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={{
     h1: makeHeading('h2'),
     h2: makeHeading('h2'),
     h3: makeHeading('h3'),
