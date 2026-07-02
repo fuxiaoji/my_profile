@@ -18,12 +18,79 @@ function noteTree(directory = localNotesRoot, relative = '') {
   return { name: relative ? path.basename(directory) : 'note', type: 'directory', source: 'local', children }
 }
 
+const biliName = process.env.BILIBILI_NAME || '三只阿基'
+const biliMid = process.env.BILIBILI_MID || ''
+const biliHeaders = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36',
+  Referer: 'https://www.bilibili.com/',
+}
+
+async function biliJson(url) {
+  const response = await fetch(url, { headers: biliHeaders })
+  if (!response.ok) throw new Error(`Bilibili request failed: ${response.status}`)
+  const data = await response.json()
+  if (data.code !== 0) throw new Error(data.message || 'Bilibili API error')
+  return data.data
+}
+
+async function resolveBiliMid() {
+  if (biliMid) return biliMid
+  const data = await biliJson(`https://api.bilibili.com/x/web-interface/search/type?search_type=bili_user&keyword=${encodeURIComponent(biliName)}`)
+  const users = data?.result || []
+  const exact = users.find(user => user.uname === biliName) || users[0]
+  return exact?.mid || ''
+}
+
+async function bilibiliSummary() {
+  const mid = await resolveBiliMid()
+  if (!mid) throw new Error('Bilibili mid not found')
+  const [card, upstat] = await Promise.all([
+    biliJson(`https://api.bilibili.com/x/web-interface/card?mid=${mid}`),
+    biliJson(`https://api.bilibili.com/x/space/upstat?mid=${mid}`).catch(() => null),
+  ])
+  let latest = []
+  try {
+    const archive = await biliJson(`https://api.bilibili.com/x/space/arc/search?mid=${mid}&pn=1&ps=4&order=pubdate`)
+    latest = (archive?.list?.vlist || []).map(video => ({
+      title: video.title,
+      url: `https://www.bilibili.com/video/${video.bvid}`,
+      cover: video.pic,
+      date: video.created ? new Date(video.created * 1000).toISOString().slice(0, 10) : '',
+    }))
+  } catch {
+    latest = []
+  }
+  return {
+    name: card?.card?.name || biliName,
+    mid,
+    profileUrl: `https://space.bilibili.com/${mid}`,
+    fans: card?.card?.fans ?? null,
+    likes: upstat?.likes ?? card?.like_num ?? null,
+    latest,
+    updatedAt: new Date().toISOString(),
+  }
+}
+
+function handleBilibiliApi(request, response, next) {
+  const pathname = new URL(request.url, 'http://localhost').pathname
+  if (pathname !== '/api/bilibili/summary') return next()
+  bilibiliSummary().then(data => {
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    response.setHeader('Cache-Control', 'public, max-age=300')
+    response.end(JSON.stringify(data))
+  }).catch(error => {
+    response.statusCode = 502
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    response.end(JSON.stringify({ name: biliName, fans: null, likes: null, latest: [], error: error.message }))
+  })
+}
+
 function localNotesPlugin() {
   return {
     name: 'local-notes-preview',
-    apply: 'serve',
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
+        handleBilibiliApi(request, response, () => {
         const pathname = new URL(request.url, 'http://localhost').pathname
         if (pathname === '/__local_notes_index') {
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
@@ -52,6 +119,12 @@ function localNotesPlugin() {
           response.setHeader('Content-Length', size)
           fs.createReadStream(file).pipe(response)
         }
+        })
+      })
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((request, response, next) => {
+        handleBilibiliApi(request, response, next)
       })
     },
   }

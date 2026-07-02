@@ -100,6 +100,8 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         gsap.fromTo('.game-preview-section h2 span', { yPercent: 110, scaleX: .72, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.35, stagger: .12, ease: 'power4.out', scrollTrigger: { trigger: '.game-preview-section', start: 'top 68%' } })
         gsap.fromTo('.game-preview-bottom > *', { y: 55, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .95, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.game-preview-section', start: 'top 45%' } })
         gsap.to('.game-preview-video', { scale: 1.1, yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.game-preview-section', start: 'top bottom', end: 'bottom top', scrub: 1.2 } })
+        gsap.fromTo('.mmd-preview-head h2 span', { yPercent: 115, scaleX: .7, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.25, stagger: .1, ease: 'power4.out', scrollTrigger: { trigger: '.mmd-preview-section', start: 'top 68%' } })
+        gsap.fromTo('.mmd-triptych .home-video-tile, .bili-panel', { y: 90, rotate: (index) => index % 2 ? 2 : -2, autoAlpha: 0 }, { y: 0, rotate: 0, autoAlpha: 1, duration: 1.15, stagger: .12, ease: 'power4.out', scrollTrigger: { trigger: '.mmd-triptych', start: 'top 76%' } })
 
         gsap.utils.toArray('.project-card').forEach((card) => {
           const visual = card.querySelector('.project-visual')
@@ -114,14 +116,12 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         gsap.to('.portrait img', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top bottom', end: 'bottom top', scrub: 1.1 } })
         if (window.matchMedia('(min-width: 701px)').matches) {
           const photoTrack = document.querySelector('.photo-track')
-          const photoDistance = () => Math.max(1, photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08)
-          gsap.to(photoTrack, {
-            x: () => -photoDistance(),
-            ease: 'none',
-            scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.25, pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true },
-          })
-          gsap.fromTo('.photo-frame', { clipPath: 'inset(0 0 100% 0)', yPercent: 12 }, { clipPath: 'inset(0 0 0% 0)', yPercent: 0, duration: 1.3, stagger: .07, ease: 'power4.out', scrollTrigger: { trigger: '.photo-section', start: 'top 68%' } })
-          gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -12 - (index % 3) * 3, ease: 'none', scrollTrigger: { trigger: '.photo-section', start: 'top top', end: () => `+=${photoDistance()}`, scrub: 1.4 } }))
+          if (photoTrack) {
+            const photoDistance = () => Math.max(1, photoTrack.scrollWidth - window.innerWidth + window.innerWidth * .08)
+            gsap.fromTo('.photo-frame', { clipPath: 'inset(0 0 100% 0)', yPercent: 12 }, { clipPath: 'inset(0 0 0% 0)', yPercent: 0, duration: 1.3, stagger: .07, ease: 'power4.out', scrollTrigger: { trigger: '.photo-section', start: 'top 72%' } })
+            gsap.to(photoTrack, { x: () => -photoDistance(), duration: 34, ease: 'none', repeat: -1, yoyo: true, repeatDelay: 1.2, invalidateOnRefresh: true })
+            gsap.utils.toArray('.photo-frame img').forEach((image, index) => gsap.to(image, { yPercent: -8 - (index % 3) * 2, ease: 'none', scrollTrigger: { trigger: image, start: 'top bottom', end: 'bottom top', scrub: 1.2 } }))
+          }
         }
         gsap.fromTo('.capabilities-section article', { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, stagger: .12, duration: 1.1, ease: 'power4.out', scrollTrigger: { trigger: '.capabilities-section', start: 'top 58%' } })
         gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
@@ -131,8 +131,8 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         gsap.fromTo('.game-hero h1 span', { yPercent: 115, scaleX: .68, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.45, stagger: .14, delay: .42, ease: 'power4.out' })
         gsap.fromTo('.game-hero-meta span, .game-hero-intro > *', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .08, delay: 1.05, ease: 'power3.out' })
         gsap.to('.game-hero > video', { scale: 1.08, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.game-hero', start: 'top top', end: 'bottom top', scrub: 1.3 } })
-        gsap.fromTo('.game-statement h2, .game-case h2, .game-reels header h2, .game-literacy header h2, .game-contact h2', { yPercent: 45, scaleX: .78, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.3, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: '.game-statement', start: 'top 72%' } })
-        gsap.fromTo('.game-case-copy > *, .game-toolkit article, .game-literacy article', { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, stagger: .1, ease: 'power4.out', scrollTrigger: { trigger: '.game-case', start: 'top 66%' } })
+        gsap.fromTo('.game-statement h2, .game-case h2, .game-mmd-title h2 span, .game-reels header h2, .game-literacy header h2, .game-contact h2', { yPercent: 45, scaleX: .78, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.3, stagger: .08, ease: 'power4.out', scrollTrigger: { trigger: '.game-statement', start: 'top 72%' } })
+        gsap.fromTo('.game-case-copy > *, .game-mmd-card, .game-toolkit article, .game-literacy article', { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, stagger: .1, ease: 'power4.out', scrollTrigger: { trigger: '.game-case', start: 'top 66%' } })
         gsap.to('.game-wallpaper img', { yPercent: -8, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.game-wallpaper', start: 'top bottom', end: 'bottom top', scrub: 1.2 } })
         gsap.fromTo('.game-reel-grid figure', { clipPath: 'inset(100% 0 0 0)', y: 70 }, { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.35, stagger: .16, ease: 'power4.out', scrollTrigger: { trigger: '.game-reel-grid', start: 'top 78%' }, clearProps: 'clipPath' })
       } else {

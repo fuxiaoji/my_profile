@@ -92,12 +92,83 @@ function HomeProjectMosaic() {
 function GamePreviewSection() {
   const { language } = useLanguage(); const zh = language === 'zh'
   return <section className="game-preview-section">
-    <video className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg" aria-hidden="true"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></video>
     <div className="game-preview-overlay" />
     <div className="game-preview-meta"><span>(GAME / MOTION)</span><span>MMD · BLENDER · REALTIME</span></div>
-    <h2><span>MOTION.</span><span>WORLD.</span><span>STAGE.</span></h2>
-    <div className="home-mmd-peek" aria-hidden="true"><video autoPlay muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></video><span>MMD DANCE / NEW WORK</span></div>
-    <div className="game-preview-bottom"><div><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera rhythm'}</p><strong>{zh ? '把角色动作、舞台光线和镜头节奏组织成可以循环观看的动态作品。' : 'Character motion, stage lighting and camera rhythm become loopable motion pieces.'}</strong></div><dl><div><dt>2</dt><dd>{zh ? '最新舞蹈视频' : 'new dance reels'}</dd></div><div><dt>4K</dt><dd>{zh ? '原始渲染素材' : 'source renders'}</dd></div></dl><Link to="/game">{zh ? '查看游戏与动态作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+    <div className="game-preview-head"><h2><span>MOTION.</span><span>WORLD.</span><span>STAGE.</span></h2><p>{zh ? '三个动态作品切片，像作品集橱窗一样并排展示。' : 'Three motion slices, arranged like a compact portfolio showcase.'}</p></div>
+    <div className="home-video-triptych">
+      {[
+        ['/game/mmd-dance-03.mp4', '/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', zh ? '最新舞蹈作品' : 'Latest dance piece'],
+        ['/game/mmd-dance-02.mp4', '/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', zh ? '舞台与镜头' : 'Stage and camera'],
+        ['/game/mmd-dance-01.mp4', '/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', zh ? '动作与构图' : 'Motion and framing'],
+      ].map(([src, poster, no, label, caption]) => <Link className="home-video-tile" to="/game" key={src}><video autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><span>{no}</span><div><strong>{label}</strong><em>{caption}</em></div></Link>)}
+    </div>
+    <div className="game-preview-bottom"><div><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera rhythm'}</p><strong>{zh ? '把角色动作、舞台光线和镜头节奏组织成可以循环观看的动态作品。' : 'Character motion, stage lighting and camera rhythm become loopable motion pieces.'}</strong></div><dl><div><dt>3</dt><dd>{zh ? '最新舞蹈视频' : 'new dance reels'}</dd></div><div><dt>4K</dt><dd>{zh ? '原始渲染素材' : 'source renders'}</dd></div></dl><Link to="/game">{zh ? '查看游戏与动态作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+  </section>
+}
+
+const mmdVideos = [
+  ['/game/mmd-dance-03.mp4', '/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', '最新舞蹈作品', 'Latest dance piece'],
+  ['/game/mmd-dance-02.mp4', '/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', '舞台与镜头', 'Stage and camera'],
+  ['/game/mmd-dance-01.mp4', '/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', '动作与构图', 'Motion and framing'],
+]
+
+function BilibiliPanel({ compact = false }) {
+  const { language } = useLanguage(); const zh = language === 'zh'
+  const [profile, setProfile] = useState(null)
+  useEffect(() => {
+    let alive = true
+    const load = async () => {
+      try {
+        const response = await fetch('/api/bilibili/summary')
+        if (!response.ok) throw new Error('Bilibili API unavailable')
+        const data = await response.json()
+        if (!data.latest?.length) {
+          const fallback = await fetch('/bilibili-summary.json').then(result => result.json()).catch(() => null)
+          if (alive) setProfile(fallback ? { ...fallback, ...data, latest: fallback.latest || [] } : data)
+          return
+        }
+        if (alive) setProfile(data)
+      } catch {
+        try {
+          const fallback = await fetch('/bilibili-summary.json').then(result => result.json())
+          if (alive) setProfile(fallback)
+        } catch {
+          if (alive) setProfile({ name: '三只阿基', fans: null, likes: null, latest: [] })
+        }
+      }
+    }
+    load()
+    return () => { alive = false }
+  }, [])
+  const latest = profile?.latest || []
+  const metric = value => value == null ? '—' : Number(value).toLocaleString('zh-CN')
+  return <aside className={`bili-panel ${compact ? 'bili-panel-compact' : ''}`}>
+    <div><p className="eyebrow">BILIBILI / 三只阿基</p><h3>{profile?.name || '三只阿基'}</h3><a href={profile?.profileUrl || 'https://space.bilibili.com/'} target="_blank" rel="noreferrer">{zh ? '打开主页' : 'Open profile'} <Arrow /></a></div>
+    <dl><div><dt>{metric(profile?.fans)}</dt><dd>{zh ? '粉丝' : 'Followers'}</dd></div><div><dt>{metric(profile?.likes)}</dt><dd>{zh ? '累计获赞' : 'Likes'}</dd></div></dl>
+    <div className="bili-latest"><span>{zh ? '最新作品' : 'Latest works'}</span>{latest.length ? latest.slice(0, compact ? 2 : 3).map(item => <a href={item.url} target="_blank" rel="noreferrer" key={item.url || item.title}><em>{item.date || 'BILI'}</em><strong>{item.title}</strong></a>) : <p>{zh ? '服务器接口连接后自动显示。' : 'Connect the server API to show live works.'}</p>}</div>
+  </aside>
+}
+
+function RealtimeGamePreviewSection() {
+  const { language } = useLanguage(); const zh = language === 'zh'
+  return <section className="game-preview-section realtime-preview-section">
+    <video className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video>
+    <div className="game-preview-overlay" />
+    <div className="game-preview-meta"><span>(GAME / REALTIME)</span><span>UE5 · BLENDER · AI</span></div>
+    <h2><span>PLAY.</span><span>BUILD.</span><span>SIMULATE.</span></h2>
+    <div className="game-preview-bottom"><div><p>{zh ? '直升机、角色与实时场景' : 'Helicopter, character and realtime scene'}</p><strong>{zh ? '把游戏理解拆成可运行的系统：规则、载具、镜头、环境和交互共同形成可信的实时世界。' : 'Game literacy becomes a runnable system: rules, vehicle, camera, environment and interaction.'}</strong></div><dl><div><dt>2300+</dt><dd>BATTLEFIELD HRS</dd></div><div><dt>200+</dt><dd>AI MODELS</dd></div></dl><Link to="/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+  </section>
+}
+
+function MmdPreviewSection() {
+  const { language } = useLanguage(); const zh = language === 'zh'
+  return <section className="mmd-preview-section" id="mmd-preview">
+    <div className="mmd-preview-kicker"><span>(MMD / 二次元)</span><span>Motion · Stage · Camera</span></div>
+    <div className="mmd-preview-head"><h2><span>AKI</span><span>STAGE</span></h2><p>{zh ? '把 MMD 舞蹈、角色表演和镜头节奏独立成一个动态作品板块，不再挤在游戏主叙事里。' : 'A dedicated motion-art block for MMD dance, character performance and camera rhythm.'}</p></div>
+    <div className="home-video-triptych mmd-triptych">
+      {mmdVideos.map(([src, poster, no, label, zhCaption, enCaption]) => <Link className="home-video-tile" to="/game#mmd-stage" key={src}><video autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><span>{no}</span><div><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></div></Link>)}
+    </div>
+    <div className="mmd-preview-bottom"><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera direction'}</p><BilibiliPanel compact /><Link to="/game#mmd-stage">{zh ? '查看 MMD 与二次元板块' : 'View MMD stage'} <Arrow /></Link></div>
   </section>
 }
 
@@ -112,7 +183,9 @@ function Home({ openingVariant = 'v2' }) {
 
     <section id="work" className="work-section home-work"><SectionTitle index="01" title={t.selected} subtitle={t.selectedSub} /><HomeProjectMosaic /><Link className="section-cta" to="/projects">{t.allProjects} <Arrow /></Link></section>
 
-    <GamePreviewSection />
+    <RealtimeGamePreviewSection />
+
+    <MmdPreviewSection />
 
     <section className="capabilities-section"><SectionTitle index="02" title={t.method} subtitle={t.methodSub} light /><div className="capability-list">{capabilities.map(([title, tools, zhTitle, zhDesc, enDesc, zhPoints, enPoints], i) => <article key={title}><span>0{i + 1}</span><h3>{language === 'zh' ? zhTitle : title}</h3><div className="capability-detail"><p className="capability-tools">{tools}</p><p className="capability-desc">{language === 'zh' ? zhDesc : enDesc}</p><ul>{(language === 'zh' ? zhPoints : enPoints).map((point, pointIndex) => <li key={point}><span>{String(pointIndex + 1).padStart(2, '0')}</span><p>{point}</p></li>)}</ul></div></article>)}</div></section>
 
@@ -169,7 +242,9 @@ function GamePage() {
 
     <section className="game-wallpaper"><img src="/game/enchanted-forest.webp" alt={zh ? '魔法森林实时渲染作品' : 'Enchanted forest realtime render'} /><div><span>02 / ENVIRONMENT ART</span><h2>ENCHANTED<br />FOREST</h2><p>{zh ? '角色、植被、水面、体积光与景深共同组织的幻想场景练习。' : 'A fantasy environment study in character staging, foliage, water, volumetric light and depth of field.'}</p></div></section>
 
-    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></video><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '最新 MMD 舞蹈作品：用舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A new MMD dance piece focused on stage light, character motion and camera rhythm.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></video><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing continuity and composition shifts.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicle, character and environment.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></video><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'Material, lighting, composition and camera study.'}</p></figcaption></figure></div></section>
+    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-03-poster.jpg"><source src="/game/mmd-dance-03.mp4" type="video/mp4" /></video><figcaption><span>MMD / LATEST DANCE</span><p>{zh ? '06/28 最新 MMD 舞蹈作品：更完整地展示舞台、动作和镜头节奏。' : 'The latest 06/28 MMD dance piece with stronger staging, motion and camera rhythm.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></video><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A dance piece focused on stage light, character motion and camera rhythm.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></video><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing continuity and composition shifts.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicle, character and environment.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></video><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'Material, lighting, composition and camera study.'}</p></figcaption></figure></div></section>
+
+    <section className="game-mmd-stage" id="mmd-stage"><div className="game-mmd-title"><p className="eyebrow">03B / MMD & 二次元</p><h2><span>AKI</span><span>MOTION</span><span>STAGE</span></h2><p>{zh ? '这个板块把“三只阿基”的 MMD 舞蹈、舞台光线、角色动作和镜头调度单独展示，像一个二次元动态作品集。' : 'A dedicated anime-motion portfolio for MMD dance, stage light, character motion and camera direction.'}</p></div><div className="game-mmd-grid">{mmdVideos.map(([src, poster, no, label, zhCaption, enCaption], index) => <figure className={`game-mmd-card game-mmd-card-${index + 1}`} key={src}><video controls muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><figcaption><span>{no}</span><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></figcaption></figure>)}</div><BilibiliPanel /></section>
 
     <section className="game-toolkit"><p className="eyebrow">04 / REALTIME CRAFT</p><div className="game-toolkit-grid"><article><span>01</span><h3>UE5</h3><p>Blueprint / C++ / Sequencer / Lighting</p></article><article><span>02</span><h3>UNITY</h3><p>Gameplay prototype / Interaction / Scene</p></article><article><span>03</span><h3>BLENDER</h3><p>Modeling / Texturing / Shader / Animation</p></article><article><span>04</span><h3>GAME AI</h3><p>PyTorch / RL / Evolution / Multi-agent</p></article></div></section>
 
