@@ -429,6 +429,18 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .local-file-fallback h2 { max-width: 12em; margin: 2rem 0; font-size: clamp(2.5rem, 6vw, 6rem); line-height: .92; letter-spacing: -.07em; }
 .local-file-fallback a { width: fit-content; padding-bottom: .4rem; border-bottom: 1px solid; font: .7rem "DM Mono"; }
 
+.tieba-embed-page { min-height: 100vh; padding: 8.5rem 3vw 8vh; color: #162535; background: var(--paper); }
+.tieba-embed-hero { display: grid; grid-template-columns: 1fr minmax(0, 2.1fr) minmax(16rem, .9fr); gap: 3vw; align-items: end; padding-bottom: 5vh; border-bottom: 1px solid rgba(22,37,53,.42); }
+.tieba-embed-hero > a:first-child { align-self: start; width: fit-content; padding-bottom: .4rem; border-bottom: 1px solid currentColor; font: .62rem "DM Mono"; }
+.tieba-embed-hero .eyebrow { align-self: start; }
+.tieba-embed-hero h1 { grid-column: 2 / 4; margin: 3vh 0 0; font-size: clamp(4rem, 10vw, 11rem); line-height: .78; letter-spacing: -.09em; }
+.tieba-embed-hero p:not(.eyebrow) { grid-column: 2; margin: 0; max-width: 38rem; font-size: clamp(1rem, 1.6vw, 1.4rem); line-height: 1.55; }
+.tieba-embed-hero > a:last-child { justify-self: end; padding: 1rem 1.2rem; border: 1px solid currentColor; font: .62rem "DM Mono"; }
+.tieba-embed-shell { margin-top: 4vh; height: min(82vh, 920px); overflow: hidden; border: 1px solid rgba(22,37,53,.45); background: #f7f3ee; box-shadow: 0 24px 80px rgba(22,37,53,.12); }
+.tieba-embed-shell iframe { display: block; width: 100%; height: 100%; border: 0; background: #f7f3ee; }
+.tieba-embed-note { margin: 2vh 0 0 auto; max-width: 44rem; display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; font-size: .82rem; line-height: 1.6; opacity: .72; }
+.tieba-embed-note span { font: .62rem "DM Mono"; }
+
 /* Game / realtime portfolio */
 .game-preview-section { position: relative; min-height: 100svh; padding: 3vw; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; color: #f4f1e9; background: #111; isolation: isolate; }
 .game-preview-video { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; }

@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const localNotesRoot = 'F:/desktop/note'
+const localArticlesRoot = path.resolve('文章')
 const ignoredNoteEntries = new Set(['.git', '.obsidian', '.DS_Store'])
 
 function noteTree(directory = localNotesRoot, relative = '') {
@@ -85,12 +86,75 @@ function handleBilibiliApi(request, response, next) {
   })
 }
 
+function findArchivedTiebaMarkdown(threadId) {
+  if (!threadId || !fs.existsSync(localArticlesRoot)) return null
+  const stack = [localArticlesRoot]
+  while (stack.length) {
+    const current = stack.pop()
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const full = path.join(current, entry.name)
+      if (entry.isDirectory()) {
+        stack.push(full)
+        continue
+      }
+      if (!entry.name.toLowerCase().endsWith('.md')) continue
+      if (full.includes(threadId) || fs.readFileSync(full, 'utf8').includes(`/p/${threadId}`)) {
+        return full
+      }
+    }
+  }
+  return null
+}
+
+async function readJsonBody(request) {
+  const chunks = []
+  for await (const chunk of request) chunks.push(chunk)
+  const text = Buffer.concat(chunks).toString('utf8')
+  return text ? JSON.parse(text) : {}
+}
+
+function handleTiebaSpiderApi(request, response, next) {
+  const pathname = new URL(request.url, 'http://localhost').pathname
+  if (pathname !== '/spider-api/run') return next()
+  if (request.method !== 'POST') {
+    response.statusCode = 405
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    response.end(JSON.stringify({ code: 405, msg: 'Method not allowed' }))
+    return
+  }
+  readJsonBody(request).then(body => {
+    const url = String(body.url || '')
+    const threadId = url.match(/tieba\.baidu\.com\/p\/(\d+)/)?.[1] || url.match(/\/p\/(\d+)/)?.[1]
+    const archived = findArchivedTiebaMarkdown(threadId)
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    if (!archived) {
+      response.end(JSON.stringify({
+        code: 200,
+        msg: `本地预览接口已连通，但没有找到帖子 ${threadId || url} 的本地归档。线上完整抓取请部署 API_DOC.md 中的爬虫后端。`,
+        markdown_content: `# Tieba Reaper\n\n> 本地接口已连通。\n\n- 输入链接：${url || '未提供'}\n- 本地归档：未找到\n\n如果这是新帖子，需要服务器端爬虫服务实际访问贴吧并返回 Markdown。`,
+      }))
+      return
+    }
+    response.end(JSON.stringify({
+      code: 200,
+      msg: '已从本地文章归档读取 Markdown。',
+      markdown_content: fs.readFileSync(archived, 'utf8'),
+      folder_name: path.basename(path.dirname(archived)),
+    }))
+  }).catch(error => {
+    response.statusCode = 400
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    response.end(JSON.stringify({ code: 400, msg: error.message }))
+  })
+}
+
 function localNotesPlugin() {
   return {
     name: 'local-notes-preview',
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
         handleBilibiliApi(request, response, () => {
+        handleTiebaSpiderApi(request, response, () => {
         const pathname = new URL(request.url, 'http://localhost').pathname
         if (pathname === '/__local_notes_index') {
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
@@ -120,11 +184,12 @@ function localNotesPlugin() {
           fs.createReadStream(file).pipe(response)
         }
         })
+        })
       })
     },
     configurePreviewServer(server) {
       server.middlewares.use((request, response, next) => {
-        handleBilibiliApi(request, response, next)
+        handleBilibiliApi(request, response, () => handleTiebaSpiderApi(request, response, next))
       })
     },
   }
