@@ -433,6 +433,8 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .game-preview-section { position: relative; min-height: 100svh; padding: 3vw; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; color: #f4f1e9; background: #111; isolation: isolate; }
 .game-preview-video { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .game-preview-overlay { position: absolute; z-index: -1; inset: 0; background: radial-gradient(circle at 20% 10%, rgba(198,211,141,.18), transparent 32rem), radial-gradient(circle at 88% 18%, rgba(215,92,59,.2), transparent 28rem), linear-gradient(135deg, #0b0f0d 0%, #141712 52%, #080a09 100%); }
+.realtime-preview-section .game-preview-overlay { background: linear-gradient(90deg, rgba(7,11,12,.88), rgba(7,11,12,.34) 50%, rgba(7,11,12,.72)), linear-gradient(0deg, rgba(7,11,12,.86), rgba(7,11,12,.2) 52%, rgba(7,11,12,.58)), radial-gradient(circle at 78% 18%, rgba(126,171,202,.24), transparent 34rem); }
+.realtime-preview-section .game-preview-video { filter: saturate(1.08) contrast(1.05); transform-origin: center; }
 .game-preview-meta { display: flex; justify-content: space-between; font: .62rem "DM Mono"; letter-spacing: .08em; }
 .game-preview-head { display: grid; grid-template-columns: 1.3fr .7fr; gap: 4vw; align-items: end; margin: 5vh 0 4vh; }
 .game-preview-head p { max-width: 26rem; margin-bottom: 1rem; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.45; opacity: .75; }
@@ -468,14 +470,19 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .game-preview-bottom > a:hover { color: #111; background: #f4f1e9; }
 
 .home-project-tool-cover { display: none; }
-.home-project-tool { background: linear-gradient(135deg, rgba(198,211,141,.26), rgba(232,227,216,.82)); }
-.crawler-mini-ui { position: relative; min-height: 45%; margin-bottom: auto; display: grid; grid-template-columns: .8fr 1.2fr; gap: .6rem; opacity: .86; }
+.home-project-tool { grid-column: 7 / 13; grid-row: span 2; position: relative; overflow: hidden; min-height: 12rem; padding: 1.15rem; display: grid; grid-template-columns: minmax(7rem, .8fr) minmax(0, 1.2fr) auto; gap: 1rem; align-items: end; color: var(--ink); border: 1px solid var(--ink); border-radius: 0 0 3rem 0; background: linear-gradient(135deg, rgba(198,211,141,.34), rgba(232,227,216,.88)); transition: transform .55s cubic-bezier(.16,1,.3,1); }
+.home-project-tool:hover { transform: translateY(-8px) rotate(.4deg); }
+.crawler-mini-ui { position: relative; min-height: 7.5rem; display: grid; grid-template-columns: .8fr 1.2fr; gap: .6rem; opacity: .72; }
 .crawler-mini-ui span { border: 1px solid currentColor; background: rgba(255,255,255,.26); }
 .crawler-mini-ui span:nth-child(1) { grid-row: span 2; border-radius: 999px 999px 1.2rem 1.2rem; }
 .crawler-mini-ui span:nth-child(2) { border-radius: 999px; }
 .crawler-mini-ui span:nth-child(3) { border-radius: .9rem; }
 .crawler-mini-ui b { position: absolute; inset: auto 10% 14% auto; width: 38%; height: 1px; background: currentColor; transform: rotate(-16deg); transform-origin: right center; }
-.home-project-tool-meta { margin-top: auto; }
+.home-project-tool-meta { min-width: 0; }
+.home-project-tool-meta span { display: block; margin-bottom: .45rem; font: .56rem "DM Mono"; letter-spacing: .08em; opacity: .68; }
+.home-project-tool-meta strong { display: block; font-size: clamp(1.9rem, 3.7vw, 4.2rem); line-height: .82; letter-spacing: -.08em; }
+.home-project-tool-meta em { display: block; margin-top: .75rem; max-width: 20rem; font-style: normal; font-size: .82rem; line-height: 1.45; opacity: .72; }
+.home-project-tool > i { align-self: end; justify-self: end; font: .62rem "DM Mono"; font-style: normal; white-space: nowrap; }
 
 .mmd-preview-section { position: relative; padding: 13vh 3vw 11vh; overflow: hidden; color: #eeeae1; background: radial-gradient(circle at 80% 18%, rgba(168,87,118,.32), transparent 26rem), radial-gradient(circle at 14% 74%, rgba(94,129,160,.35), transparent 28rem), #101311; }
 .mmd-preview-section::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 9vw 9vw; mask-image: linear-gradient(180deg, transparent, #000 12%, #000 82%, transparent); }
@@ -709,6 +716,8 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
   .tile-3 { grid-column: 2; grid-row: span 3; }
   .tile-4 { grid-column: 1; grid-row: span 3; clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%, 0 14%); }
   .tile-5 { grid-column: 2; grid-row: span 2; border-radius: 0 0 45% 0; }
+  .home-project-tool { grid-column: 1 / -1; grid-row: span 2; min-height: 15rem; grid-template-columns: 1fr 1.35fr; }
+  .home-project-tool > i { grid-column: 2; justify-self: start; }
   .project-card, .project-card:nth-child(even) { grid-template-columns: 1fr; min-height: 0; }
   .project-card:nth-child(even) .project-visual { order: 0; }
   .project-visual { min-height: 70vh; }
