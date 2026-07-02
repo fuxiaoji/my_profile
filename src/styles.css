@@ -651,43 +651,63 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 
 @media (min-width: 1100px) {
   .nav-shell { height: 68px; padding-inline: 2.4vw; }
-  .hero { padding: 12vh 2.4vw 3.2vh; }
-  .hero h1 { font-size: clamp(5.4rem, 16.4vw, 16.4rem); line-height: .84; }
-  .hero-watermark { font-size: clamp(8rem, 23vw, 23rem); }
-  .manifesto { min-height: 92vh; padding: 13vh 2.4vw; }
-  .manifesto-copy { font-size: clamp(3.1rem, 6.9vw, 7.1rem); }
-  .work-section, .capabilities-section, .profile-section, .game-reels, .game-toolkit, .game-literacy { padding-block: 11vh; padding-inline: 2.4vw; }
-  .section-heading { margin-bottom: 8vh; grid-template-columns: 6vw 1fr; }
-  .section-heading h2 { font-size: clamp(4.2rem, 10.5vw, 11.2rem); }
-  html:lang(zh-CN) .section-heading h2 { font-size: clamp(3.8rem, 8.8vw, 9.4rem); }
+  .hero { min-height: 88svh; padding: 10vh 2.4vw 3.2vh; }
+  .hero h1 { font-size: clamp(5rem, 13.2vw, 13.6rem); line-height: .86; }
+  .hero-watermark { font-size: clamp(7rem, 18vw, 18rem); }
+  .manifesto { min-height: 76vh; padding: 9vh 2.4vw; }
+  .manifesto-copy { font-size: clamp(2.8rem, 5.2vw, 5.7rem); max-width: 13em; }
+  .manifesto-cn { font-size: clamp(1rem, 1.25vw, 1.25rem); }
+  .work-section, .capabilities-section, .profile-section, .game-reels, .game-toolkit, .game-literacy { padding-block: 8.5vh; padding-inline: 2.4vw; }
+  .section-heading { margin-bottom: 6vh; grid-template-columns: 5vw 1fr; }
+  .section-heading h2 { font-size: clamp(3.5rem, 7.8vw, 8.5rem); line-height: .78; }
+  html:lang(zh-CN) .section-heading h2 { font-size: clamp(3.2rem, 6.6vw, 7rem); line-height: 1.08; }
   .home-project-mosaic { grid-auto-rows: minmax(76px, 5.8vw); gap: 1vw; }
   .project-card { min-height: min(63vw, 700px); }
   .project-visual { min-height: 500px; }
   .profile-grid { gap: 3vw; }
   .portrait { height: 62vh; }
   .awards-strip { margin-top: 9vh; }
-  .photo-heading h2 { font-size: clamp(4rem, 8vw, 8rem); }
-  .game-preview-section, .game-hero { min-height: 92svh; padding: 2.4vw; }
+  .photo-heading h2 { font-size: clamp(3.6rem, 6vw, 6.3rem); }
+  .game-preview-section, .game-hero { min-height: 82svh; padding: 2.4vw; }
   .game-preview-head { margin-block: 3.5vh 3vh; }
-  .game-preview-section h2 { font-size: clamp(4rem, 9.2vw, 9.6rem); }
-  .mmd-preview-section { padding-block: 11vh 10vh; padding-inline: 2.4vw; }
-  .mmd-preview-head h2, .game-mmd-title h2 { font-size: clamp(4.8rem, 11.5vw, 12rem); }
+  .game-preview-section h2 { font-size: clamp(3.8rem, 7.4vw, 8rem); }
+  .mmd-preview-section { padding-block: 8.5vh 8vh; padding-inline: 2.4vw; }
+  .mmd-preview-head h2, .game-mmd-title h2 { font-size: clamp(4rem, 8.5vw, 9.2rem); }
   .home-video-triptych { margin-bottom: 3.5vh; }
   .home-video-tile { min-height: clamp(220px, 29vh, 330px); }
   .home-video-tile:nth-child(1) { min-height: clamp(260px, 35vh, 390px); }
   .home-video-tile:nth-child(3) { min-height: clamp(210px, 26vh, 300px); }
   .game-preview-bottom { padding-top: 1.4rem; gap: 2.6vw; }
   .game-hero { padding-top: 6.6rem; }
-  .game-hero h1 { font-size: clamp(5rem, 12.2vw, 12.5rem); }
+  .game-hero h1 { font-size: clamp(4.5rem, 9.4vw, 10rem); }
   .game-statement { padding: 11vh 2.4vw; }
-  .game-statement h2 { margin-bottom: 8vh; font-size: clamp(2.7rem, 5.6vw, 5.8rem); }
+  .game-statement h2 { margin-bottom: 7vh; font-size: clamp(2.5rem, 4.5vw, 4.8rem); }
   .game-case { padding: 10vh 2.4vw; }
-  .game-case h2 { font-size: clamp(4rem, 8.5vw, 8.7rem); }
+  .game-case h2 { font-size: clamp(3.5rem, 6.6vw, 7rem); }
   .game-wallpaper { min-height: 92vh; }
   .game-reels header { margin-bottom: 7vh; }
-  .game-reels header h2, .game-literacy header h2 { font-size: clamp(2.5rem, 4.8vw, 4.9rem); }
+  .game-reels header h2, .game-literacy header h2 { font-size: clamp(2.3rem, 3.8vw, 4rem); }
   .game-literacy article { min-height: 31rem; }
   .game-literacy-visual { height: 13.5rem; }
+}
+
+@media (min-width: 1500px) {
+  .nav-shell { height: 60px; }
+  .hero { min-height: 82svh; }
+  .hero h1 { font-size: clamp(5rem, 11.4vw, 12.2rem); }
+  .hero h1 span:last-child { margin-left: 14vw; }
+  .manifesto { min-height: 70vh; padding-block: 7.5vh; }
+  .manifesto-copy { margin-left: 10vw; font-size: clamp(3rem, 4.7vw, 5.25rem); }
+  .section-heading h2 { font-size: clamp(3.6rem, 6.6vw, 7.4rem); }
+  html:lang(zh-CN) .section-heading h2 { font-size: clamp(3.2rem, 5.7vw, 6.3rem); }
+  .index-page { padding-top: 11vh; }
+  .index-hero { min-height: 58vh; }
+  .index-hero h1 { font-size: clamp(4.5rem, 10vw, 10.5rem); }
+  html:lang(zh-CN) .index-hero h1 { font-size: clamp(4rem, 8.4vw, 8.8rem); }
+  .tieba-embed-page { padding-top: 6.5rem; }
+  .tieba-embed-hero h1 { font-size: clamp(3.8rem, 7.4vw, 8rem); }
+  .work-section, .library-section, .profile-section, .capabilities-section { padding-block: 7.5vh; }
+  .contact-section h2 { font-size: clamp(3.8rem, 7.5vw, 8rem); }
 }
 
 @media (max-width: 800px) {
