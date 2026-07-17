@@ -8,6 +8,9 @@ const resolveAsset = (src, base) => {
   if (!src || /^(https?:|data:|blob:)/i.test(src)) return src
   let clean = src.replace(/^\.\//, '').replace(/^\//, '')
   try { clean = decodeURIComponent(clean) } catch { /* retain malformed legacy paths */ }
+  if (clean.startsWith('文章/') && base.startsWith('/article-asset/')) {
+    return `/article-asset/${clean.replace(/^文章\//, '').split('/').map(encodeURIComponent).join('/')}`
+  }
   if (clean.startsWith('文章/') && base.includes('/main/')) {
     const repositoryRoot = `${base.slice(0, base.indexOf('/main/') + 6)}`
     return `${repositoryRoot}${clean.split('/').map(encodeURIComponent).join('/')}`
