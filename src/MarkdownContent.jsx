@@ -1,9 +1,13 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import rehypeRaw from 'rehype-raw'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 
 const headingId = (text, index) => `section-${index}-${text.replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '').toLowerCase()}`
 const childText = children => Array.isArray(children) ? children.join('') : String(children)
+
 const resolveAsset = (src, base) => {
   if (!src || /^(https?:|data:|blob:)/i.test(src)) return src
   let clean = src.replace(/^\.\//, '').replace(/^\//, '')
@@ -26,7 +30,7 @@ export default function MarkdownContent({ source, assetBase = '' }) {
     return <Tag id={headingId(text, headingIndex)}>{children}</Tag>
   }
 
-  return <div className="article-prose"><ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={{
+  return <div className="article-prose"><ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeRaw, rehypeKatex]} components={{
     h1: makeHeading('h2'),
     h2: makeHeading('h2'),
     h3: makeHeading('h3'),

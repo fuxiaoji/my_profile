@@ -393,6 +393,9 @@ html:lang(zh-CN) .index-hero h1 { padding-block: .08em; font-size: clamp(5rem, 1
 .article-prose details { margin: 1.5rem 0; border: 1px solid var(--line); background: rgba(170,183,159,.12); }
 .article-prose summary { padding: 1rem 1.2rem; cursor: pointer; font: .68rem "DM Mono"; letter-spacing: .03em; }
 .article-prose details > :not(summary) { margin-inline: 1.2rem; }
+.article-prose .katex { font-size: 1.04em; }
+.article-prose .katex-display { margin: 1.6rem 0; padding: 1rem 1.2rem; overflow-x: auto; overflow-y: hidden; border: 1px solid rgba(29,35,42,.12); background: rgba(255,255,255,.34); }
+.article-prose .katex-display > .katex { display: inline-block; min-width: max-content; }
 .article-list-line { display: grid; grid-template-columns: 1.5rem 1fr; }
 .article-list-line span { color: var(--coral); }
 .source-article-link { margin-top: 3rem; padding: 1.2rem 0; display: flex; justify-content: space-between; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
