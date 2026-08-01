@@ -280,7 +280,22 @@ function ArticleDetailPage() {
     if (!article) return undefined
     let current = true
     const loader = articleMarkdown[`/${article.md}`] || Object.entries(articleMarkdown).find(([path]) => path.endsWith(article.md.split('/').pop()))?.[1]
-    if (loader) loader().then(markdown => { if (current) setSource(markdown) }).catch(() => { if (current) setSource('') })
+    const localUrl = `/article-asset/${article.md.replace(/^文章\//, '').split('/').map(encodeURIComponent).join('/')}`
+    const remoteUrl = githubRaw(article.md)
+    const loadArticle = async () => {
+      if (loader) return loader()
+      for (const url of isLocalHost() ? [localUrl, remoteUrl] : [remoteUrl]) {
+        try {
+          const response = await fetch(url)
+          const type = response.headers.get('content-type') || ''
+          if (!response.ok || type.includes('text/html')) continue
+          return response.text()
+        } catch { /* try next source */ }
+      }
+      return ''
+    }
+    setSource('')
+    loadArticle().then(markdown => { if (current) setSource(markdown) }).catch(() => { if (current) setSource('') })
     return () => { current = false }
   }, [article])
   useEffect(() => {

@@ -80,6 +80,13 @@ function handleBilibiliApi(request, response, next) {
     response.setHeader('Cache-Control', 'public, max-age=300')
     response.end(JSON.stringify(data))
   }).catch(error => {
+    const fallbackFile = path.resolve('public/bilibili-summary.json')
+    if (fs.existsSync(fallbackFile)) {
+      response.setHeader('Content-Type', 'application/json; charset=utf-8')
+      response.setHeader('Cache-Control', 'public, max-age=60')
+      response.end(JSON.stringify({ ...JSON.parse(fs.readFileSync(fallbackFile, 'utf8')), liveError: error.message }))
+      return
+    }
     response.statusCode = 502
     response.setHeader('Content-Type', 'application/json; charset=utf-8')
     response.end(JSON.stringify({ name: biliName, fans: null, likes: null, latest: [], error: error.message }))
