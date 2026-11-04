@@ -139,7 +139,7 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
         gsap.fromTo('.awards-strip article', { y: 90, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .12, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.awards-strip', start: 'top 82%' } })
         gsap.fromTo('.home-article-card, .library-actions > a', { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .1, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: '.home-article-cards', start: 'top 78%' } })
         gsap.fromTo('.contact-section h2', { xPercent: -20, scaleX: .7 }, { xPercent: 0, scaleX: 1, transformOrigin: 'left center', ease: 'power3.out', scrollTrigger: { trigger: '.contact-section', start: 'top bottom', end: 'center 55%', scrub: 1.4 } })
-      } else if (pathname === '/game') {
+      } else if (pathname === '/portfolio/game') {
         gsap.fromTo('.game-hero h1 span', { yPercent: 115, scaleX: .68, autoAlpha: 0 }, { yPercent: 0, scaleX: 1, autoAlpha: 1, duration: 1.45, stagger: .14, delay: .42, ease: 'power4.out' })
         gsap.fromTo('.game-hero-meta span, .game-hero-intro > *', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .08, delay: 1.05, ease: 'power3.out' })
         gsap.to('.game-hero > video', { scale: 1.08, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.game-hero', start: 'top top', end: 'bottom top', scrub: 1.3 } })

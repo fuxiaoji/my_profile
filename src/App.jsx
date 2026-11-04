@@ -26,7 +26,7 @@ const MarkdownContent = lazy(() => import('./MarkdownContent'))
 function Shell({ children }) {
   const { t, toggle, language } = useLanguage()
   const zh = language === 'zh'
-  const navItems = [['/research', zh ? '研究' : 'Research'], ['/projects', t.navWork], ['/game', t.navGame], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
+  const navItems = [['/research', zh ? '研究' : 'Research'], ['/projects', t.navWork], ['/portfolio/game', t.navGame], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
   return <div className="site-shell">
     <header className="nav-shell">
       <Link className="wordmark" to="/" aria-label={t.home}>FWJ<span>®</span></Link>
@@ -105,19 +105,19 @@ function GamePreviewSection() {
     <div className="game-preview-head"><h2><span>MOTION.</span><span>WORLD.</span><span>STAGE.</span></h2><p>{zh ? '三个动态作品切片，像作品集橱窗一样并排展示。' : 'Three motion slices, arranged like a compact portfolio showcase.'}</p></div>
     <div className="home-video-triptych">
       {[
-        ['/game/mmd-dance-03.mp4', '/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', zh ? '最新舞蹈作品' : 'Latest dance piece'],
-        ['/game/mmd-dance-02.mp4', '/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', zh ? '舞台与镜头' : 'Stage and camera'],
-        ['/game/mmd-dance-01.mp4', '/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', zh ? '动作与构图' : 'Motion and framing'],
-      ].map(([src, poster, no, label, caption]) => <Link className="home-video-tile" to="/game" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{caption}</em></div></Link>)}
+        ['/portfolio-media/game/mmd-dance-03.mp4', '/portfolio-media/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', zh ? '最新舞蹈作品' : 'Latest dance piece'],
+        ['/portfolio-media/game/mmd-dance-02.mp4', '/portfolio-media/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', zh ? '舞台与镜头' : 'Stage and camera'],
+        ['/portfolio-media/game/mmd-dance-01.mp4', '/portfolio-media/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', zh ? '动作与构图' : 'Motion and framing'],
+      ].map(([src, poster, no, label, caption]) => <Link className="home-video-tile" to="/portfolio/game" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{caption}</em></div></Link>)}
     </div>
-    <div className="game-preview-bottom"><div><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera rhythm'}</p><strong>{zh ? '把角色动作、舞台光线和镜头节奏组织成可以循环观看的动态作品。' : 'Character motion, stage lighting and camera rhythm become loopable motion pieces.'}</strong></div><dl><div><dt>3</dt><dd>{zh ? '最新舞蹈视频' : 'new dance reels'}</dd></div><div><dt>4K</dt><dd>{zh ? '原始渲染素材' : 'source renders'}</dd></div></dl><Link to="/game">{zh ? '查看游戏与动态作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+    <div className="game-preview-bottom"><div><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera rhythm'}</p><strong>{zh ? '把角色动作、舞台光线和镜头节奏组织成可以循环观看的动态作品。' : 'Character motion, stage lighting and camera rhythm become loopable motion pieces.'}</strong></div><dl><div><dt>3</dt><dd>{zh ? '最新舞蹈视频' : 'new dance reels'}</dd></div><div><dt>4K</dt><dd>{zh ? '原始渲染素材' : 'source renders'}</dd></div></dl><Link to="/portfolio/game">{zh ? '查看游戏与动态作品' : 'Enter game portfolio'} <Arrow /></Link></div>
   </section>
 }
 
 const mmdVideos = [
-  ['/game/mmd-dance-03.mp4', '/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', '最新舞蹈作品', 'Latest dance piece'],
-  ['/game/mmd-dance-02.mp4', '/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', '舞台与镜头', 'Stage and camera'],
-  ['/game/mmd-dance-01.mp4', '/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', '动作与构图', 'Motion and framing'],
+  ['/portfolio-media/game/mmd-dance-03.mp4', '/portfolio-media/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', '最新舞蹈作品', 'Latest dance piece'],
+  ['/portfolio-media/game/mmd-dance-02.mp4', '/portfolio-media/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', '舞台与镜头', 'Stage and camera'],
+  ['/portfolio-media/game/mmd-dance-01.mp4', '/portfolio-media/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', '动作与构图', 'Motion and framing'],
 ]
 
 function BilibiliPanel({ compact = false }) {
@@ -160,11 +160,11 @@ function BilibiliPanel({ compact = false }) {
 function RealtimeGamePreviewSection() {
   const { language } = useLanguage(); const zh = language === 'zh'
   return <section className="game-preview-section realtime-preview-section">
-    <LazyVideo className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo>
+    <LazyVideo className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/portfolio-media/game/helicopter-poster.webp" aria-hidden="true"><source src="/portfolio-media/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo>
     <div className="game-preview-overlay" />
     <div className="game-preview-meta"><span>(GAME / REALTIME)</span><span>UE5 · BLENDER · AI</span></div>
     <h2><span>PLAY.</span><span>BUILD.</span><span>SIMULATE.</span></h2>
-    <div className="game-preview-bottom"><div><p>{zh ? '直升机、角色与实时场景' : 'Helicopters, characters and realtime scenes'}</p><strong>{zh ? '把游戏理解拆成可运行的系统：规则、载具、镜头、环境和交互共同形成可信的实时世界。' : 'I turn game literacy into runnable systems: rules, vehicles, cameras, environments and interaction.'}</strong></div><dl><div><dt>2300+</dt><dd>BATTLEFIELD HRS</dd></div><div><dt>FSM</dt><dd>AGENT SYSTEMS</dd></div></dl><Link to="/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+    <div className="game-preview-bottom"><div><p>{zh ? '直升机、角色与实时场景' : 'Helicopters, characters and realtime scenes'}</p><strong>{zh ? '把游戏理解拆成可运行的系统：规则、载具、镜头、环境和交互共同形成可信的实时世界。' : 'I turn game literacy into runnable systems: rules, vehicles, cameras, environments and interaction.'}</strong></div><dl><div><dt>2300+</dt><dd>BATTLEFIELD HRS</dd></div><div><dt>FSM</dt><dd>AGENT SYSTEMS</dd></div></dl><Link to="/portfolio/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
   </section>
 }
 
@@ -174,9 +174,9 @@ function MmdPreviewSection() {
     <div className="mmd-preview-kicker"><span>(MMD / 二次元)</span><span>Motion · Stage · Camera</span></div>
     <div className="mmd-preview-head"><h2><span>AKI</span><span>STAGE</span></h2><p>{zh ? '把 MMD 舞蹈、角色表演和镜头节奏独立成一个动态作品板块，不再挤在游戏主叙事里。' : 'A dedicated motion portfolio for MMD dance, character performance and camera rhythm.'}</p></div>
     <div className="home-video-triptych mmd-triptych">
-      {mmdVideos.map(([src, poster, no, label, zhCaption, enCaption]) => <Link className="home-video-tile" to="/game#mmd-stage" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></div></Link>)}
+      {mmdVideos.map(([src, poster, no, label, zhCaption, enCaption]) => <Link className="home-video-tile" to="/portfolio/game#mmd-stage" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></div></Link>)}
     </div>
-    <div className="mmd-preview-bottom"><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera direction'}</p><BilibiliPanel compact /><Link to="/game#mmd-stage">{zh ? '查看 MMD 与二次元板块' : 'View the MMD stage'} <Arrow /></Link></div>
+    <div className="mmd-preview-bottom"><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera direction'}</p><BilibiliPanel compact /><Link to="/portfolio/game#mmd-stage">{zh ? '查看 MMD 与二次元板块' : 'View the MMD stage'} <Arrow /></Link></div>
   </section>
 }
 
@@ -225,17 +225,17 @@ const gameLiteracy = [
 ]
 
 const gameVisuals = {
-  '01': [{ name: 'HEARTS OF IRON IV', image: '/game/covers/hoi4.jpg' }, { name: 'VICTORIA 3', image: '/game/covers/victoria3.jpg' }, { name: 'HARDCORE WARGAMES', code: '20+' }],
-  '02': [{ name: 'BATTLEFIELD 1', image: '/game/covers/battlefield1.jpg' }, { name: 'COORDINATION', code: 'TEAM' }, { name: 'PLAYTIME', code: '2300+' }],
-  '03': [{ name: '原神', image: '/game/logos/genshin.png' }, { name: '崩坏：星穹铁道', image: '/game/logos/star-rail.png' }, { name: '鸣潮', image: '/game/logos/wuthering-waves.png' }, { name: '洛克王国', image: '/game/logos/roco.png' }, { name: '异环', code: 'NTE' }],
-  '04': [{ name: 'WORLD OF WARSHIPS', image: '/game/covers/world-of-warships.jpg' }, { name: 'MOUNT & BLADE II', image: '/game/covers/bannerlord.jpg' }, { name: 'BLACK MYTH: WUKONG', image: '/game/covers/black-myth.jpg' }, { name: 'EFOOTBALL', image: '/game/covers/efootball.jpg' }],
+  '01': [{ name: 'HEARTS OF IRON IV', image: '/portfolio-media/game/covers/hoi4.jpg' }, { name: 'VICTORIA 3', image: '/portfolio-media/game/covers/victoria3.jpg' }, { name: 'HARDCORE WARGAMES', code: '20+' }],
+  '02': [{ name: 'BATTLEFIELD 1', image: '/portfolio-media/game/covers/battlefield1.jpg' }, { name: 'COORDINATION', code: 'TEAM' }, { name: 'PLAYTIME', code: '2300+' }],
+  '03': [{ name: '原神', image: '/portfolio-media/game/logos/genshin.png' }, { name: '崩坏：星穹铁道', image: '/portfolio-media/game/logos/star-rail.png' }, { name: '鸣潮', image: '/portfolio-media/game/logos/wuthering-waves.png' }, { name: '洛克王国', image: '/portfolio-media/game/logos/roco.png' }, { name: '异环', code: 'NTE' }],
+  '04': [{ name: 'WORLD OF WARSHIPS', image: '/portfolio-media/game/covers/world-of-warships.jpg' }, { name: 'MOUNT & BLADE II', image: '/portfolio-media/game/covers/bannerlord.jpg' }, { name: 'BLACK MYTH: WUKONG', image: '/portfolio-media/game/covers/black-myth.jpg' }, { name: 'EFOOTBALL', image: '/portfolio-media/game/covers/efootball.jpg' }],
 }
 
 function GamePage() {
   const { language } = useLanguage(); const zh = language === 'zh'
   return <main className="game-page">
     <section className="game-hero">
-      <LazyVideo autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><div className="game-hero-shade" />
+      <LazyVideo autoPlay muted loop playsInline preload="metadata" poster="/portfolio-media/game/helicopter-poster.webp" aria-hidden="true"><source src="/portfolio-media/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><div className="game-hero-shade" />
       <div className="game-hero-meta"><span>05 / GAME & REALTIME</span><span>CHENGDU / 2026</span></div>
       <h1><span>GAME</span><span>SYSTEMS</span></h1>
       <div className="game-hero-intro"><p>{zh ? '游戏开发 / AI / 实时视觉' : 'Game development / AI / realtime visuals'}</p><strong>{zh ? '理解规则，构建系统，再让世界动起来。' : 'Understand the rules. Build the system. Make the world move.'}</strong><a href="#game-work">{zh ? '向下探索' : 'Explore'} ↓</a></div>
@@ -249,9 +249,9 @@ function GamePage() {
       <div className="game-case-copy"><p>{zh ? '把经典隐藏移动兵棋《追击俾斯麦》完整电子化，并构建可以大规模训练与观测的 AI 演化环境。' : 'A complete digital adaptation of the hidden-movement wargame, rebuilt as a scalable AI training environment.'}</p><ol><li><span>01</span>{zh ? 'C++ 并发仿真与 TypeScript 实时可视化组成异构架构。' : 'A heterogeneous architecture combining C++ simulation with TypeScript realtime visualization.'}</li><li><span>02</span>{zh ? '探索 Transformer、LSTM 策略模型与遗传算法演化。' : 'Transformer/LSTM policies and genetic algorithms for imperfect-information decisions.'}</li><li><span>03</span>{zh ? '打通对局采集、PyTorch 训练、演化实验与回放验证。' : 'Connects game data, PyTorch training, evolutionary experiments and replay validation.'}</li></ol><div className="game-stack"><span>C++</span><span>PYTORCH</span><span>TRANSFORMER</span><span>LSTM</span><span>TYPESCRIPT</span></div></div>
     </section>
 
-    <section className="game-wallpaper"><img src="/game/enchanted-forest.webp" alt={zh ? '魔法森林实时渲染作品' : 'Enchanted forest realtime render'} /><div><span>02 / ENVIRONMENT ART</span><h2>ENCHANTED<br />FOREST</h2><p>{zh ? '角色、植被、水面、体积光与景深共同组织的幻想场景练习。' : 'A fantasy environment study in character staging, foliage, water, volumetric light and depth of field.'}</p></div></section>
+    <section className="game-wallpaper"><img src="/portfolio-media/game/enchanted-forest.webp" alt={zh ? '魔法森林实时渲染作品' : 'Enchanted forest realtime render'} /><div><span>02 / ENVIRONMENT ART</span><h2>ENCHANTED<br />FOREST</h2><p>{zh ? '角色、植被、水面、体积光与景深共同组织的幻想场景练习。' : 'A fantasy environment study in character staging, foliage, water, volumetric light and depth of field.'}</p></div></section>
 
-    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-03-poster.jpg"><source src="/game/mmd-dance-03.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / LATEST DANCE</span><p>{zh ? '06/28 最新 MMD 舞蹈作品：更完整地展示舞台、动作和镜头节奏。' : 'The latest MMD dance piece (06/28), with stronger staging, motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A dance piece focused on stage lighting, character motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing motion continuity and composition shifts.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicles, characters and environments.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></LazyVideo><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'A study in materials, lighting, composition and camera movement.'}</p></figcaption></figure></div></section>
+    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><LazyVideo controls muted loop playsInline preload="metadata" poster="/portfolio-media/game/mmd-dance-03-poster.jpg"><source src="/portfolio-media/game/mmd-dance-03.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / LATEST DANCE</span><p>{zh ? '06/28 最新 MMD 舞蹈作品：更完整地展示舞台、动作和镜头节奏。' : 'The latest MMD dance piece (06/28), with stronger staging, motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/portfolio-media/game/mmd-dance-02-poster.jpg"><source src="/portfolio-media/game/mmd-dance-02.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A dance piece focused on stage lighting, character motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/portfolio-media/game/mmd-dance-01-poster.jpg"><source src="/portfolio-media/game/mmd-dance-01.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing motion continuity and composition shifts.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/portfolio-media/game/helicopter-poster.webp"><source src="/portfolio-media/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicles, characters and environments.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/portfolio-media/game/forest-poster.webp"><source src="/portfolio-media/game/forest-render.mp4" type="video/mp4" /></LazyVideo><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'A study in materials, lighting, composition and camera movement.'}</p></figcaption></figure></div></section>
 
     <section className="game-mmd-stage" id="mmd-stage"><div className="game-mmd-title"><p className="eyebrow">03B / MMD & 二次元</p><h2><span>AKI</span><span>MOTION</span><span>STAGE</span></h2><p>{zh ? '这个板块把“三只阿基”的 MMD 舞蹈、舞台光线、角色动作和镜头调度单独展示，像一个二次元动态作品集。' : 'A dedicated anime motion portfolio for MMD dance, stage lighting, character motion and camera direction.'}</p></div><div className="game-mmd-grid">{mmdVideos.map(([src, poster, no, label, zhCaption, enCaption], index) => <figure className={`game-mmd-card game-mmd-card-${index + 1}`} key={src}><LazyVideo controls muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><figcaption><span>{no}</span><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></figcaption></figure>)}</div><BilibiliPanel /></section>
 
@@ -365,7 +365,7 @@ function NoteViewerPage() {
 function PageMetadata() {
   const { pathname } = useLocation(); const { language } = useLanguage()
   useEffect(() => {
-    const names = { '/research': ['研究', 'Research'], '/projects': ['项目', 'Projects'], '/game': ['游戏与仿真', 'Games & simulation'], '/about': ['关于与简历', 'About & CV'] }
+    const names = { '/research': ['研究', 'Research'], '/projects': ['项目', 'Projects'], '/portfolio/game': ['游戏与仿真', 'Games & simulation'], '/about': ['关于与简历', 'About & CV'] }
     const label = names[pathname]?.[language === 'zh' ? 0 : 1]
     document.title = label ? `${label} · 傅文基 / Wenji Fu` : '傅文基 / Wenji Fu · AI、运筹与交互系统'
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://fuwenji.asia${pathname}`)
@@ -375,5 +375,5 @@ function PageMetadata() {
 
 export default function App() {
   const location = useLocation(); const scope = useRef(null); const openingVariant = 'v2'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search + location.hash)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><PageMetadata /><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/research" element={<ResearchPage />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/game" element={<GamePage />} /><Route path="/tools/tieba-spider" element={<TiebaSpiderPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><PageMetadata /><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/research" element={<ResearchPage />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/portfolio/game" element={<GamePage />} /><Route path="/tools/tieba-spider" element={<TiebaSpiderPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }
