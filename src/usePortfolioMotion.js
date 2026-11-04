@@ -9,7 +9,12 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
     if (!scope.current) return undefined
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    const resetScroll = () => {
+      const id = window.location.hash.slice(1)
+      const target = id ? document.getElementById(decodeURIComponent(id)) : null
+      if (target) target.scrollIntoView({ block: 'start', behavior: 'auto' })
+      else window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
     resetScroll()
     window.requestAnimationFrame(() => window.requestAnimationFrame(resetScroll))
     const resetTimer = window.setTimeout(resetScroll, 120)
@@ -28,12 +33,14 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
           .to('.route-curtain span', { yPercent: 0, duration: .45, ease: 'power3.out' }, '-=.2')
           .to('.route-curtain span', { yPercent: -120, duration: .35, ease: 'power3.in' }, '+=.1')
           .to('.route-curtain', { clipPath: 'inset(0 0 100% 0)', duration: .72, ease: 'power4.inOut' }, '-=.1')
-          .set('.route-curtain', { display: 'none' })
+          .set('.route-curtain', { display: 'none' }).timeScale(2.4)
       } else {
         gsap.set('.route-curtain', { display: 'none' })
       }
 
       if (pathname === '/') {
+        if (!sessionStorage.getItem('portfolio-intro-seen')) {
+        sessionStorage.setItem('portfolio-intro-seen', '1')
         const counter = { value: 0 }
         document.body.style.overflow = 'hidden'
         const intro = gsap.timeline({ defaults: { ease: 'power4.inOut' }, onComplete: () => { document.body.style.overflow = '' } })
@@ -77,6 +84,11 @@ export function usePortfolioMotion(scope, pathname, openingVariant = 'v1', route
             .to('.hero-watermark', { xPercent: 0, autoAlpha: 1, duration: 1.5, ease: 'power3.out' }, 2.48)
             .to('.hero h1 span', { yPercent: 0, scaleX: 1, duration: 1.5, stagger: .14, ease: 'power4.out' }, 2.62)
             .to('.hero-top > *, .hero-bottom > *', { y: 0, autoAlpha: 1, duration: .95, stagger: .08 }, 3.12)
+        }
+
+        intro.timeScale(2.5)
+        } else {
+          gsap.set('.opening', { display: 'none' })
         }
 
         gsap.fromTo('.manifesto-copy', { xPercent: -12, scaleX: .78 }, {

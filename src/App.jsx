@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router-dom'
-import { awards, capabilities, facts, photographs, projects } from './data'
+import { awards, capabilities, facts, photographs, projects } from './portfolioData'
 import { useLanguage } from './i18n'
 import { usePortfolioMotion } from './usePortfolioMotion'
+import { Background, ResearchPage, ResearchPreview } from './Research.jsx'
+import { LazyVideo } from './LazyVideo'
 
 function Arrow() { return <span aria-hidden="true">↗</span> }
 const githubFile = (path, repo = 'my_profile') => `https://github.com/fuxiaoji/${repo}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}`
@@ -24,14 +26,14 @@ const MarkdownContent = lazy(() => import('./MarkdownContent'))
 function Shell({ children }) {
   const { t, toggle, language } = useLanguage()
   const zh = language === 'zh'
-  const navItems = [['/projects', t.navWork], ['/game', t.navGame], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
+  const navItems = [['/research', zh ? '研究' : 'Research'], ['/projects', t.navWork], ['/game', t.navGame], ['/writing', t.navArticles], ['/study', t.navNotes], ['/about', t.navProfile]]
   return <div className="site-shell">
     <header className="nav-shell">
       <Link className="wordmark" to="/" aria-label={t.home}>FWJ<span>®</span></Link>
       <nav aria-label={zh ? '主导航' : 'Main navigation'}>
         {navItems.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : undefined}>{label}</NavLink>)}
       </nav>
-      <div className="nav-actions"><a className="header-email" href="mailto:fuwenji61616@gmail.com">EMAIL</a><a className="header-resume" href="/about#resume">{t.resume} ↓</a><span className="availability"><i /> {t.available}</span><button type="button" onClick={toggle} aria-label={zh ? '切换语言' : 'Switch language'}>{t.language}</button></div>
+      <div className="nav-actions"><a className="header-email" href="https://github.com/fuxiaoji">GITHUB</a><a className="header-resume" href="/about#resume">{t.resume} ↓</a><span className="availability"><i /> {t.available}</span><button type="button" onClick={toggle} aria-label={zh ? '切换语言' : 'Switch language'}>{t.language}</button></div>
     </header>{children}<nav className="mobile-dock" aria-label={zh ? '移动端导航' : 'Mobile navigation'}><Link to="/">{zh ? '首页' : 'Home'}</Link>{navItems.map(([to, label]) => <NavLink key={to} to={to}>{label}</NavLink>)}</nav>
   </div>
 }
@@ -81,11 +83,13 @@ function ArticleCommunity() {
 function ResumePanel() {
   const { language } = useLanguage(); const zh = language === 'zh'
   const resumes = [
-    ['/files/resume-internet.pdf', zh ? '互联网 / AI 开发' : 'Internet / AI Development', '01'],
-    ['/files/resume-game.pdf', zh ? '游戏开发 / AI' : 'Game Development / AI', '02'],
-    ['/files/resume-finance.pdf', zh ? '金融研究' : 'Finance & Research', '03'],
+    ['/files/resume-full-public.pdf', zh ? '完整履历' : 'Full CV', 'CV'],
+    ['/files/resume-ai-public.pdf', zh ? 'AI 与软件开发' : 'AI & software', 'AI'],
+    ['/files/resume-game-public.pdf', zh ? '游戏开发与 AI' : 'Game development', 'GAME'],
+    ['/files/resume-finance-public.pdf', zh ? '金融与金融科技' : 'Finance & FinTech', 'FIN'],
+    ['/files/resume-research-public.pdf', zh ? '科研申请' : 'Research', 'RES'],
   ]
-  return <section id="resume" className="resume-panel"><div><p className="eyebrow">CONTACT & RÉSUMÉ / 联系与简历</p><h3>{zh ? '选择适合你的版本。' : 'Choose the version that fits.'}</h3><a className="primary-email" href="mailto:fuwenji61616@gmail.com"><span>EMAIL</span><strong>fuwenji61616@gmail.com</strong><Arrow /></a></div><div className="resume-downloads">{resumes.map(([href, label, no]) => <a href={href} download key={href}><span>{no}</span><strong>{label}</strong><em>{zh ? '下载 PDF ↓' : 'Download PDF ↓'}</em></a>)}</div></section>
+  return <section id="resume" className="resume-panel"><div><p>{zh ? '公开履历' : 'Public résumé'}</p><h3>{zh ? '研究与工程，一起看。' : 'Research and engineering, together.'}</h3><p className="resume-context">{zh ? '选择适合你的版本。更多材料，欢迎通过 GitHub 交流。' : 'Choose a focused résumé or the full CV. Find me on GitHub for more.'}</p><a className="public-contact" href="https://github.com/fuxiaoji" target="_blank" rel="noreferrer">{zh ? '在 GitHub 找到我' : 'Find me on GitHub'} <Arrow /></a></div><div className="resume-downloads">{resumes.map(([href, label, no]) => <a href={href} download key={href}><span>{no}</span><strong>{label}</strong><em>{zh ? '下载 PDF' : 'Download PDF'}</em></a>)}</div></section>
 }
 
 function HomeProjectMosaic() {
@@ -104,7 +108,7 @@ function GamePreviewSection() {
         ['/game/mmd-dance-03.mp4', '/game/mmd-dance-03-poster.jpg', '01', 'MMD / 06.28', zh ? '最新舞蹈作品' : 'Latest dance piece'],
         ['/game/mmd-dance-02.mp4', '/game/mmd-dance-02-poster.jpg', '02', 'MMD / 06.25', zh ? '舞台与镜头' : 'Stage and camera'],
         ['/game/mmd-dance-01.mp4', '/game/mmd-dance-01-poster.jpg', '03', 'MMD / 06.24', zh ? '动作与构图' : 'Motion and framing'],
-      ].map(([src, poster, no, label, caption]) => <Link className="home-video-tile" to="/game" key={src}><video autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><span>{no}</span><div><strong>{label}</strong><em>{caption}</em></div></Link>)}
+      ].map(([src, poster, no, label, caption]) => <Link className="home-video-tile" to="/game" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{caption}</em></div></Link>)}
     </div>
     <div className="game-preview-bottom"><div><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera rhythm'}</p><strong>{zh ? '把角色动作、舞台光线和镜头节奏组织成可以循环观看的动态作品。' : 'Character motion, stage lighting and camera rhythm become loopable motion pieces.'}</strong></div><dl><div><dt>3</dt><dd>{zh ? '最新舞蹈视频' : 'new dance reels'}</dd></div><div><dt>4K</dt><dd>{zh ? '原始渲染素材' : 'source renders'}</dd></div></dl><Link to="/game">{zh ? '查看游戏与动态作品' : 'Enter game portfolio'} <Arrow /></Link></div>
   </section>
@@ -147,20 +151,20 @@ function BilibiliPanel({ compact = false }) {
   const latest = profile?.latest || []
   const metric = value => value == null ? '—' : Number(value).toLocaleString('zh-CN')
   return <aside className={`bili-panel ${compact ? 'bili-panel-compact' : ''}`}>
-    <div><p className="eyebrow">BILIBILI / 三只阿基</p><h3>{profile?.name || '三只阿基'}</h3><a href={profile?.profileUrl || 'https://space.bilibili.com/'} target="_blank" rel="noreferrer">{zh ? '打开主页' : 'Open Bilibili profile'} <Arrow /></a></div>
+    <div><p className="eyebrow">BILIBILI / 三只阿基</p><h3>{profile?.name || '三只阿基'}</h3><a href={profile?.profileUrl || 'https://space.bilibili.com/480295330'} target="_blank" rel="noreferrer">{zh ? '打开主页' : 'Open Bilibili profile'} <Arrow /></a></div>
     <dl><div><dt>{metric(profile?.fans)}</dt><dd>{zh ? '粉丝' : 'Followers'}</dd></div><div><dt>{metric(profile?.likes)}</dt><dd>{zh ? '累计获赞' : 'Likes'}</dd></div></dl>
-    <div className="bili-latest"><span>{zh ? '最新作品' : 'Latest videos'}</span>{latest.length ? latest.slice(0, compact ? 2 : 3).map(item => <a href={item.url} target="_blank" rel="noreferrer" key={item.url || item.title}><em>{item.date || 'BILI'}</em><strong>{item.title}</strong></a>) : <p>{zh ? '服务器接口连接后自动显示。' : 'Connect the server API to show live Bilibili updates.'}</p>}</div>
+    <div className="bili-latest"><span>{zh ? '最新作品' : 'Latest videos'}</span>{latest.length ? latest.slice(0, compact ? 2 : 3).map(item => <a href={item.url} target="_blank" rel="noreferrer" key={item.url || item.title}><em>{item.date || 'BILI'}</em><strong>{item.title}</strong></a>) : <p>{zh ? '更多作品请见 B 站主页。' : 'Find more work on Bilibili.'}</p>}</div>
   </aside>
 }
 
 function RealtimeGamePreviewSection() {
   const { language } = useLanguage(); const zh = language === 'zh'
   return <section className="game-preview-section realtime-preview-section">
-    <video className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video>
+    <LazyVideo className="game-preview-video" autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo>
     <div className="game-preview-overlay" />
     <div className="game-preview-meta"><span>(GAME / REALTIME)</span><span>UE5 · BLENDER · AI</span></div>
     <h2><span>PLAY.</span><span>BUILD.</span><span>SIMULATE.</span></h2>
-    <div className="game-preview-bottom"><div><p>{zh ? '直升机、角色与实时场景' : 'Helicopters, characters and realtime scenes'}</p><strong>{zh ? '把游戏理解拆成可运行的系统：规则、载具、镜头、环境和交互共同形成可信的实时世界。' : 'I turn game literacy into runnable systems: rules, vehicles, cameras, environments and interaction.'}</strong></div><dl><div><dt>2300+</dt><dd>BATTLEFIELD HRS</dd></div><div><dt>200+</dt><dd>AI MODELS</dd></div></dl><Link to="/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
+    <div className="game-preview-bottom"><div><p>{zh ? '直升机、角色与实时场景' : 'Helicopters, characters and realtime scenes'}</p><strong>{zh ? '把游戏理解拆成可运行的系统：规则、载具、镜头、环境和交互共同形成可信的实时世界。' : 'I turn game literacy into runnable systems: rules, vehicles, cameras, environments and interaction.'}</strong></div><dl><div><dt>2300+</dt><dd>BATTLEFIELD HRS</dd></div><div><dt>FSM</dt><dd>AGENT SYSTEMS</dd></div></dl><Link to="/game">{zh ? '进入游戏作品' : 'Enter game portfolio'} <Arrow /></Link></div>
   </section>
 }
 
@@ -170,7 +174,7 @@ function MmdPreviewSection() {
     <div className="mmd-preview-kicker"><span>(MMD / 二次元)</span><span>Motion · Stage · Camera</span></div>
     <div className="mmd-preview-head"><h2><span>AKI</span><span>STAGE</span></h2><p>{zh ? '把 MMD 舞蹈、角色表演和镜头节奏独立成一个动态作品板块，不再挤在游戏主叙事里。' : 'A dedicated motion portfolio for MMD dance, character performance and camera rhythm.'}</p></div>
     <div className="home-video-triptych mmd-triptych">
-      {mmdVideos.map(([src, poster, no, label, zhCaption, enCaption]) => <Link className="home-video-tile" to="/game#mmd-stage" key={src}><video autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><span>{no}</span><div><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></div></Link>)}
+      {mmdVideos.map(([src, poster, no, label, zhCaption, enCaption]) => <Link className="home-video-tile" to="/game#mmd-stage" key={src}><LazyVideo autoPlay muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><span>{no}</span><div><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></div></Link>)}
     </div>
     <div className="mmd-preview-bottom"><p>{zh ? 'MMD 舞蹈、实时渲染与镜头调度' : 'MMD dance, realtime rendering and camera direction'}</p><BilibiliPanel compact /><Link to="/game#mmd-stage">{zh ? '查看 MMD 与二次元板块' : 'View the MMD stage'} <Arrow /></Link></div>
   </section>
@@ -181,9 +185,9 @@ function Home({ openingVariant = 'v2' }) {
   useEffect(() => { fetch('/articles.json').then(r => r.json()).then(data => setFeaturedArticles(data.slice(0, 8))).catch(() => setFeaturedArticles([])) }, [])
   return <main>
     <div className={`opening opening--${openingVariant}`} aria-hidden="true"><div className="opening-panel" /><div className="opening-panel" /><div className="opening-panel" /><div className="opening-kicker"><span>INDEPENDENT DEVELOPER</span><span>PORTFOLIO / 2026</span></div><div className="opening-cn"><span>傅文基</span></div><i className="opening-rule" /><p className="opening-label"><span>FU WENJI / PORTFOLIO</span></p><strong className="opening-count">000</strong></div>
-    <section id="top" className="hero" aria-labelledby="hero-title"><div className="hero-watermark" aria-hidden="true">傅文基</div><div className="hero-top"><p className="eyebrow">{t.heroRole}</p><p>CHENGDU / CN<br />30.67° N, 104.06° E</p></div><h1 id="hero-title"><span>FU</span><span>WENJI</span></h1><div className="hero-bottom"><p className="hero-intro">{t.heroLine}</p><p className="scroll-note">{t.explore} <b>↓</b></p></div></section>
+    <section id="top" className="hero" aria-labelledby="hero-title"><div className="hero-watermark" aria-hidden="true">傅文基</div><div className="hero-top"><p className="eyebrow">{t.heroRole}</p><p>{language === 'zh' ? '研究 / 工程 / 开源' : 'Research / Build / Share'}<br />2026</p></div><h1 id="hero-title"><span>FU</span><span>WENJI</span></h1><div className="hero-bottom"><p className="hero-intro">{t.heroLine}</p><p className="scroll-note">{t.explore} <b>↓</b></p></div></section>
 
-    <section className="manifesto"><p className="eyebrow">{t.introKicker}</p><p className="manifesto-copy">{t.intro}</p><p className="manifesto-cn">{t.introDetail}</p></section>
+    <ResearchPreview /><section className="manifesto"><p className="eyebrow">{t.introKicker}</p><p className="manifesto-copy">{t.intro}</p><p className="manifesto-cn">{t.introDetail}</p></section>
 
     <section id="work" className="work-section home-work"><SectionTitle index="01" title={t.selected} subtitle={t.selectedSub} /><HomeProjectMosaic /><Link className="section-cta" to="/projects">{t.allProjects} <Arrow /></Link></section>
 
@@ -199,7 +203,7 @@ function Home({ openingVariant = 'v2' }) {
 
     <section className="library-section"><SectionTitle index="04" title={t.library} subtitle={t.librarySub} /><div className="home-article-cards">{featuredArticles.map((article, index) => <Link className={`home-article-card article-card-${index + 1}`} to={`/writing/${index}`} key={article.title}><div className="article-card-cover"><img src={article.cover && !/^https?:/i.test(article.cover) ? articleAsset(article.cover) : articleFallbackCover(article)} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = articleFallbackCover(article) }} alt={`${article.title} 文章封面`} loading="lazy" /></div><span>{String(index + 1).padStart(2, '0')} / {article.date || 'FIELD NOTE'}</span><h3>{article.title}</h3><p>{article.summary}</p><small>{article.tags?.join(' / ')}</small><Arrow /></Link>)}</div><div className="library-actions"><Link className="all-writing-link" to="/writing">{language === 'zh' ? '查看全部文章' : 'View all writing'} <Arrow /></Link><Link className="notes-entry" to="/study"><span>NOTES / 笔记</span><strong>{language === 'zh' ? '进入文件浏览器' : 'Open file browser'}</strong><Arrow /></Link></div></section>
 
-    <section id="contact" className="contact-section"><p className="eyebrow">{t.contactKicker}</p><h2>{t.contact}</h2><ResumePanel /><Subscribe /><div className="contact-links"><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="https://github.com/fuxiaoji" target="_blank" rel="noreferrer">GITHUB <Arrow /></a><a href="#top">BACK TO TOP ↑</a></div><footer><span>© 2026 FU WENJI</span><span>CHENGDU / CN</span><a href="#top">BACK TO TOP ↑</a></footer></section>
+    <section id="contact" className="contact-section"><p className="eyebrow">{t.contactKicker}</p><h2>{t.contact}</h2><ResumePanel /><Subscribe /><div className="contact-links"><a href="https://github.com/fuxiaoji">GITHUB <Arrow /></a><a href="https://github.com/fuxiaoji" target="_blank" rel="noreferrer">GITHUB <Arrow /></a><a href="#top">BACK TO TOP ↑</a></div><footer><span>© 2026 FU WENJI</span><span>CHENGDU / CN</span><a href="#top">BACK TO TOP ↑</a></footer></section>
   </main>
 }
 
@@ -210,19 +214,19 @@ function ProjectsPage() { const { t } = useLanguage(); return <IndexShell><PageH
 
 function AboutPage() {
   const { t, language } = useLanguage()
-  return <IndexShell><PageHero kicker="04 / PROFILE" title={t.profile} lead={t.bio1} /><section className="about-index"><div className="about-portrait"><img src="/photo/8562470192cf76943e9acf21df4fd607.jpg" alt="傅文基个人照" /></div><div><p className="about-lead">{t.bio2}</p><dl className="facts">{facts.map(([value, zhLabel, enLabel]) => <div key={value}><dt>{value}</dt><dd>{language === 'zh' ? zhLabel : enLabel}</dd></div>)}</dl></div></section><ResumePanel /><Subscribe /></IndexShell>
+  return <IndexShell><PageHero kicker="04 / PROFILE" title={t.profile} lead={t.bio1} /><section className="about-index"><div className="about-portrait"><img src="/photo/8562470192cf76943e9acf21df4fd607.jpg" alt="傅文基个人照" /></div><div><p className="about-lead">{t.bio2}</p><dl className="facts">{facts.map(([value, zhLabel, enLabel]) => <div key={value}><dt>{value}</dt><dd>{language === 'zh' ? zhLabel : enLabel}</dd></div>)}</dl></div></section><Background /><ResumePanel /><Subscribe /></IndexShell>
 }
 
 const gameLiteracy = [
   ['01', 'STRATEGY / WARGAME', '策略与兵棋', '《钢铁雄心 IV》《维多利亚》各 1000+ 小时；体验 20+ 款硬核兵棋，持续产出攻略与战报。', '1,000+ hours each in Hearts of Iron IV and Victoria, plus 20+ hardcore wargames and a growing archive of guides and AARs.', '1000+ HRS × 2'],
-  ['02', 'FPS / BATTLEFIELD', '战场与载具', '战地系列 2300+ 小时；《战地 1》2000+ 小时，110 级，胜率 67%，熟悉步兵、载具和空战节奏。', '2,300+ hours across Battlefield; 2,000+ in Battlefield 1 with a 67% win rate and deep infantry, vehicle and air-combat literacy.', '67% WIN RATE'],
+  ['02', 'FPS / BATTLEFIELD', '战场与载具', '战地系列 2300+ 小时，关注步兵、载具、空战协同与大战场信息反馈。', '2,300+ hours across Battlefield, focused on infantry, vehicles, air coordination and battlefield feedback.', '2,300+ HRS'],
   ['03', 'GaaS / ANIME', '长线内容', '长期体验原神、崩坏：星穹铁道、鸣潮等产品，理解内容版本节奏、角色驱动与抽卡商业化。', 'Long-term experience with major anime GaaS titles, with attention to update cadence, character-driven content and gacha monetisation.', 'LIVE OPS'],
   ['04', 'ACTION / SIM', '动作与模拟', '战舰世界、骑马与砍杀、实况足球各 500+ 小时，并完整体验多款动作与开放世界作品。', '500+ hours each across World of Warships, Mount & Blade and PES, alongside completed action and open-world titles.', '500+ HRS'],
 ]
 
 const gameVisuals = {
   '01': [{ name: 'HEARTS OF IRON IV', image: '/game/covers/hoi4.jpg' }, { name: 'VICTORIA 3', image: '/game/covers/victoria3.jpg' }, { name: 'HARDCORE WARGAMES', code: '20+' }],
-  '02': [{ name: 'BATTLEFIELD 1', image: '/game/covers/battlefield1.jpg' }, { name: 'AIR / CAVALRY', code: '20★' }, { name: 'WIN RATE', code: '67%' }],
+  '02': [{ name: 'BATTLEFIELD 1', image: '/game/covers/battlefield1.jpg' }, { name: 'COORDINATION', code: 'TEAM' }, { name: 'PLAYTIME', code: '2300+' }],
   '03': [{ name: '原神', image: '/game/logos/genshin.png' }, { name: '崩坏：星穹铁道', image: '/game/logos/star-rail.png' }, { name: '鸣潮', image: '/game/logos/wuthering-waves.png' }, { name: '洛克王国', image: '/game/logos/roco.png' }, { name: '异环', code: 'NTE' }],
   '04': [{ name: 'WORLD OF WARSHIPS', image: '/game/covers/world-of-warships.jpg' }, { name: 'MOUNT & BLADE II', image: '/game/covers/bannerlord.jpg' }, { name: 'BLACK MYTH: WUKONG', image: '/game/covers/black-myth.jpg' }, { name: 'EFOOTBALL', image: '/game/covers/efootball.jpg' }],
 }
@@ -231,30 +235,31 @@ function GamePage() {
   const { language } = useLanguage(); const zh = language === 'zh'
   return <main className="game-page">
     <section className="game-hero">
-      <video autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><div className="game-hero-shade" />
+      <LazyVideo autoPlay muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp" aria-hidden="true"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><div className="game-hero-shade" />
       <div className="game-hero-meta"><span>05 / GAME & REALTIME</span><span>CHENGDU / 2026</span></div>
       <h1><span>GAME</span><span>SYSTEMS</span></h1>
       <div className="game-hero-intro"><p>{zh ? '游戏开发 / AI / 实时视觉' : 'Game development / AI / realtime visuals'}</p><strong>{zh ? '理解规则，构建系统，再让世界动起来。' : 'Understand the rules. Build the system. Make the world move.'}</strong><a href="#game-work">{zh ? '向下探索' : 'Explore'} ↓</a></div>
     </section>
 
-    <section className="game-statement" id="game-work"><p className="eyebrow">PROFILE / GAME</p><h2>{zh ? '从玩家经验，走向可运行的游戏系统。' : 'From player literacy to runnable game systems.'}</h2><div><p>{zh ? '我的游戏方向不是孤立的美术或代码练习：一端是对策略、战场、长线内容与动作循环的长期观察，另一端是 C++、PyTorch、UE5、Unity 与 Blender 的工程实践。' : 'My game practice connects years of player literacy with engineering across C++, PyTorch, UE5, Unity and Blender.'}</p><dl><div><dt>2300+</dt><dd>BATTLEFIELD HOURS</dd></div><div><dt>200+</dt><dd>EVOLVED AI MODELS</dd></div><div><dt>20+</dt><dd>HARDCORE WARGAMES</dd></div></dl></div></section>
+    <section className="game-statement" id="game-work"><p className="eyebrow">PROFILE / GAME</p><h2>{zh ? '从玩家经验，走向可运行的游戏系统。' : 'From player literacy to runnable game systems.'}</h2><div><p>{zh ? '我的游戏方向连接策略、战场与动作循环的长期观察，以及 C++、PyTorch、UE5、Unity 与 Blender 的工程实践。' : 'My game practice connects years of player literacy with engineering across C++, PyTorch, UE5, Unity and Blender.'}</p><dl><div><dt>2300+</dt><dd>BATTLEFIELD HOURS</dd></div><div><dt>Rust</dt><dd>SIMULATION ENGINE</dd></div><div><dt>20+</dt><dd>HARDCORE WARGAMES</dd></div></dl></div></section>
 
+    <section className="game-systems-index"><h2>{zh ? '规则、策略与智能体' : 'Rules, policies and agents'}</h2>{projects.filter(item => ['harpoon', 'iron', 'eots', 'unity'].includes(item.id)).map(item => <article key={item.id}><div><h3>{item.title}</h3><p>{zh ? item.subtitle : item.enSubtitle}</p></div><div><p>{zh ? item.copy : item.enCopy}</p><a href={item.link} target="_blank" rel="noreferrer">{zh ? '查看项目' : 'View project'} <Arrow /></a></div></article>)}</section>
     <section className="game-case">
       <div className="game-case-heading"><p className="eyebrow">01 / GAME AI</p><h2>BISMARCK<br />HUNT</h2><a href="https://github.com/fuxiaoji/wargame" target="_blank" rel="noreferrer">GITHUB / SOURCE <Arrow /></a></div>
-      <div className="game-case-copy"><p>{zh ? '把经典隐藏移动兵棋《追击俾斯麦》完整电子化，并构建可以大规模训练与观测的 AI 演化环境。' : 'A complete digital adaptation of the hidden-movement wargame, rebuilt as a scalable AI training environment.'}</p><ol><li><span>01</span>{zh ? 'C++ 并发仿真与 TypeScript 实时可视化组成异构架构。' : 'A heterogeneous architecture combining C++ simulation with TypeScript realtime visualization.'}</li><li><span>02</span>{zh ? '结合 Transformer、LSTM 与强化学习表达不完全信息决策。' : 'Transformer, LSTM and reinforcement learning for imperfect-information decisions.'}</li><li><span>03</span>{zh ? '演化 200+ 模型，最佳策略相对基线胜率提升 40%。' : 'Evolved 200+ models; the best strategy improved the baseline win rate by 40%.'}</li></ol><div className="game-stack"><span>C++</span><span>PYTORCH</span><span>TRANSFORMER</span><span>LSTM</span><span>TYPESCRIPT</span></div></div>
+      <div className="game-case-copy"><p>{zh ? '把经典隐藏移动兵棋《追击俾斯麦》完整电子化，并构建可以大规模训练与观测的 AI 演化环境。' : 'A complete digital adaptation of the hidden-movement wargame, rebuilt as a scalable AI training environment.'}</p><ol><li><span>01</span>{zh ? 'C++ 并发仿真与 TypeScript 实时可视化组成异构架构。' : 'A heterogeneous architecture combining C++ simulation with TypeScript realtime visualization.'}</li><li><span>02</span>{zh ? '探索 Transformer、LSTM 策略模型与遗传算法演化。' : 'Transformer/LSTM policies and genetic algorithms for imperfect-information decisions.'}</li><li><span>03</span>{zh ? '打通对局采集、PyTorch 训练、演化实验与回放验证。' : 'Connects game data, PyTorch training, evolutionary experiments and replay validation.'}</li></ol><div className="game-stack"><span>C++</span><span>PYTORCH</span><span>TRANSFORMER</span><span>LSTM</span><span>TYPESCRIPT</span></div></div>
     </section>
 
     <section className="game-wallpaper"><img src="/game/enchanted-forest.webp" alt={zh ? '魔法森林实时渲染作品' : 'Enchanted forest realtime render'} /><div><span>02 / ENVIRONMENT ART</span><h2>ENCHANTED<br />FOREST</h2><p>{zh ? '角色、植被、水面、体积光与景深共同组织的幻想场景练习。' : 'A fantasy environment study in character staging, foliage, water, volumetric light and depth of field.'}</p></div></section>
 
-    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-03-poster.jpg"><source src="/game/mmd-dance-03.mp4" type="video/mp4" /></video><figcaption><span>MMD / LATEST DANCE</span><p>{zh ? '06/28 最新 MMD 舞蹈作品：更完整地展示舞台、动作和镜头节奏。' : 'The latest MMD dance piece (06/28), with stronger staging, motion and camera rhythm.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></video><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A dance piece focused on stage lighting, character motion and camera rhythm.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></video><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing motion continuity and composition shifts.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></video><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicles, characters and environments.'}</p></figcaption></figure><figure><video controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></video><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'A study in materials, lighting, composition and camera movement.'}</p></figcaption></figure></div></section>
+    <section className="game-reels"><header><p className="eyebrow">03 / MOTION STUDIES</p><h2>{zh ? '实时世界，也需要镜头与节奏。' : 'Realtime worlds need camera and rhythm.'}</h2></header><div className="game-reel-grid game-reel-grid-featured"><figure className="mmd-feature-reel"><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-03-poster.jpg"><source src="/game/mmd-dance-03.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / LATEST DANCE</span><p>{zh ? '06/28 最新 MMD 舞蹈作品：更完整地展示舞台、动作和镜头节奏。' : 'The latest MMD dance piece (06/28), with stronger staging, motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-02-poster.jpg"><source src="/game/mmd-dance-02.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / DANCE FILM</span><p>{zh ? '舞台光、角色动作和镜头切换制造节奏，而不是只展示模型。' : 'A dance piece focused on stage lighting, character motion and camera rhythm.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/mmd-dance-01-poster.jpg"><source src="/game/mmd-dance-01.mp4" type="video/mp4" /></LazyVideo><figcaption><span>MMD / CAMERA TEST</span><p>{zh ? '第二支舞蹈片段作为横向补充，展示动作连续性和构图变化。' : 'A companion dance reel showing motion continuity and composition shifts.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/helicopter-poster.webp"><source src="/game/helicopter-ue5.mp4" type="video/mp4" /></LazyVideo><figcaption><span>UE5 / CINEMATIC</span><p>{zh ? '直升机、角色与环境共同构成的实时过场实验。' : 'A realtime cinematic study with vehicles, characters and environments.'}</p></figcaption></figure><figure><LazyVideo controls muted loop playsInline preload="metadata" poster="/game/forest-poster.webp"><source src="/game/forest-render.mp4" type="video/mp4" /></LazyVideo><figcaption><span>BLENDER / SCENE ANIMATION</span><p>{zh ? '材质、灯光、构图与镜头运动练习。' : 'A study in materials, lighting, composition and camera movement.'}</p></figcaption></figure></div></section>
 
-    <section className="game-mmd-stage" id="mmd-stage"><div className="game-mmd-title"><p className="eyebrow">03B / MMD & 二次元</p><h2><span>AKI</span><span>MOTION</span><span>STAGE</span></h2><p>{zh ? '这个板块把“三只阿基”的 MMD 舞蹈、舞台光线、角色动作和镜头调度单独展示，像一个二次元动态作品集。' : 'A dedicated anime motion portfolio for MMD dance, stage lighting, character motion and camera direction.'}</p></div><div className="game-mmd-grid">{mmdVideos.map(([src, poster, no, label, zhCaption, enCaption], index) => <figure className={`game-mmd-card game-mmd-card-${index + 1}`} key={src}><video controls muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></video><figcaption><span>{no}</span><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></figcaption></figure>)}</div><BilibiliPanel /></section>
+    <section className="game-mmd-stage" id="mmd-stage"><div className="game-mmd-title"><p className="eyebrow">03B / MMD & 二次元</p><h2><span>AKI</span><span>MOTION</span><span>STAGE</span></h2><p>{zh ? '这个板块把“三只阿基”的 MMD 舞蹈、舞台光线、角色动作和镜头调度单独展示，像一个二次元动态作品集。' : 'A dedicated anime motion portfolio for MMD dance, stage lighting, character motion and camera direction.'}</p></div><div className="game-mmd-grid">{mmdVideos.map(([src, poster, no, label, zhCaption, enCaption], index) => <figure className={`game-mmd-card game-mmd-card-${index + 1}`} key={src}><LazyVideo controls muted loop playsInline preload="metadata" poster={poster}><source src={src} type="video/mp4" /></LazyVideo><figcaption><span>{no}</span><strong>{label}</strong><em>{zh ? zhCaption : enCaption}</em></figcaption></figure>)}</div><BilibiliPanel /></section>
 
-    <section className="game-toolkit"><p className="eyebrow">04 / REALTIME CRAFT</p><div className="game-toolkit-grid"><article><span>01</span><h3>UE5</h3><p>Blueprint / C++ / Sequencer / Lighting</p></article><article><span>02</span><h3>UNITY</h3><p>Gameplay prototype / Interaction / Scene</p></article><article><span>03</span><h3>BLENDER</h3><p>Modeling / Texturing / Shader / Animation</p></article><article><span>04</span><h3>GAME AI</h3><p>PyTorch / RL / Evolution / Multi-agent</p></article></div></section>
+    <section className="game-toolkit"><p className="eyebrow">04 / REALTIME CRAFT</p><div className="game-toolkit-grid"><article><span>01</span><h3>UE5</h3><p>Blueprint / C++ / Sequencer / Lighting</p></article><article><span>02</span><h3>UNITY</h3><p>Gameplay prototype / Interaction / Scene</p></article><article><span>03</span><h3>BLENDER</h3><p>Modeling / Texturing / Shader / Animation</p></article><article><span>04</span><h3>GAME AI</h3><p>PyTorch / Imitation / Evolution / Multi-agent</p></article></div></section>
 
     <section id="player-literacy" className="game-literacy"><header><p className="eyebrow">05 / PLAYER LITERACY</p><h2>{zh ? '大量游玩不是数字，是对系统手感的长期采样。' : 'Playtime is long-term sampling of how systems feel.'}</h2></header><div>{gameLiteracy.map(([no, en, title, copy, enCopy, metric]) => <article key={no}><div className={`game-literacy-visual game-visual-${no}`}>{gameVisuals[no].map(item => <figure className={item.image ? 'has-image' : 'is-stat'} key={item.name}>{item.image ? <img src={item.image} alt={`${item.name} 游戏视觉`} /> : <b>{item.code}</b>}<figcaption>{item.name}</figcaption></figure>)}</div><span>{no} / {en}</span><h3>{zh ? title : en}</h3><p>{zh ? copy : enCopy}</p><strong>{metric}</strong></article>)}</div></section>
 
-    <section className="game-contact"><p>GAME DEVELOPMENT / AI / REALTIME</p><h2>{zh ? '想一起做一个会动、会思考的世界？' : 'Build a world that moves and thinks?'}</h2><div><a href="mailto:fuwenji61616@gmail.com">EMAIL <Arrow /></a><a href="/files/resume-game.pdf" download>{zh ? '下载游戏方向简历' : 'Download game résumé'} <Arrow /></a><Link to="/">{zh ? '返回首页' : 'Back home'} <Arrow /></Link></div></section>
+    <section className="game-contact"><p>GAME DEVELOPMENT / AI / REALTIME</p><h2>{zh ? '想一起做一个会动、会思考的世界？' : 'Build a world that moves and thinks?'}</h2><div><a href="https://github.com/fuxiaoji">GITHUB <Arrow /></a><a href="/files/resume-game.pdf" download>{zh ? '下载游戏方向简历' : 'Download game résumé'} <Arrow /></a><Link to="/">{zh ? '返回首页' : 'Back home'} <Arrow /></Link></div></section>
   </main>
 }
 
@@ -357,7 +362,18 @@ function NoteViewerPage() {
   return <main className="note-viewer"><header className="note-viewer-header"><Link to="/study">← {language === 'zh' ? '返回笔记库' : 'Notes index'}</Link><p className="eyebrow">{isPdf ? 'PDF DOCUMENT' : isMarkdown ? 'MARKDOWN NOTE' : 'LOCAL FILE'} / {path.split('/').slice(0, -1).join(' / ')}</p><h1>{name.replace(/\.[^.]+$/i, '')}</h1><div><a href={fileUrl} target="_blank" rel="noreferrer">{language === 'zh' ? '打开原文件' : 'Open original'} ↗</a><a href={fileUrl} download>{language === 'zh' ? '下载文件' : 'Download'} ↓</a></div></header>{isPdf ? <section className="pdf-reader"><div className="pdf-reader-bar"><span>PDF / {name}</span><span>{language === 'zh' ? '可缩放、翻页与打印' : 'Zoom, navigate and print'}</span></div><iframe title={name} src={fileUrl} /></section> : isMarkdown ? <div className="article-layout note-markdown-layout"><aside><p className="eyebrow">CONTENTS / 目录</p>{headings.length ? headings.map((heading, index) => <a href={`#${headingId(heading, index)}`} key={`${heading}-${index}`}><span>{String(index + 1).padStart(2, '0')}</span>{heading}</a>) : <p>{language === 'zh' ? '正文阅读' : 'Note content'}</p>}</aside>{source ? <Suspense fallback={<div className="article-prose"><p>LOADING MARKDOWN…</p></div>}><MarkdownContent source={source} assetBase={assetBase} /></Suspense> : <div className="article-prose"><p>{error || (language === 'zh' ? '正在载入笔记…' : 'Loading note…')}</p></div>}</div> : <section className="local-file-fallback"><p className="eyebrow">{name.split('.').pop()?.toUpperCase()} / LOCAL DOCUMENT</p><h2>{language === 'zh' ? '此格式请使用本机应用打开' : 'Open this format with a desktop application'}</h2><a href={fileUrl} target="_blank" rel="noreferrer">{language === 'zh' ? '打开本地文件' : 'Open local file'} ↗</a></section>}</main>
 }
 
+function PageMetadata() {
+  const { pathname } = useLocation(); const { language } = useLanguage()
+  useEffect(() => {
+    const names = { '/research': ['研究', 'Research'], '/projects': ['项目', 'Projects'], '/game': ['游戏与仿真', 'Games & simulation'], '/about': ['关于与简历', 'About & CV'] }
+    const label = names[pathname]?.[language === 'zh' ? 0 : 1]
+    document.title = label ? `${label} · 傅文基 / Wenji Fu` : '傅文基 / Wenji Fu · AI、运筹与交互系统'
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://fuwenji.asia${pathname}`)
+  }, [pathname, language])
+  return null
+}
+
 export default function App() {
-  const location = useLocation(); const scope = useRef(null); const openingVariant = 'v2'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search)
-  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/game" element={<GamePage />} /><Route path="/tools/tieba-spider" element={<TiebaSpiderPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
+  const location = useLocation(); const scope = useRef(null); const openingVariant = 'v2'; usePortfolioMotion(scope, location.pathname, openingVariant, location.search + location.hash)
+  return <div ref={scope}><div className="route-curtain" aria-hidden="true"><span>FWJ / INDEX</span></div><Shell><PageMetadata /><Routes location={location}><Route path="/" element={<Home openingVariant={openingVariant} />} /><Route path="/research" element={<ResearchPage />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/game" element={<GamePage />} /><Route path="/tools/tieba-spider" element={<TiebaSpiderPage />} /><Route path="/articles" element={<ArticlesPage />} /><Route path="/writing" element={<ArticlesPage />} /><Route path="/writing/:articleId" element={<ArticleDetailPage />} /><Route path="/notes" element={<NotesPage />} /><Route path="/study" element={<NotesPage />} /><Route path="/study/view" element={<NoteViewerPage />} /><Route path="/about" element={<AboutPage />} /></Routes></Shell></div>
 }

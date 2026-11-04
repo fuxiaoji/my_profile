@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const localNotesRoot = 'F:/desktop/note'
+const localNotesRoot = process.env.PORTFOLIO_NOTES_ROOT || path.resolve('note')
 const localArticlesRoot = path.resolve('文章')
 const ignoredNoteEntries = new Set(['.git', '.obsidian', '.DS_Store'])
 
@@ -193,6 +193,12 @@ function localMime(file) {
 function handleLocalContent(request, response, next) {
   const pathname = new URL(request.url, 'http://localhost').pathname
   if (pathname === '/__local_notes_index') {
+    if (!process.env.PORTFOLIO_NOTES_ROOT || !fs.existsSync(localNotesRoot)) {
+      response.statusCode = 404
+      response.setHeader('Content-Type', 'application/json; charset=utf-8')
+      response.end(JSON.stringify({ error: 'Local note preview is not configured' }))
+      return
+    }
     response.setHeader('Content-Type', 'application/json; charset=utf-8')
     response.end(JSON.stringify(noteTree()))
     return
@@ -256,5 +262,5 @@ function localNotesPlugin() {
 
 export default defineConfig({
   plugins: [react(), localNotesPlugin()],
-  build: { target: 'es2020', sourcemap: true },
+  build: { target: 'es2020', sourcemap: false },
 })
